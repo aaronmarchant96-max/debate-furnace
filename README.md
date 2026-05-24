@@ -17,6 +17,12 @@ Debate Furnace is a React argument pressure-testing app. It runs both sides of a
 - What Would Change the Verdict
 - Copyable markdown report
 
+## Reference docs
+
+The current app is intentionally compact for local testing and deployment. The richer V4 script and report language is archived here:
+
+- [Debate Furnace Rich Script Reference](docs/Debate_Furnace_Rich_Script_Reference.md)
+
 ## Local setup
 
 ```bash
