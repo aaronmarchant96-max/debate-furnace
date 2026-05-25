@@ -14,6 +14,11 @@ function extractJson(text) {
   }
 }
 
+function truncate(value, limit = 600) {
+  const text = String(value ?? "");
+  return text.length > limit ? `${text.slice(0, limit)}…` : text;
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -21,6 +26,7 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
+    console.error("[debate] Missing GEMINI_API_KEY");
     return res.status(500).json({ error: "Missing GEMINI_API_KEY" });
   }
 
@@ -83,17 +89,31 @@ Return exactly this JSON shape:
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Gemini API returned ${response.status}: ${errorText.slice(0, 300)}`);
+      console.error("[debate] Gemini API error", {
+        status: response.status,
+        statusText: response.statusText,
+        body: truncate(errorText)
+      });
+      throw new Error(`Gemini API returned ${response.status}: ${truncate(errorText, 300)}`);
     }
 
     const body = await response.json();
-    const text = body.candidates?.[0]?.content?.parts?.[0]?.text;
+    const text = body.candidates?.[0]?.content?.parts?.map((part) => part?.text || "").join("") || "";
+    if (!text.trim()) {
+      console.error("[debate] Empty Gemini candidate payload", {
+        body: truncate(JSON.stringify(body))
+      });
+    }
     const debate = extractJson(text);
     return res.status(200).json(debate);
   } catch (error) {
+    console.error("[debate] AI debate generation failed", {
+      message: error instanceof Error ? error.message : "Unknown error",
+      stack: error instanceof Error ? error.stack : undefined
+    });
     return res.status(500).json({
       error: "AI debate generation failed",
-      detail: error instanceof Error ? error.message : "Unknown error",
+      detail: error instanceof Error ? error.message : "Unknown error"
     });
   }
 }
