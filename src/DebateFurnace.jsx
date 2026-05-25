@@ -109,6 +109,7 @@ function buildShareLink(payload) {
 
 const HISTORY_KEY = "debate_furnace_history_v1";
 const HISTORY_LIMIT = 12;
+const DECISION_PATH_KEY = "debate_furnace_decision_path_v1";
 
 function safeParseHistory(value) {
   try {
@@ -165,6 +166,98 @@ function formatSavedAt(value) {
   } catch {
     return "";
   }
+}
+
+function getSavedDecisionPathPreference() {
+  if (typeof window === "undefined") return "auto";
+  const saved = window.localStorage.getItem(DECISION_PATH_KEY);
+  return ["auto", "show", "hide"].includes(saved) ? saved : "auto";
+}
+
+function shouldShowDecisionPath(debate, preference = "auto") {
+  if (preference === "hide") return false;
+  if (preference === "show") return true;
+
+  const type = String(debate?.qType || debate?.type || debate?.label || "").toLowerCase();
+  if (["moral", "philosophical", "personal"].includes(type)) return false;
+  if (["practical", "policy", "work"].includes(type)) return true;
+
+  const q = cleanQuestion(debate?.question || "").toLowerCase();
+  const starterTopics = [
+    "remote work",
+    "office work",
+    "gun control",
+    "frontier ai",
+    "regulate frontier ai",
+    "college",
+    "tuition",
+    "housing",
+    "prison",
+    "rehabilitation",
+    "punishment",
+    "capital punishment",
+    "encryption",
+    "workweek",
+    "genetically modify"
+  ];
+  if (starterTopics.some((kw) => q.includes(kw))) return true;
+
+  const decisionKeywords = ["should", "must", "allow", "ban", "require", "permit", "decide", "choose", "policy", "strategy", "plan"];
+  return decisionKeywords.some((kw) => q.includes(kw));
+}
+
+function getDecisionPath(debate) {
+  const q = cleanQuestion(debate?.question || "").toLowerCase();
+  const type = String(debate?.qType || "").toLowerCase();
+  const isTech = ["encryption", "frontier ai", "ai", "architecture", "software", "system", "technical", "product"].some((x) => q.includes(x));
+  const isHighStakes = ["capital punishment", "genetically modify", "prison", "housing", "gun control", "college"].some((x) => q.includes(x));
+  const isTeamOps = ["remote work", "office work", "workweek", "meeting", "team", "async", "decision"].some((x) => q.includes(x));
+
+  if (isTeamOps || type === "practical") {
+    return {
+      framework: "Written Proposal + Timeboxed Input",
+      driver: "The person closest to the problem",
+      approver: "The decision owner",
+      contributors: "Directly affected teammates",
+      deadline: "3 business days",
+      logTemplate: "Context | options | recommendation | tradeoffs | risks | decision | follow-up",
+      why: "Best when the question is about team workflow, operating rhythm, or a practical work setup."
+    };
+  }
+
+  if (isTech || ["factual", "open"].includes(type)) {
+    return {
+      framework: "RFC",
+      driver: "The person writing the proposal",
+      approver: "The technical owner or team lead",
+      contributors: "Reviewers with relevant context",
+      deadline: "3 business days",
+      logTemplate: "Problem | proposal | alternatives | tradeoffs | decision | review date",
+      why: "Best when the choice is technical, implementation-heavy, or likely to be revisited later."
+    };
+  }
+
+  if (type === "policy" || isHighStakes) {
+    return {
+      framework: "DACI",
+      driver: "The person driving the proposal",
+      approver: "The accountable decision maker",
+      contributors: "Subject-matter reviewers and impacted stakeholders",
+      deadline: "5 business days",
+      logTemplate: "Context | decision needed | options | impact by group | risks | recommendation | final call",
+      why: "Best when the decision affects multiple groups and needs explicit ownership."
+    };
+  }
+
+  return {
+    framework: "Disagree and Commit",
+    driver: "The person making the recommendation",
+    approver: "The final decision maker",
+    contributors: "People with relevant context",
+    deadline: "2 business days",
+    logTemplate: "Question | proposal | objections | resolution | decision | review date",
+    why: "Best when the choice is reversible or the team needs speed more than process."
+  };
 }
 
 function isStarterQuestion(q) {
@@ -1033,6 +1126,73 @@ function Score({ label, score, color }) {
   return <div><div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7 }}><span style={{ fontSize: 12, color: T.muted, fontWeight: 700 }}>{label}</span><b style={{ fontSize: 24, color }}>{score.toFixed(1)}</b></div><div style={{ height: 4, background: T.border, borderRadius: 3, overflow: "hidden" }}><div style={{ height: "100%", width: `${score * 10}%`, background: color }} /></div></div>;
 }
 
+function DecisionPathControls({ value, onChange }) {
+  return (
+    <div style={{ background: T.card, border: `1px solid ${T.border}`, borderRadius: 12, marginBottom: 12, padding: 14 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+        <div>
+          <div style={{ fontSize: 10, letterSpacing: 3, color: T.muted, fontWeight: 800, marginBottom: 6 }}>DECISION PATH</div>
+          <div style={{ fontSize: 12, color: T.textDim, lineHeight: 1.45 }}>Auto for practical and policy questions; override it when you want.</div>
+        </div>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          {["auto", "show", "hide"].map((mode) => (
+            <button
+              key={mode}
+              onClick={() => onChange(mode)}
+              style={{
+                background: value === mode ? T.surface : T.charcoal,
+                border: `1px solid ${value === mode ? T.ember : T.border}`,
+                borderRadius: 999,
+                padding: "6px 10px",
+                color: value === mode ? T.ember : T.muted,
+                cursor: "pointer",
+                fontSize: 11,
+                fontWeight: 800,
+                fontFamily: "inherit"
+              }}
+            >
+              {mode === "auto" ? "Auto" : mode === "show" ? "Show" : "Hide"}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DecisionPathPanel({ decisionPath, mobile, compactLine, grid }) {
+  return (
+    <Section title="RECOMMENDED DECISION PATH" color={T.judge}>
+      <div style={grid}>
+        <div>
+          <div style={{ fontSize: 10, letterSpacing: 2, color: T.judge, fontWeight: 800, marginBottom: 8 }}>RECOMMENDED APPROACH</div>
+          <p style={{ fontSize: 14, color: T.text, lineHeight: mobile ? compactLine : 1.7, margin: 0 }}>{decisionPath.framework}</p>
+        </div>
+        <div>
+          <div style={{ fontSize: 10, letterSpacing: 2, color: T.judge, fontWeight: 800, marginBottom: 8 }}>WHY THIS FITS</div>
+          <p style={{ fontSize: 13, color: T.textDim, lineHeight: mobile ? compactLine : 1.7, margin: 0 }}>{decisionPath.why}</p>
+        </div>
+        <div>
+          <div style={{ fontSize: 10, letterSpacing: 2, color: T.judge, fontWeight: 800, marginBottom: 8 }}>DRIVER / APPROVER</div>
+          <p style={{ fontSize: 13, color: T.textDim, lineHeight: mobile ? compactLine : 1.7, margin: 0 }}>
+            <b style={{ color: T.text }}>Driver:</b> {decisionPath.driver}
+            <br />
+            <b style={{ color: T.text }}>Approver:</b> {decisionPath.approver}
+          </p>
+        </div>
+        <div>
+          <div style={{ fontSize: 10, letterSpacing: 2, color: T.judge, fontWeight: 800, marginBottom: 8 }}>INPUT / LOG</div>
+          <p style={{ fontSize: 13, color: T.textDim, lineHeight: mobile ? compactLine : 1.7, margin: 0 }}>
+            <b style={{ color: T.text }}>Input deadline:</b> {decisionPath.deadline}
+            <br />
+            <b style={{ color: T.text }}>Decision log template:</b> {decisionPath.logTemplate}
+          </p>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
 export default function DebateFurnace() {
   const mobile = useMobile();
   const reportLine = mobile ? 1.55 : 1.75;
@@ -1056,12 +1216,18 @@ export default function DebateFurnace() {
   const [fallbackNotice, setFallbackNotice] = useState("");
   const [debateHistory, setDebateHistory] = useState([]);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [decisionPathPreference, setDecisionPathPreference] = useState(() => getSavedDecisionPathPreference());
   const grid = { display: "grid", gridTemplateColumns: mobile ? "1fr" : "1fr 1fr", gap: 12 };
   const colors = { balanced: T.sideA, aggressive: T.gold, ruthless: T.molten };
 
   useEffect(() => {
     setDebateHistory(getSavedDebateHistory());
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(DECISION_PATH_KEY, decisionPathPreference);
+  }, [decisionPathPreference]);
 
   useEffect(() => {
     const hash = window.location.hash.startsWith("#d=") ? window.location.hash.slice(3) : "";
@@ -1138,7 +1304,12 @@ export default function DebateFurnace() {
     const result = verdictLabel(debate.matchWinner, debate.shortA, debate.shortB);
     const label = debate.label === "Moral / Philosophical" ? "Unburned Claims to Verify or Clarify" : "Unburned Claims to Verify";
     const shareLink = buildShareLink(makeSharePayload(question, sideA, sideB, intensity, debate));
-    const md = `# Debate Furnace — Final Report\n\n**Question:** ${question}\n**Type:** ${debate.label}\n**Result:** ${result}\n**Score:** ${debate.shortA}: ${debate.aWins} | ${debate.shortB}: ${debate.bWins}${debate.ties ? ` | ${debate.ties} tie` : ""}\n\n## What the Question Was Really Asking\n${debate.desc}\n\n## Key Takeaways\n${debate.take.map(([t, b]) => `- **${t}:** ${b}`).join("\n")}\n\n## Strongest Cases\n- **${debate.shortA}:** ${debate.strongA}\n- **${debate.shortB}:** ${debate.strongB}\n\n## Where Each Side Cracked\n- **${debate.shortA}:** ${debate.crackA}\n- **${debate.shortB}:** ${debate.crackB}\n\n## ${label}\n${debate.verify.map((v) => `- ${v}`).join("\n")}\n\n## What Would Change the Verdict?\n### Make ${debate.shortA} stronger\n${debate.changeA.map((v) => `- ${v}`).join("\n")}\n\n### Make ${debate.shortB} stronger\n${debate.changeB.map((v) => `- ${v}`).join("\n")}\n\n## What This Really Depends On\n${debate.core}\n\n- If you value **${debate.comp[0]}**, ${debate.shortA} feels stronger.\n- If you value **${debate.comp[1]}**, ${debate.shortB} feels stronger.\n- The real question is: ${debate.comp[2]}.\n\n## Transcript\n${debate.rounds.map((r) => `### Round ${r.round} — ${r.label}\n**${debate.shortA}:** ${r.aArg}\n\n**${debate.shortB}:** ${r.bArg}\n\n**Judge:** ${r.judgeNote}`).join("\n\n")}\n\n**Share link:** ${shareLink}\n\n---\n*Pressure-test both sides. Find the hinge. Decide what matters.*`;
+    const showDecisionPath = shouldShowDecisionPath(debate, decisionPathPreference);
+    const decisionPath = getDecisionPath(debate);
+    const decisionPathBlock = showDecisionPath
+      ? `\n## Recommended Decision Path\n- Framework: ${decisionPath.framework}\n- Driver: ${decisionPath.driver}\n- Approver: ${decisionPath.approver}\n- Contributors: ${decisionPath.contributors}\n- Input deadline: ${decisionPath.deadline}\n- Decision log template: ${decisionPath.logTemplate}\n- Why this path fits: ${decisionPath.why}\n`
+      : "";
+    const md = `# Debate Furnace — Final Report\n\n**Question:** ${question}\n**Type:** ${debate.label}\n**Result:** ${result}\n**Score:** ${debate.shortA}: ${debate.aWins} | ${debate.shortB}: ${debate.bWins}${debate.ties ? ` | ${debate.ties} tie` : ""}\n\n## What the Question Was Really Asking\n${debate.desc}\n\n## Key Takeaways\n${debate.take.map(([t, b]) => `- **${t}:** ${b}`).join("\n")}\n\n## Strongest Cases\n- **${debate.shortA}:** ${debate.strongA}\n- **${debate.shortB}:** ${debate.strongB}\n\n## Where Each Side Cracked\n- **${debate.shortA}:** ${debate.crackA}\n- **${debate.shortB}:** ${debate.crackB}\n\n## ${label}\n${debate.verify.map((v) => `- ${v}`).join("\n")}\n\n## What Would Change the Verdict?\n### Make ${debate.shortA} stronger\n${debate.changeA.map((v) => `- ${v}`).join("\n")}\n\n### Make ${debate.shortB} stronger\n${debate.changeB.map((v) => `- ${v}`).join("\n")}\n\n## What This Really Depends On\n${debate.core}\n\n- If you value **${debate.comp[0]}**, ${debate.shortA} feels stronger.\n- If you value **${debate.comp[1]}**, ${debate.shortB} feels stronger.\n- The real question is: ${debate.comp[2]}.${decisionPathBlock}\n\n## Transcript\n${debate.rounds.map((r) => `### Round ${r.round} — ${r.label}\n**${debate.shortA}:** ${r.aArg}\n\n**${debate.shortB}:** ${r.bArg}\n\n**Judge:** ${r.judgeNote}`).join("\n\n")}\n\n**Share link:** ${shareLink}\n\n---\n*Pressure-test both sides. Find the hinge. Decide what matters.*`;
     navigator.clipboard.writeText(md).finally(() => { setCopied(true); setTimeout(() => setCopied(false), 1500); });
   };
   const copyShareLink = () => {
@@ -1180,5 +1351,5 @@ export default function DebateFurnace() {
   const r = debate.rounds[round];
   const result = verdictLabel(debate.matchWinner, debate.shortA, debate.shortB);
   const unburned = debate.label === "Moral / Philosophical" ? "UNBURNED CLAIMS TO VERIFY OR CLARIFY" : "UNBURNED CLAIMS TO VERIFY";
-  return <div style={{ background: T.bg, minHeight: "100vh", fontFamily: "Inter, system-ui, sans-serif", color: T.text }}><div style={{ position: "sticky", top: 0, zIndex: 10, background: `${T.bg}f2`, backdropFilter: "blur(16px)", borderBottom: `1px solid ${T.border}`, padding: mobile ? "8px 12px" : "10px 20px" }}><div style={{ maxWidth: 940, margin: "0 auto", display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap", alignItems: "center" }}><div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}><span style={{ fontSize: 11, letterSpacing: 4, color: T.ember, fontWeight: 900 }}>DEBATE FURNACE</span><Pill color={h[2]} compact={mobile}>{h[0]}</Pill><Pill color={T.brass} compact={mobile}>{debate.icon} {debate.label}</Pill></div><div style={{ display: "flex", gap: 8 }}>{final && <button onClick={copyShareLink} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 8, padding: "6px 12px", color: shareCopied ? T.judge : T.muted, cursor: "pointer" }}>{shareCopied ? "Link Copied" : "Share Link"}</button>}{final && <button onClick={copy} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 8, padding: "6px 12px", color: copied ? T.judge : T.muted, cursor: "pointer" }}>{copied ? "Copied" : "Copy Report"}</button>}<button onClick={reset} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 8, padding: "6px 12px", color: T.muted, cursor: "pointer" }}>Reset</button></div></div></div><div style={{ maxWidth: 940, margin: "0 auto", padding: mobile ? "14px 12px 18px" : "20px" }}><div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, padding: mobile ? "12px 14px" : "14px 16px", marginBottom: 14 }}><div style={{ fontSize: mobile ? 13 : 14, lineHeight: mobile ? reportLine : 1.5, marginBottom: 8 }}>{question}</div><div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}><Pill color={T.sideA} compact={mobile}>{debate.shortA}: {debate.sideA}</Pill><Pill color={T.sideB} compact={mobile}>{debate.shortB}: {debate.sideB}</Pill><Pill color={colors[intensity]} compact={mobile}>{intensity}</Pill></div></div>{fallbackNotice && <div style={{ background: `${T.ember}10`, border: `1px solid ${T.ember}33`, borderRadius: 10, padding: "10px 14px", color: T.ember, fontSize: 12, lineHeight: 1.55, marginBottom: 14 }}>{fallbackNotice}</div>}{analysis ? <Section title={`${debate.icon} QUESTION ANALYSIS`} color={T.brass}><div style={grid}><p style={{ fontSize: 13, color: T.textDim, lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere" }}>{debate.desc}</p><div>{debate.criteria.map((c) => <span key={c} style={{ display: "inline-block", background: `${T.gold}10`, border: `1px solid ${T.gold}30`, borderRadius: 8, padding: "2px 8px", fontSize: 11, color: T.gold, margin: 2 }}>{c}</span>)}</div></div><button onClick={stoke} style={{ marginTop: 16, background: `linear-gradient(135deg,${T.molten},${T.brass})`, border: "none", borderRadius: 10, padding: "12px 22px", color: "white", fontWeight: 900, cursor: "pointer" }}>BEGIN ROUND 1 — OPENING ARGUMENTS</button></Section> : !final ? <><div style={{ display: "flex", justifyContent: "center", gap: 10, marginBottom: 18, flexWrap: "wrap", alignItems: "center" }}><Pill color={T.ember} compact={mobile}>ROUND {r.round} — {r.label.toUpperCase()}</Pill><button onClick={() => copyRound(r)} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 999, padding: "5px 10px", color: roundCopied === `r${r.round}` ? T.judge : T.muted, cursor: "pointer", fontSize: 11, fontWeight: 800, fontFamily: "inherit" }}>{roundCopied === `r${r.round}` ? "Copied" : "Copy Round"}</button></div><div style={grid}>{[[debate.shortA, r.aArg, T.sideA, "A"], [debate.shortB, r.bArg, T.sideB, "B"]].map(([n, a, c, s]) => <div key={s} style={{ background: T.card, border: `1px solid ${c}28`, borderTop: `3px solid ${c}`, borderRadius: 12, padding: mobile ? 16 : 20 }}><b style={{ color: c }}>{s} {n.toUpperCase()}</b><p style={{ fontSize: 13.5, lineHeight: mobile ? compactLine : 1.8 }}>{a}</p></div>)}</div><div style={{ background: T.card, border: `1px solid ${T.judge}33`, borderLeft: `3px solid ${T.judge}`, borderRadius: 12, padding: mobile ? 16 : 20, marginTop: 14, marginBottom: 20 }}><div style={{ fontSize: 10, letterSpacing: 3, color: T.judge, fontWeight: 800, marginBottom: 14 }}>FURNACE JUDGE — ROUND {r.round}</div><div style={grid}><Score label={debate.shortA} score={r.sa} color={T.sideA} /><Score label={debate.shortB} score={r.sb} color={T.sideB} /></div><p style={{ fontSize: 13, color: T.muted, lineHeight: mobile ? compactLine : 1.65, overflowWrap: "anywhere" }}>{r.judgeNote}</p></div><button onClick={stoke} style={{ width: "100%", background: "linear-gradient(135deg,#111825,#1a1228)", border: `1px solid ${T.sideA}44`, borderRadius: 12, padding: 14, color: T.sideA, fontWeight: 800, cursor: "pointer" }}>{round < 2 ? `STOKE THE FURNACE → ROUND ${round + 2}` : "STOKE THE FURNACE → WHAT SURVIVED"}</button></> : <><div style={{ background: "linear-gradient(135deg,#130f08,#0f0810)", border: `1px solid ${T.gold}44`, borderRadius: 16, padding: mobile ? 20 : 28, textAlign: "center", marginBottom: 18 }}><div style={{ fontSize: 10, letterSpacing: 6, color: T.brass, marginBottom: 10 }}>WHAT SURVIVED THE HEAT</div><div style={{ fontSize: mobile ? 24 : 30, fontWeight: 900, color: T.gold }}>{result}</div><div style={{ fontSize: 13, color: T.muted, marginTop: 8, lineHeight: mobile ? compactLine : 1.6 }}>{debate.shortA}: {debate.aWins} rounds · {debate.shortB}: {debate.bWins} rounds{debate.ties ? ` · ${debate.ties} tie` : ""}</div><Pill color={h[2]} compact={mobile}>{h[0]} — {h[1]}</Pill><p style={{ fontSize: 11, color: T.muted, fontStyle: "italic" }}>Survived stronger means performed better under pressure — not objectively correct.</p></div><Section title={`${debate.icon} WHAT THE QUESTION WAS REALLY ASKING`} color={T.brass}><p style={{ fontSize: 13, lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere", color: T.textDim }}>{debate.desc}</p></Section><Section title="KEY TAKEAWAYS" color={T.gold}>{debate.take.map(([t, b]) => <p key={t} style={{ fontSize: 13, color: T.textDim, lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere" }}><b style={{ color: T.text }}>{t}:</b> {b}</p>)}</Section><div style={grid}><Card title={`STRONGEST — ${debate.shortA.toUpperCase()}`} color={T.sideA}>{debate.strongA}</Card><Card title={`STRONGEST — ${debate.shortB.toUpperCase()}`} color={T.sideB}>{debate.strongB}</Card><Card title={`WHERE ${debate.shortA.toUpperCase()} CRACKED`} color={T.ember}>{debate.crackA}</Card><Card title={`WHERE ${debate.shortB.toUpperCase()} CRACKED`} color={T.ember}>{debate.crackB}</Card></div><Section title={unburned} color={T.smoke}>{debate.verify.map((v) => <div key={v} style={{ fontSize: 13, color: T.textDim, lineHeight: mobile ? compactLine : 1.65, overflowWrap: "anywhere", marginBottom: 8 }}>• {v}</div>)}</Section><Section title="WHAT WOULD CHANGE THE VERDICT?" color={T.brass}><div style={grid}>{[[`Make ${debate.shortA} stronger`, debate.changeA, T.sideA], [`Make ${debate.shortB} stronger`, debate.changeB, T.sideB]].map(([t, items, c]) => <div key={t}><b style={{ fontSize: 11, color: c }}>{t.toUpperCase()}</b>{items.map((i) => <div key={i} style={{ fontSize: 12, color: T.textDim, lineHeight: mobile ? compactLine : 1.65, overflowWrap: "anywhere", marginTop: 6 }}>• {i}</div>)}</div>)}</div></Section><Section title="WHAT THIS REALLY DEPENDS ON" color={T.gold}><p style={{ fontSize: mobile ? 14 : 15, lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere", fontStyle: "italic" }}>{debate.core}</p><p style={{ lineHeight: mobile ? 1.55 : 1.7, overflowWrap: "anywhere" }}>If you value <b style={{ color: T.sideA }}>{debate.comp[0]}</b>, {debate.shortA} feels stronger.</p><p style={{ lineHeight: mobile ? 1.55 : 1.7, overflowWrap: "anywhere" }}>If you value <b style={{ color: T.sideB }}>{debate.comp[1]}</b>, {debate.shortB} feels stronger.</p><p style={{ lineHeight: mobile ? 1.55 : 1.7, overflowWrap: "anywhere" }}><span style={{ color: T.muted }}>The real question is: </span><em style={{ color: T.gold }}>{debate.comp[2]}</em>.</p><div style={{ borderTop: `1px solid ${T.border}`, paddingTop: 12, fontSize: 13, color: T.muted, fontStyle: "italic" }}>The decision is yours. The furnace shows what the choice depends on.</div></Section><div style={{ background: T.card, border: `1px solid ${T.border}`, borderRadius: 12, marginBottom: mobile ? 18 : 18, overflow: "hidden" }}><button onClick={() => setOpen(!open)} style={{ width: "100%", background: "none", border: "none", padding: mobile ? "12px 14px" : "14px 18px", display: "flex", justifyContent: "space-between", color: T.muted, fontWeight: 800, cursor: "pointer" }}>FULL DEBATE TRANSCRIPT <span>{open ? "▲" : "▼"}</span></button>{open && <div style={{ padding: mobile ? "4px 14px 18px" : "4px 18px 22px", borderTop: `1px solid ${T.border}` }}>{debate.rounds.map((rr) => <div key={rr.round} style={{ marginTop: 20 }}><div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "center", flexWrap: "wrap", marginBottom: 10 }}><b style={{ fontSize: 10, letterSpacing: 3, color: T.ember }}>ROUND {rr.round} — {rr.label.toUpperCase()}</b><button onClick={() => copyRound(rr)} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 999, padding: "5px 10px", color: roundCopied === `r${rr.round}` ? T.judge : T.muted, cursor: "pointer", fontSize: 11, fontWeight: 800, fontFamily: "inherit" }}>{roundCopied === `r${rr.round}` ? "Copied" : "Copy Round"}</button></div><p style={{ lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere" }}><b style={{ color: T.sideA }}>{debate.shortA}:</b> {rr.aArg}</p><p style={{ lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere" }}><b style={{ color: T.sideB }}>{debate.shortB}:</b> {rr.bArg}</p><div style={{ background: T.charcoal, borderRadius: 8, padding: 12, fontSize: 13, color: T.muted, lineHeight: mobile ? compactLine : 1.65, overflowWrap: "anywhere" }}><b style={{ color: T.judge }}>JUDGE:</b> {rr.judgeNote}</div></div>)}</div>}</div><p style={{ textAlign: "center", color: T.muted, fontSize: 12, fontStyle: "italic" }}>"Pressure-test both sides. Find the hinge. Decide what matters."</p><div style={{ display: "flex", flexDirection: mobile ? "column" : "row", gap: 12, position: mobile ? "sticky" : "static", bottom: mobile ? 0 : "auto", zIndex: mobile ? 20 : 1, padding: mobile ? "10px 0 calc(12px + env(safe-area-inset-bottom))" : 0, background: mobile ? `${T.bg}f2` : "transparent", backdropFilter: mobile ? "blur(16px)" : "none", borderTop: mobile ? `1px solid ${T.border}` : "none" }}><button onClick={copy} style={{ flex: 1, background: T.charcoal, border: `1px solid ${T.border}`, borderRadius: 12, padding: 13, color: copied ? T.judge : T.muted, fontWeight: 800, cursor: "pointer" }}>{copied ? "Copied" : "Copy Full Report"}</button><button onClick={reset} style={{ flex: 1, background: `linear-gradient(135deg,${T.molten},${T.brass})`, border: "none", borderRadius: 12, padding: 13, color: "white", fontWeight: 900, cursor: "pointer" }}>NEW DEBATE</button></div><div style={{ maxWidth: 940, margin: "14px auto 0", display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap", fontSize: 12, color: T.muted }}><a href="https://x.com/PromptHound96" target="_blank" rel="noreferrer" style={{ color: T.textDim, textDecoration: "none" }}>X @PromptHound96</a><span style={{ color: T.border }}>•</span><a href="https://github.com/aaronmarchant96-max" target="_blank" rel="noreferrer" style={{ color: T.textDim, textDecoration: "none" }}>GitHub aaronmarchant96-max</a></div></>}</div></div>;
+  return <div style={{ background: T.bg, minHeight: "100vh", fontFamily: "Inter, system-ui, sans-serif", color: T.text }}><div style={{ position: "sticky", top: 0, zIndex: 10, background: `${T.bg}f2`, backdropFilter: "blur(16px)", borderBottom: `1px solid ${T.border}`, padding: mobile ? "8px 12px" : "10px 20px" }}><div style={{ maxWidth: 940, margin: "0 auto", display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap", alignItems: "center" }}><div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}><span style={{ fontSize: 11, letterSpacing: 4, color: T.ember, fontWeight: 900 }}>DEBATE FURNACE</span><Pill color={h[2]} compact={mobile}>{h[0]}</Pill><Pill color={T.brass} compact={mobile}>{debate.icon} {debate.label}</Pill></div><div style={{ display: "flex", gap: 8 }}>{final && <button onClick={copyShareLink} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 8, padding: "6px 12px", color: shareCopied ? T.judge : T.muted, cursor: "pointer" }}>{shareCopied ? "Link Copied" : "Share Link"}</button>}{final && <button onClick={copy} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 8, padding: "6px 12px", color: copied ? T.judge : T.muted, cursor: "pointer" }}>{copied ? "Copied" : "Copy Report"}</button>}<button onClick={reset} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 8, padding: "6px 12px", color: T.muted, cursor: "pointer" }}>Reset</button></div></div></div><div style={{ maxWidth: 940, margin: "0 auto", padding: mobile ? "14px 12px 18px" : "20px" }}><div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, padding: mobile ? "12px 14px" : "14px 16px", marginBottom: 14 }}><div style={{ fontSize: mobile ? 13 : 14, lineHeight: mobile ? reportLine : 1.5, marginBottom: 8 }}>{question}</div><div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}><Pill color={T.sideA} compact={mobile}>{debate.shortA}: {debate.sideA}</Pill><Pill color={T.sideB} compact={mobile}>{debate.shortB}: {debate.sideB}</Pill><Pill color={colors[intensity]} compact={mobile}>{intensity}</Pill></div></div>{fallbackNotice && <div style={{ background: `${T.ember}10`, border: `1px solid ${T.ember}33`, borderRadius: 10, padding: "10px 14px", color: T.ember, fontSize: 12, lineHeight: 1.55, marginBottom: 14 }}>{fallbackNotice}</div>}{analysis ? <Section title={`${debate.icon} QUESTION ANALYSIS`} color={T.brass}><div style={grid}><p style={{ fontSize: 13, color: T.textDim, lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere" }}>{debate.desc}</p><div>{debate.criteria.map((c) => <span key={c} style={{ display: "inline-block", background: `${T.gold}10`, border: `1px solid ${T.gold}30`, borderRadius: 8, padding: "2px 8px", fontSize: 11, color: T.gold, margin: 2 }}>{c}</span>)}</div></div><button onClick={stoke} style={{ marginTop: 16, background: `linear-gradient(135deg,${T.molten},${T.brass})`, border: "none", borderRadius: 10, padding: "12px 22px", color: "white", fontWeight: 900, cursor: "pointer" }}>BEGIN ROUND 1 — OPENING ARGUMENTS</button></Section> : !final ? <><div style={{ display: "flex", justifyContent: "center", gap: 10, marginBottom: 18, flexWrap: "wrap", alignItems: "center" }}><Pill color={T.ember} compact={mobile}>ROUND {r.round} — {r.label.toUpperCase()}</Pill><button onClick={() => copyRound(r)} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 999, padding: "5px 10px", color: roundCopied === `r${r.round}` ? T.judge : T.muted, cursor: "pointer", fontSize: 11, fontWeight: 800, fontFamily: "inherit" }}>{roundCopied === `r${r.round}` ? "Copied" : "Copy Round"}</button></div><div style={grid}>{[[debate.shortA, r.aArg, T.sideA, "A"], [debate.shortB, r.bArg, T.sideB, "B"]].map(([n, a, c, s]) => <div key={s} style={{ background: T.card, border: `1px solid ${c}28`, borderTop: `3px solid ${c}`, borderRadius: 12, padding: mobile ? 16 : 20 }}><b style={{ color: c }}>{s} {n.toUpperCase()}</b><p style={{ fontSize: 13.5, lineHeight: mobile ? compactLine : 1.8 }}>{a}</p></div>)}</div><div style={{ background: T.card, border: `1px solid ${T.judge}33`, borderLeft: `3px solid ${T.judge}`, borderRadius: 12, padding: mobile ? 16 : 20, marginTop: 14, marginBottom: 20 }}><div style={{ fontSize: 10, letterSpacing: 3, color: T.judge, fontWeight: 800, marginBottom: 14 }}>FURNACE JUDGE — ROUND {r.round}</div><div style={grid}><Score label={debate.shortA} score={r.sa} color={T.sideA} /><Score label={debate.shortB} score={r.sb} color={T.sideB} /></div><p style={{ fontSize: 13, color: T.muted, lineHeight: mobile ? compactLine : 1.65, overflowWrap: "anywhere" }}>{r.judgeNote}</p></div><button onClick={stoke} style={{ width: "100%", background: "linear-gradient(135deg,#111825,#1a1228)", border: `1px solid ${T.sideA}44`, borderRadius: 12, padding: 14, color: T.sideA, fontWeight: 800, cursor: "pointer" }}>{round < 2 ? `STOKE THE FURNACE → ROUND ${round + 2}` : "STOKE THE FURNACE → WHAT SURVIVED"}</button></> : <><div style={{ background: "linear-gradient(135deg,#130f08,#0f0810)", border: `1px solid ${T.gold}44`, borderRadius: 16, padding: mobile ? 20 : 28, textAlign: "center", marginBottom: 18 }}><div style={{ fontSize: 10, letterSpacing: 6, color: T.brass, marginBottom: 10 }}>WHAT SURVIVED THE HEAT</div><div style={{ fontSize: mobile ? 24 : 30, fontWeight: 900, color: T.gold }}>{result}</div><div style={{ fontSize: 13, color: T.muted, marginTop: 8, lineHeight: mobile ? compactLine : 1.6 }}>{debate.shortA}: {debate.aWins} rounds · {debate.shortB}: {debate.bWins} rounds{debate.ties ? ` · ${debate.ties} tie` : ""}</div><Pill color={h[2]} compact={mobile}>{h[0]} — {h[1]}</Pill><p style={{ fontSize: 11, color: T.muted, fontStyle: "italic" }}>Performed better under pressure means it scored higher under this debate setup — not a claim of objective truth.</p></div><Section title={`${debate.icon} WHAT THE QUESTION WAS REALLY ASKING`} color={T.brass}><p style={{ fontSize: 13, lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere", color: T.textDim }}>{debate.desc}</p></Section><Section title="KEY TAKEAWAYS" color={T.gold}>{debate.take.map(([t, b]) => <p key={t} style={{ fontSize: 13, color: T.textDim, lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere" }}><b style={{ color: T.text }}>{t}:</b> {b}</p>)}</Section><div style={grid}><Card title={`STRONGEST — ${debate.shortA.toUpperCase()}`} color={T.sideA}>{debate.strongA}</Card><Card title={`STRONGEST — ${debate.shortB.toUpperCase()}`} color={T.sideB}>{debate.strongB}</Card><Card title={`WHERE ${debate.shortA.toUpperCase()} CRACKED`} color={T.ember}>{debate.crackA}</Card><Card title={`WHERE ${debate.shortB.toUpperCase()} CRACKED`} color={T.ember}>{debate.crackB}</Card></div><Section title={unburned} color={T.smoke}>{debate.verify.map((v) => <div key={v} style={{ fontSize: 13, color: T.textDim, lineHeight: mobile ? compactLine : 1.65, overflowWrap: "anywhere", marginBottom: 8 }}>• {v}</div>)}</Section><Section title="WHAT WOULD CHANGE THE VERDICT?" color={T.brass}><div style={grid}>{[[`Make ${debate.shortA} stronger`, debate.changeA, T.sideA], [`Make ${debate.shortB} stronger`, debate.changeB, T.sideB]].map(([t, items, c]) => <div key={t}><b style={{ fontSize: 11, color: c }}>{t.toUpperCase()}</b>{items.map((i) => <div key={i} style={{ fontSize: 12, color: T.textDim, lineHeight: mobile ? compactLine : 1.65, overflowWrap: "anywhere", marginTop: 6 }}>• {i}</div>)}</div>)}</div></Section><DecisionPathControls value={decisionPathPreference} onChange={setDecisionPathPreference} />{decisionPathShown && <DecisionPathPanel decisionPath={decisionPath} mobile={mobile} compactLine={compactLine} grid={grid} />}<Section title="WHAT THIS REALLY DEPENDS ON" color={T.gold}><p style={{ fontSize: mobile ? 14 : 15, lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere", fontStyle: "italic" }}>{debate.core}</p><p style={{ lineHeight: mobile ? 1.55 : 1.7, overflowWrap: "anywhere" }}>If you value <b style={{ color: T.sideA }}>{debate.comp[0]}</b>, {debate.shortA} feels stronger.</p><p style={{ lineHeight: mobile ? 1.55 : 1.7, overflowWrap: "anywhere" }}>If you value <b style={{ color: T.sideB }}>{debate.comp[1]}</b>, {debate.shortB} feels stronger.</p><p style={{ lineHeight: mobile ? 1.55 : 1.7, overflowWrap: "anywhere" }}><span style={{ color: T.muted }}>The real question is: </span><em style={{ color: T.gold }}>{debate.comp[2]}</em>.</p><div style={{ borderTop: `1px solid ${T.border}`, paddingTop: 12, fontSize: 13, color: T.muted, fontStyle: "italic" }}>The decision is yours. The furnace shows what the choice depends on.</div></Section><div style={{ background: T.card, border: `1px solid ${T.border}`, borderRadius: 12, marginBottom: mobile ? 18 : 18, overflow: "hidden" }}><button onClick={() => setOpen(!open)} style={{ width: "100%", background: "none", border: "none", padding: mobile ? "12px 14px" : "14px 18px", display: "flex", justifyContent: "space-between", color: T.muted, fontWeight: 800, cursor: "pointer" }}>FULL DEBATE TRANSCRIPT <span>{open ? "▲" : "▼"}</span></button>{open && <div style={{ padding: mobile ? "4px 14px 18px" : "4px 18px 22px", borderTop: `1px solid ${T.border}` }}>{debate.rounds.map((rr) => <div key={rr.round} style={{ marginTop: 20 }}><div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "center", flexWrap: "wrap", marginBottom: 10 }}><b style={{ fontSize: 10, letterSpacing: 3, color: T.ember }}>ROUND {rr.round} — {rr.label.toUpperCase()}</b><button onClick={() => copyRound(rr)} style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 999, padding: "5px 10px", color: roundCopied === `r${rr.round}` ? T.judge : T.muted, cursor: "pointer", fontSize: 11, fontWeight: 800, fontFamily: "inherit" }}>{roundCopied === `r${rr.round}` ? "Copied" : "Copy Round"}</button></div><p style={{ lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere" }}><b style={{ color: T.sideA }}>{debate.shortA}:</b> {rr.aArg}</p><p style={{ lineHeight: mobile ? compactLine : 1.7, overflowWrap: "anywhere" }}><b style={{ color: T.sideB }}>{debate.shortB}:</b> {rr.bArg}</p><div style={{ background: T.charcoal, borderRadius: 8, padding: 12, fontSize: 13, color: T.muted, lineHeight: mobile ? compactLine : 1.65, overflowWrap: "anywhere" }}><b style={{ color: T.judge }}>JUDGE:</b> {rr.judgeNote}</div></div>)}</div>}</div><p style={{ textAlign: "center", color: T.muted, fontSize: 12, fontStyle: "italic" }}>"Pressure-test both sides. Find the hinge. Decide what matters."</p><div style={{ display: "flex", flexDirection: mobile ? "column" : "row", gap: 12, position: mobile ? "sticky" : "static", bottom: mobile ? 0 : "auto", zIndex: mobile ? 20 : 1, padding: mobile ? "10px 0 calc(12px + env(safe-area-inset-bottom))" : 0, background: mobile ? `${T.bg}f2` : "transparent", backdropFilter: mobile ? "blur(16px)" : "none", borderTop: mobile ? `1px solid ${T.border}` : "none" }}><button onClick={copy} style={{ flex: 1, background: T.charcoal, border: `1px solid ${T.border}`, borderRadius: 12, padding: 13, color: copied ? T.judge : T.muted, fontWeight: 800, cursor: "pointer" }}>{copied ? "Copied" : "Copy Full Report"}</button><button onClick={reset} style={{ flex: 1, background: `linear-gradient(135deg,${T.molten},${T.brass})`, border: "none", borderRadius: 12, padding: 13, color: "white", fontWeight: 900, cursor: "pointer" }}>NEW DEBATE</button></div><div style={{ maxWidth: 940, margin: "14px auto 0", display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap", fontSize: 12, color: T.muted }}><a href="https://x.com/PromptHound96" target="_blank" rel="noreferrer" style={{ color: T.textDim, textDecoration: "none" }}>X @PromptHound96</a><span style={{ color: T.border }}>•</span><a href="https://github.com/aaronmarchant96-max" target="_blank" rel="noreferrer" style={{ color: T.textDim, textDecoration: "none" }}>GitHub aaronmarchant96-max</a></div></>}</div></div>;
 }
