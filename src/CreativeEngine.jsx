@@ -218,6 +218,12 @@ function lowerClean(text) {
   return trimTerminalPunctuation(text).toLowerCase();
 }
 
+function pickDifferentRandomSeed(seeds, currentSeedId) {
+  if (!seeds.length) return null;
+  const candidates = seeds.length > 1 ? seeds.filter((seed) => seed.id !== currentSeedId) : seeds;
+  return candidates[Math.floor(Math.random() * candidates.length)] || null;
+}
+
 function buildFuel(seed, genre) {
   const focus = seed.storyDNA.slice(0, 3).join(", ");
   const hinge = lowerClean(seed.hinge);
@@ -945,6 +951,7 @@ export default function CreativeEngine() {
   const [storyPacket, setStoryPacket] = useState(null);
   const [storyCopyState, setStoryCopyState] = useState("");
   const [copyState, setCopyState] = useState("");
+  const [lastRandomSeedId, setLastRandomSeedId] = useState("");
 
   const filteredSeeds = useMemo(() => {
     if (tag === "All") return SEEDS;
@@ -964,7 +971,18 @@ export default function CreativeEngine() {
 
   useEffect(() => {
     setStoryPacket(null);
+    setStoryCopyState("");
   }, [seedId, blueprintFormat, remixGenre, remixMutation]);
+
+  useEffect(() => {
+    setCopyState("");
+  }, [seedId]);
+
+  useEffect(() => {
+    if (!filteredSeeds.some((seed) => seed.id === lastRandomSeedId)) {
+      setLastRandomSeedId("");
+    }
+  }, [filteredSeeds, lastRandomSeedId]);
 
   async function copySeedPacket() {
     try {
@@ -979,8 +997,11 @@ export default function CreativeEngine() {
   }
 
   function pickRandomSeed() {
-    const next = filteredSeeds[Math.floor(Math.random() * filteredSeeds.length)] || SEEDS[0];
-    if (next) setSeedId(next.id);
+    const next = pickDifferentRandomSeed(filteredSeeds, lastRandomSeedId || activeSeed.id);
+    if (next) {
+      setLastRandomSeedId(next.id);
+      setSeedId(next.id);
+    }
   }
 
   function generateStoryIdea() {
@@ -1115,9 +1136,10 @@ export default function CreativeEngine() {
                 onTagChange={setTag}
               />
             )}
-            {tab === "blueprint" && <BlueprintPanel seed={activeSeed} format={blueprintFormat} onFormatChange={setBlueprintFormat} />}
+            {tab === "blueprint" && <BlueprintPanel key={activeSeed.id} seed={activeSeed} format={blueprintFormat} onFormatChange={setBlueprintFormat} />}
             {tab === "remix" && (
               <RemixPanel
+                key={activeSeed.id}
                 seed={activeSeed}
                 genre={remixGenre}
                 onGenreChange={setRemixGenre}
