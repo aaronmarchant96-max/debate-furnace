@@ -1,0 +1,35 @@
+{
+  "id": "franklin-expedition",
+  "title": "The Franklin Expedition",
+  "era": "1845-1848",
+  "region": "Canadian Arctic",
+  "sourceType": "history",
+  "sourceTrail": [
+    { "label": "Britannica", "url": "https://www.britannica.com/topic/Franklin-expedition" },
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Franklin%27s_lost_expedition" }
+  ],
+  "summary": "Two ships vanished while trying to chart the Northwest Passage, turning exploration into tragedy.",
+  "whyWild": "It is a lost expedition story with enough historical weight to support horror, survival, or imperial collapse narratives.",
+  "stakes": "Discovery, empire, and the cost of trying to map the impossible.",
+  "hinge": "Whether ambition can outrun environment.",
+  "storyDNA": ["arctic isolation", "imperial ambition", "slow collapse", "failed rescue", "unknown fate"],
+  "charactersForces": ["the expedition leader", "the crew", "the ice", "the imperial mission"],
+  "tags": ["lost expedition", "survival", "frontier", "political collapse", "tragedy"],
+  "genreRemixes": [
+    {
+      "genre": "Survival Thriller",
+      "angle": "The Arctic becomes a locked-room puzzle with no exit.",
+      "prompt": "Focus on dwindling morale, hunger, and the pressure of impossible terrain."
+    },
+    {
+      "genre": "Horror",
+      "angle": "The ice hides something that follows the ships.",
+      "prompt": "Turn the expedition into a slow-burn polar horror story."
+    }
+  ],
+  "whatIfDivergences": [
+    "What if the crew found a passage that should not exist?",
+    "What if the expedition had a better rescue window?",
+    "What if the real danger was internal betrayal instead of the ice?"
+  ]
+}

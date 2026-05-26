@@ -1,0 +1,35 @@
+{
+  "id": "book-of-enoch-watchers",
+  "title": "Book of Enoch: The Watchers",
+  "era": "Ancient Text",
+  "region": "Second Temple Judaism",
+  "sourceType": "religious text",
+  "sourceTrail": [
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Book_of_Enoch" },
+    { "label": "Britannica", "url": "https://www.britannica.com/topic/Book-of-Enoch" }
+  ],
+  "summary": "The Watchers are supernatural beings whose descent and actions create corruption, forbidden knowledge, and cosmic judgment.",
+  "whyWild": "It is a ready-made source for forbidden knowledge stories, cosmic dread, and the cost of crossing a boundary that should not have been crossed.",
+  "stakes": "Order, purity, and whether knowledge itself can become a curse.",
+  "hinge": "Whether revelation is salvation or contamination.",
+  "storyDNA": ["forbidden knowledge", "cosmic authority", "corruption", "boundary crossing", "judgment"],
+  "charactersForces": ["the Watchers", "the human witness", "the fallen world", "the judging power"],
+  "tags": ["mysticism", "forbidden knowledge", "cosmic horror", "ancient world"],
+  "genreRemixes": [
+    {
+      "genre": "Cosmic Horror",
+      "angle": "The Watchers are reframed as observers whose attention changes reality.",
+      "prompt": "Turn revelation into existential dread."
+    },
+    {
+      "genre": "Fantasy",
+      "angle": "The Watchers become forbidden mentors whose gifts corrupt the world.",
+      "prompt": "Build a mythic world around the cost of heavenly knowledge."
+    }
+  ],
+  "whatIfDivergences": [
+    "What if the human world refused the knowledge entirely?",
+    "What if the Watchers were not evil but catastrophic in effect?",
+    "What if the judgment came too late to matter?"
+  ]
+}

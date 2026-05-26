@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://debate-furnace.local/schemas/inspiration-seed.json",
+  "title": "Inspiration Engine Seed",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "era",
+    "region",
+    "sourceType",
+    "sourceTrail",
+    "summary",
+    "whyWild",
+    "stakes",
+    "hinge",
+    "storyDNA",
+    "charactersForces",
+    "tags",
+    "genreRemixes",
+    "whatIfDivergences"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "era": { "type": "string", "minLength": 1 },
+    "region": { "type": "string", "minLength": 1 },
+    "sourceType": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The source class for the seed, such as history, myth, strategy text, or religious text."
+    },
+    "sourceTrail": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["label", "url"],
+        "properties": {
+          "label": { "type": "string", "minLength": 1 },
+          "url": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "summary": { "type": "string", "minLength": 1 },
+    "whyWild": { "type": "string", "minLength": 1 },
+    "stakes": { "type": "string", "minLength": 1 },
+    "hinge": { "type": "string", "minLength": 1 },
+    "storyDNA": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "charactersForces": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "genreRemixes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["genre", "angle", "prompt"],
+        "properties": {
+          "genre": { "type": "string", "minLength": 1 },
+          "angle": { "type": "string", "minLength": 1 },
+          "prompt": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "whatIfDivergences": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

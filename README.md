@@ -6,19 +6,20 @@
 
 ## About Debate Furnace
 
-Debate Furnace slows arguments down. It pressure-tests both sides, exposes the real hinge, and shows what the decision actually depends on.
+Debate Furnace slows arguments down. It exists because too many public arguments collapse complex questions into tribal yes/no fights.
 
-The goal is not fake neutrality or a louder answer. It is to make the strongest version of each side visible, reveal where each side holds up or breaks, and give the decision back to the user.
+The goal is not fake neutrality, a louder answer, or a debate bot that declares objective truth. It is to make the strongest version of each side visible, reveal where each side holds up or breaks, and give the decision back to the user.
 
-Many arguments are not simple yes or no questions. They are collisions between safety and freedom, fairness and responsibility, truth and uncertainty, progress and risk. Debate Furnace is built to make that structure visible.
+Many disagreements are not really fact fights. They are value collisions: safety and freedom, fairness and responsibility, truth and uncertainty, progress and stability, autonomy and protection. Debate Furnace is built to make that structure visible.
 
-Not every disagreement needs a winner. Sometimes the real value is seeing what the argument actually depends on.
+Not every disagreement needs a winner. Sometimes the real value is seeing why reasonable people can disagree, which claims survived pressure, and what the argument actually depends on.
 
 ## Problem / Approach / Result
 
 - **Problem:** Most tools flatten disagreement into a yes/no answer.
-- **Approach:** Build a structured debate engine that pressure-tests both sides, scores rounds, surfaces the hinge, and gives the decision back to the user.
+- **Approach:** Build a structured debate engine that pressure-tests both sides, flags weak reasoning, surfaces the hinge, and gives the decision back to the user.
 - **Result:** A working app with Gemini-backed custom debates, local fallback, share links, history, mobile polish, and copyable reports.
+- **Mission:** Raise the quality of how people think and argue by moving from "who is right?" to "what does this actually depend on?"
 
 ## Live Demo
 
@@ -138,9 +139,10 @@ user question
 
 ## Reference Docs
 
-The richer script and report language reference is archived here:
+The richer script and report language reference and product origin notes are archived here:
 
 - [Debate Furnace Rich Script Reference](docs/Debate_Furnace_Rich_Script_Reference.md)
+- [The Origin of Debate Furnace](docs/Debate_Furnace_Origin.md)
 
 ## Local Setup
 

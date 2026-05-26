@@ -1,0 +1,35 @@
+{
+  "id": "art-of-war-deception-principle",
+  "title": "The Art of War: Deception Principle",
+  "era": "Ancient Text",
+  "region": "China",
+  "sourceType": "strategy text",
+  "sourceTrail": [
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/The_Art_of_War" },
+    { "label": "Britannica", "url": "https://www.britannica.com/topic/The-Art-of-War" }
+  ],
+  "summary": "A strategy principle argues that war is shaped by misdirection, disguise, timing, and the enemy's assumptions.",
+  "whyWild": "This is a compact engine for espionage, statecraft, and any story where the side that controls perception controls the battlefield.",
+  "stakes": "Victory, survival, and whether honesty is a luxury the powerful can afford.",
+  "hinge": "Whether deception is a tactic, a moral failure, or both.",
+  "storyDNA": ["misdirection", "perception control", "asymmetric advantage", "planned ambiguity", "psychological pressure"],
+  "charactersForces": ["the strategist", "the decoy force", "the observing enemy", "the vulnerable flank"],
+  "tags": ["war", "espionage", "strategy", "betrayal", "ancient world"],
+  "genreRemixes": [
+    {
+      "genre": "Spy Thriller",
+      "angle": "Every briefing becomes a false front for a deeper operation.",
+      "prompt": "Turn the principle into a modern intelligence game."
+    },
+    {
+      "genre": "Political Thriller",
+      "angle": "The deception principle becomes a campaign strategy inside a fractured state.",
+      "prompt": "Show how perception management bends public reality."
+    }
+  ],
+  "whatIfDivergences": [
+    "What if the enemy learns the deception principle better than you do?",
+    "What if a strategist wins tactically but loses legitimacy?",
+    "What if the same tactic protects a city instead of attacking one?"
+  ]
+}

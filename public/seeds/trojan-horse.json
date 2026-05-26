@@ -1,0 +1,35 @@
+{
+  "id": "trojan-horse",
+  "title": "The Trojan Horse",
+  "era": "Mythic / Ancient",
+  "region": "Troy",
+  "sourceType": "myth",
+  "sourceTrail": [
+    { "label": "Britannica", "url": "https://www.britannica.com/topic/Trojan-Horse" },
+    { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Trojan_Horse" }
+  ],
+  "summary": "A hidden deception inside a gift becomes the strategy that ends a war.",
+  "whyWild": "It is a perfect story engine for betrayal, infiltration, and the cost of trusting the wrong symbol.",
+  "stakes": "Victory, trust, and whether intelligence beats force.",
+  "hinge": "Whether deception is a legitimate weapon or a moral fracture.",
+  "storyDNA": ["deception", "infiltration", "symbolic trust", "war pressure", "hidden agenda"],
+  "charactersForces": ["the infiltrator", "the gatekeeper", "the fearful city", "the hidden army"],
+  "tags": ["war", "betrayal", "ancient world", "mysticism", "strategy"],
+  "genreRemixes": [
+    {
+      "genre": "Thriller",
+      "angle": "The gift is a data package that hides a breach.",
+      "prompt": "Turn the hidden entry into a modern infiltration thriller."
+    },
+    {
+      "genre": "Fantasy",
+      "angle": "The horse becomes a relic carrying a sealed war spirit.",
+      "prompt": "Make the deception symbolic and mythic rather than literal."
+    }
+  ],
+  "whatIfDivergences": [
+    "What if the city inspected the gift before accepting it?",
+    "What if the infiltrators were trapped inside their own plan?",
+    "What if the real weapon was the story people told about the gift?"
+  ]
+}

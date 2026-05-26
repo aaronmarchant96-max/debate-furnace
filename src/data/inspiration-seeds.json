@@ -1,0 +1,162 @@
+[
+  {
+    "id": "donner-party",
+    "title": "The Donner Party",
+    "era": "1846-1847",
+    "region": "Sierra Nevada, North America",
+    "summary": "A wagon train was trapped by winter, and survival pressure pushed the group toward starvation, breakdown, and rescue failure.",
+    "whyWild": "The event becomes a brutal test of leadership, trust, and what people will sacrifice when the trip stops being a journey and becomes a trap.",
+    "stakes": "Life, moral compromise, and whether desperation can erase the line between necessity and collapse.",
+    "hinge": "Whether survival justifies moral compromise.",
+    "storyDNA": ["isolation", "leadership failure", "winter pressure", "resource collapse", "survival guilt"],
+    "tags": ["survival", "frontier", "winter", "moral collapse", "tragedy"],
+    "sources": [
+      { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Donner_Party" },
+      { "label": "Britannica", "url": "https://www.britannica.com/event/Donner-Party" }
+    ]
+  },
+  {
+    "id": "apollo-13",
+    "title": "Apollo 13",
+    "era": "1970",
+    "region": "Space / Earth orbit",
+    "summary": "An oxygen tank explosion turned a lunar mission into a desperate improvised return flight.",
+    "whyWild": "The story is a precision-engineering disaster where calm teamwork is the only thing keeping everyone alive.",
+    "stakes": "Survival, technical competence, and whether discipline can beat catastrophe.",
+    "hinge": "Whether improvisation can defeat a system failure.",
+    "storyDNA": ["catastrophic failure", "team coordination", "improvisation", "time pressure", "measured calm"],
+    "tags": ["survival", "engineering", "space", "crisis", "teamwork"],
+    "sources": [
+      { "label": "NASA", "url": "https://www.nasa.gov/history/apollo-13-mission-overview/" },
+      { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Apollo_13" }
+    ]
+  },
+  {
+    "id": "trojan-horse",
+    "title": "The Trojan Horse",
+    "era": "Mythic / Ancient",
+    "region": "Troy",
+    "summary": "A hidden deception inside a gift becomes the strategy that ends a war.",
+    "whyWild": "It is a perfect story engine for betrayal, infiltration, and the cost of trusting the wrong symbol.",
+    "stakes": "Victory, trust, and whether intelligence beats force.",
+    "hinge": "Whether deception is a legitimate weapon or a moral fracture.",
+    "storyDNA": ["deception", "infiltration", "symbolic trust", "war pressure", "hidden agenda"],
+    "tags": ["war", "betrayal", "ancient world", "mysticism", "strategy"],
+    "sources": [
+      { "label": "Britannica", "url": "https://www.britannica.com/topic/Trojan-Horse" },
+      { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Trojan_Horse" }
+    ]
+  },
+  {
+    "id": "emu-war",
+    "title": "The Great Emu War",
+    "era": "1932",
+    "region": "Western Australia",
+    "summary": "Soldiers were deployed against emus, and the campaign became a famous absurd failure.",
+    "whyWild": "It reads like satire, but it is real enough to become a brilliant source for ironic war stories and doomed bureaucracy.",
+    "stakes": "Authority, pride, and the gap between official power and actual control.",
+    "hinge": "Whether competence exists on paper or in the field.",
+    "storyDNA": ["bureaucratic pride", "asymmetric conflict", "comedy under failure", "public embarrassment", "nature wins"],
+    "tags": ["war", "political collapse", "absurdity", "nature", "satire"],
+    "sources": [
+      { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Emu_War" },
+      { "label": "Britannica", "url": "https://www.britannica.com/topic/Emu-War" }
+    ]
+  },
+  {
+    "id": "mary-celeste",
+    "title": "The Mary Celeste",
+    "era": "1872",
+    "region": "Atlantic Ocean",
+    "summary": "A merchant ship was found adrift with no clear explanation for why the crew vanished.",
+    "whyWild": "It is a clean mystery box: a believable setting, an empty vessel, and enough uncertainty to fuel endless speculation.",
+    "stakes": "Safety, trust, and the terror of a solved-looking problem that is not solved at all.",
+    "hinge": "Whether the absence of evidence is itself the story.",
+    "storyDNA": ["disappearance", "sea isolation", "uncertainty", "suspense", "missing crew"],
+    "tags": ["mystery", "sea", "disappearance", "forbidden knowledge"],
+    "sources": [
+      { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Mary_Celeste" },
+      { "label": "Britannica", "url": "https://www.britannica.com/topic/Mary-Celeste" }
+    ]
+  },
+  {
+    "id": "dyatlov-pass",
+    "title": "The Dyatlov Pass Incident",
+    "era": "1959",
+    "region": "Ural Mountains, Soviet Union",
+    "summary": "Nine hikers died under unexplained and disturbing circumstances during a winter expedition.",
+    "whyWild": "The event sits right on the edge between survival story, mystery, and cosmic dread.",
+    "stakes": "Human survival, hidden causes, and the fear that the real explanation may be worse than the rumor.",
+    "hinge": "Whether the truth is mundane or horrifying.",
+    "storyDNA": ["winter exposure", "panic", "uncertain cause", "forensic mystery", "fear of the unknown"],
+    "tags": ["mystery", "winter", "lost expedition", "cosmic horror", "forbidden knowledge"],
+    "sources": [
+      { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Dyatlov_Pass_incident" },
+      { "label": "Britannica", "url": "https://www.britannica.com/event/Dyatlov-Pass-incident" }
+    ]
+  },
+  {
+    "id": "franklin-expedition",
+    "title": "The Franklin Expedition",
+    "era": "1845-1848",
+    "region": "Canadian Arctic",
+    "summary": "Two ships vanished while trying to chart the Northwest Passage, turning exploration into tragedy.",
+    "whyWild": "It is a lost expedition story with enough historical weight to support horror, survival, or imperial collapse narratives.",
+    "stakes": "Discovery, empire, and the cost of trying to map the impossible.",
+    "hinge": "Whether ambition can outrun environment.",
+    "storyDNA": ["arctic isolation", "imperial ambition", "slow collapse", "failed rescue", "unknown fate"],
+    "tags": ["lost expedition", "survival", "frontier", "political collapse", "tragedy"],
+    "sources": [
+      { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Franklin%27s_lost_expedition" },
+      { "label": "Britannica", "url": "https://www.britannica.com/topic/Franklin-expedition" }
+    ]
+  },
+  {
+    "id": "tunguska",
+    "title": "The Tunguska Event",
+    "era": "1908",
+    "region": "Siberia",
+    "summary": "A massive explosion flattened a huge forest area, and the cause became a long-running mystery.",
+    "whyWild": "It has the scale of catastrophe without the clean explanation, which makes it perfect for cosmic or speculative remixing.",
+    "stakes": "Safety, knowledge, and what happens when a world-changing event has no clear witness story.",
+    "hinge": "Whether the unknown is a scientific problem or a narrative one.",
+    "storyDNA": ["massive shock", "scientific uncertainty", "remote wilderness", "evidence trail", "cosmic fear"],
+    "tags": ["cosmic horror", "mystery", "science", "forbidden knowledge", "UAP"],
+    "sources": [
+      { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Tunguska_event" },
+      { "label": "Britannica", "url": "https://www.britannica.com/event/Tunguska-event" }
+    ]
+  },
+  {
+    "id": "roswell",
+    "title": "The Roswell Incident",
+    "era": "1947",
+    "region": "New Mexico, USA",
+    "summary": "A crashed object triggered military secrecy, civilian speculation, and decades of UAP debate.",
+    "whyWild": "It is a ready-made seed for secrecy, mistrust, and stories about how institutions handle the unexplained.",
+    "stakes": "Truth, authority, and the line between evidence and mythology.",
+    "hinge": "Whether secrecy protects reality or creates legend.",
+    "storyDNA": ["secrecy", "institutional mistrust", "rumor growth", "evidence conflict", "public obsession"],
+    "tags": ["UAP", "espionage", "mysticism", "forbidden knowledge", "political collapse"],
+    "sources": [
+      { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Roswell_incident" },
+      { "label": "Britannica", "url": "https://www.britannica.com/event/Roswell-incident" }
+    ]
+  },
+  {
+    "id": "dance-plague",
+    "title": "The Dancing Plague of 1518",
+    "era": "1518",
+    "region": "Strasbourg",
+    "summary": "Dozens of people reportedly danced for days in a public outbreak that still feels strange and half-understood.",
+    "whyWild": "It sits at the border of social panic, mass psychosis, and historical weirdness, which makes it a strong engine for horror or allegory.",
+    "stakes": "Body, mind, crowd behavior, and whether a community can absorb a pressure it cannot name.",
+    "hinge": "Whether a strange event is supernatural, social, or both.",
+    "storyDNA": ["mass behavior", "uncertain cause", "public panic", "ritual pressure", "community stress"],
+    "tags": ["mysticism", "political collapse", "forbidden knowledge", "cosmic horror", "ancient world"],
+    "sources": [
+      { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Dancing_plague_of_1518" },
+      { "label": "Britannica", "url": "https://www.britannica.com/event/dancing-plague" }
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "schema": "/seeds/schema.json",
+  "seedFiles": [
+    "trojan-horse.json",
+    "donner-party.json",
+    "art-of-war-deception-principle.json",
+    "book-of-enoch-watchers.json",
+    "franklin-expedition.json"
+  ]
+}

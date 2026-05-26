@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-05-26T07:05:56.691Z",
+  "seedCount": 5,
+  "batchFile": "data/inspiration-seeds.batch.jsonl",
+  "inputFile": "public/seeds/index.json",
+  "sourceDirectory": "public/seeds",
+  "tags": [
+    {
+      "tag": "ancient world",
+      "count": 3
+    },
+    {
+      "tag": "betrayal",
+      "count": 2
+    },
+    {
+      "tag": "cosmic horror",
+      "count": 1
+    },
+    {
+      "tag": "espionage",
+      "count": 1
+    },
+    {
+      "tag": "forbidden knowledge",
+      "count": 1
+    },
+    {
+      "tag": "frontier",
+      "count": 2
+    },
+    {
+      "tag": "lost expedition",
+      "count": 1
+    },
+    {
+      "tag": "moral collapse",
+      "count": 1
+    },
+    {
+      "tag": "mysticism",
+      "count": 2
+    },
+    {
+      "tag": "political collapse",
+      "count": 1
+    },
+    {
+      "tag": "strategy",
+      "count": 2
+    },
+    {
+      "tag": "survival",
+      "count": 2
+    },
+    {
+      "tag": "tragedy",
+      "count": 2
+    },
+    {
+      "tag": "war",
+      "count": 2
+    },
+    {
+      "tag": "winter",
+      "count": 1
+    }
+  ]
+}
