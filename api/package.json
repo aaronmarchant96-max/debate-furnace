@@ -1,0 +1,9 @@
+{
+  "name": "debate-furnace-api",
+  "private": true,
+  "type": "module",
+  "main": "debate.js",
+  "dependencies": {
+    "@azure/functions": "^4.7.0"
+  }
+}

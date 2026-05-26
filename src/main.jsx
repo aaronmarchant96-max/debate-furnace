@@ -1,10 +1,10 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import DebateFurnace from "./DebateFurnace.jsx";
+import AppShell from "./AppShell.jsx";
 import "./style.css";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <DebateFurnace />
+    <AppShell />
   </React.StrictMode>
 );
