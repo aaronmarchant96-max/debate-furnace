@@ -177,6 +177,294 @@ const SEEDS = [
     ]
   },
   {
+    id: "roanoke-colony",
+    title: "Roanoke Colony",
+    era: "1585-1590",
+    region: "Roanoke Island, North America",
+    sourceType: "colonial disappearance / archive gap",
+    sourceTrail: [
+      { label: "Britannica", url: "https://www.britannica.com/place/Roanoke-Island" },
+      { label: "Encyclopedia of Virginia", url: "https://encyclopediavirginia.org/entries/roanoke-colony/" },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Roanoke_Colony" }
+    ],
+    summary: "An English colony disappears into a gap of missing records, leaving behind one carved clue and a century of argument about what survival really looked like.",
+    whyWild: "It combines colonial pressure, disappearance, uncertain testimony, and the possibility that survival meant becoming unrecognizable to the people who claimed ownership.",
+    stakes: "Survival, identity, memory, and who gets written into the official version of a disappearance.",
+    hinge: "What if survival depends on becoming unrecognizable to the people who sent you?",
+    storyDNA: ["missing record", "colonial pressure", "reinvention", "competing explanations", "fragile survival"],
+    charactersForces: ["the child colonist", "the returning captain", "the interpreter", "the local witness", "the carved message"],
+    tags: ["mystery", "frontier", "disappearance", "archive gap", "survival"],
+    genreRemixes: [
+      {
+        genre: "Frontier Mystery",
+        angle: "The real disappearance is not death but a reinvention no one back home wants to believe.",
+        prompt: "Keep the archive gap visible while turning the colony into a survival mystery."
+      },
+      {
+        genre: "Folk Horror",
+        angle: "The returning search party finds a community built on uneasy new rules and refuses to understand what it sees.",
+        prompt: "Make the fear come from colonial misreading rather than a supernatural answer."
+      }
+    ],
+    whatIfDivergences: [
+      "What if the colony chose to disappear rather than be rescued?",
+      "What if the carved clue was meant to mislead the people returning for them?",
+      "What if the surviving children remember a completely different story than the officials who search for them?"
+    ]
+  },
+  {
+    id: "lost-battalion",
+    title: "The Lost Battalion",
+    era: "1918",
+    region: "Meuse-Argonne, France",
+    sourceType: "battlefield isolation / survival under command failure",
+    sourceTrail: [
+      { label: "Britannica", url: "https://www.britannica.com/topic/Lost-Battalion" },
+      { label: "U.S. Army", url: "https://www.army.mil/article/251788/the_lost_battalion" },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Lost_Battalion_(World_War_I)" }
+    ],
+    summary: "An isolated American battalion is pinned down, cut off, and forced to survive while command confusion and friendly fire turn endurance into its own battlefield.",
+    whyWild: "It traps loyalty, command failure, and survival in a single box where the people holding the line no longer know whether anyone above them understands the cost.",
+    stakes: "Survival, duty, trust in command, and whether holding the position still means anything.",
+    hinge: "What does loyalty mean when command keeps asking trapped people to hold a position that may already be lost?",
+    storyDNA: ["encirclement", "command failure", "survival under fire", "friendly-fire risk", "holding pressure"],
+    charactersForces: ["the trapped infantryman", "the exhausted officer", "the runner", "the medic", "the distant command"],
+    tags: ["war", "survival", "ww1", "command failure", "pressure"],
+    genreRemixes: [
+      {
+        genre: "Military Thriller",
+        angle: "The fight becomes a pressure chamber where every message from command may be wrong, late, or fatal.",
+        prompt: "Keep the isolation and command confusion visible while tightening the survival pressure."
+      },
+      {
+        genre: "Anti-War Drama",
+        angle: "The real collapse is not the line but the belief that sacrifice is being seen clearly by anyone above it.",
+        prompt: "Focus on the emotional cost of obedience under failing command."
+      }
+    ],
+    whatIfDivergences: [
+      "What if the trapped unit receives one honest message too late to matter?",
+      "What if a runner realizes the people holding the line have already been written off?",
+      "What if the battalion survives but no one agrees what it was actually ordered to do?"
+    ]
+  },
+  {
+    id: "cher-ami",
+    title: "The Last Message of Cher Ami",
+    era: "1918",
+    region: "Meuse-Argonne, France",
+    sourceType: "wartime animal service / survival under fire",
+    sourceTrail: [
+      { label: "Smithsonian Magazine", url: "https://www.smithsonianmag.com/history/cher-ami-pigeon-saved-lost-battalion-180960851/" },
+      { label: "National Museum of American History", url: "https://americanhistory.si.edu/collections/search/object/nmah_439382" },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Cher_Ami" }
+    ],
+    summary: "A final message sent by pigeon becomes the narrow thread between a trapped unit and survival under artillery, confusion, and time pressure.",
+    whyWild: "It compresses a whole battlefield into one impossible delivery, where human survival depends on an animal carrying meaning through chaos.",
+    stakes: "Rescue, timing, trust, and whether the last message arrives before the trapped force disappears.",
+    hinge: "What does it mean when the last chance for human survival depends on a creature that does not understand the war?",
+    storyDNA: ["last chance", "message under fire", "timing pressure", "human dependence", "fragile rescue"],
+    charactersForces: ["the signalman", "the trapped soldier", "the pigeon handler", "the artillery line", "the wounded messenger"],
+    tags: ["war", "animal loyalty", "message", "survival", "ww1"],
+    genreRemixes: [
+      {
+        genre: "War Drama",
+        angle: "The whole battle narrows into whether one message can cross a sky full of failure.",
+        prompt: "Treat the delivery as the emotional and strategic center of the story."
+      },
+      {
+        genre: "Short Thriller",
+        angle: "Every second after release becomes a countdown between rescue and erasure.",
+        prompt: "Build the pressure around timing, signal failure, and the cost of delay."
+      }
+    ],
+    whatIfDivergences: [
+      "What if the last message reaches command but is not believed in time?",
+      "What if the trapped unit sends two different messages that demand two different rescues?",
+      "What if the surviving story focuses on the animal because the human command chain cannot defend itself?"
+    ]
+  },
+  {
+    id: "storytellers-gambit",
+    title: "The Storyteller's Gambit",
+    era: "Medieval Story Cycle",
+    region: "Persianate / Arabic literary tradition",
+    sourceType: "frame tale / survival through storytelling",
+    sourceTrail: [
+      { label: "Britannica", url: "https://www.britannica.com/topic/The-Thousand-and-One-Nights" },
+      { label: "Britannica: Shahrazad", url: "https://www.britannica.com/topic/Shahrazad" },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/One_Thousand_and_One_Nights" }
+    ],
+    summary: "A storyteller uses narrative itself as a survival tool, turning delay, curiosity, and emotional leverage into protection against power.",
+    whyWild: "It makes story structure the weapon, where every ending postponed becomes another day alive and every tale told changes the balance of power.",
+    stakes: "Survival, narrative control, emotional leverage, and whether a ruler can be changed by the stories meant to outlast him.",
+    hinge: "Can control of the story become a form of material survival?",
+    storyDNA: ["narrative leverage", "delay as strategy", "captivity", "curiosity weaponized", "power through framing"],
+    charactersForces: ["the storyteller", "the ruler", "the scribe", "the listener who understands the trap", "the captive audience"],
+    tags: ["storytelling", "strategy", "survival", "court intrigue", "mythic"],
+    genreRemixes: [
+      {
+        genre: "Court Intrigue",
+        angle: "Each tale becomes a move in a private political negotiation disguised as entertainment.",
+        prompt: "Treat the frame story as a survival strategy inside a dangerous court."
+      },
+      {
+        genre: "Literary Thriller",
+        angle: "The real heist is control over what version of reality the powerful choose to keep hearing.",
+        prompt: "Turn storytelling itself into the engine of suspense and survival."
+      }
+    ],
+    whatIfDivergences: [
+      "What if the ruler realizes the story is a trap but cannot stop listening?",
+      "What if the storyteller's stories begin changing the court faster than anyone expected?",
+      "What if the final tale is the one that risks ending the protection the stories created?"
+    ]
+  },
+  {
+    id: "binding-of-fenrir",
+    title: "The Binding of Fenrir",
+    era: "Norse Mythic Age",
+    region: "Norse myth",
+    sourceType: "myth / oath-breaking power conflict",
+    sourceTrail: [
+      { label: "Britannica", url: "https://www.britannica.com/topic/Fenrir" },
+      { label: "World History Encyclopedia", url: "https://www.worldhistory.org/Fenrir/" },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Fenrir" }
+    ],
+    summary: "The gods bind a force they fear through trickery, turning preemptive control into the first betrayal in a larger doomed future.",
+    whyWild: "It is a pure engine for fear, broken trust, and the question of whether trying to prevent catastrophe is what finally creates it.",
+    stakes: "Order, prophecy, legitimacy, and whether betrayal can ever be justified by fear of what comes next.",
+    hinge: "Does preventing a feared future justify betrayal in the present?",
+    storyDNA: ["preemptive betrayal", "fear of prophecy", "broken oath", "containment", "catastrophe created by control"],
+    charactersForces: ["the bound force", "the oath-keeper", "the fearful ruler", "the willing sacrificer", "the witness who sees the cost"],
+    tags: ["myth", "betrayal", "prophecy", "power", "tragedy"],
+    genreRemixes: [
+      {
+        genre: "Epic Fantasy",
+        angle: "The prison built to prevent disaster becomes the first crime that makes disaster inevitable.",
+        prompt: "Make the binding a political and moral turning point, not just a mythic set piece."
+      },
+      {
+        genre: "Political Allegory",
+        angle: "A state breaks its own oath to contain a threat, then has to live inside the distrust it created.",
+        prompt: "Turn prophecy into a modern story about fear, containment, and state violence."
+      }
+    ],
+    whatIfDivergences: [
+      "What if one god refuses the plan and becomes the only witness no one trusts later?",
+      "What if the bound force would have chosen restraint if it had not been betrayed first?",
+      "What if the real catastrophe is the culture of fear created by the binding, not the bound thing itself?"
+    ]
+  },
+  {
+    id: "flower-woman",
+    title: "The Flower Woman",
+    era: "Medieval Welsh Myth",
+    region: "Wales",
+    sourceType: "myth / taboo breaking",
+    sourceTrail: [
+      { label: "Britannica: Blodeuwedd", url: "https://www.britannica.com/topic/Blodeuwedd" },
+      { label: "Encyclopedia.com: Blodeuwedd", url: "https://www.encyclopedia.com/environment/encyclopedias-almanacs-transcripts-and-maps/blodeuwedd" },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Blodeuwedd" }
+    ],
+    summary: "A woman created from flowers for a role she did not choose becomes the center of betrayal, punishment, and the cost of refusing a life built for someone else's order.",
+    whyWild: "It combines beauty, artificial creation, desire, and punishment into a story about what happens when a person made for symbolism insists on being a person.",
+    stakes: "Freedom, identity, desire, punishment, and whether a created life owes obedience to its design.",
+    hinge: "What happens when a person created for a role decides the role is a cage?",
+    storyDNA: ["constructed identity", "forbidden desire", "betrayal", "punishment", "refusal of assigned purpose"],
+    charactersForces: ["the created woman", "the reluctant husband", "the secret lover", "the maker", "the witness to the punishment"],
+    tags: ["myth", "identity", "betrayal", "transformation", "taboo"],
+    genreRemixes: [
+      {
+        genre: "Dark Fairy Tale",
+        angle: "The flower-made woman becomes the one person who sees that the whole order around her is also artificial.",
+        prompt: "Keep the myth visible while focusing on desire, creation, and punishment."
+      },
+      {
+        genre: "Gothic Fantasy",
+        angle: "A court built on ritual beauty cracks when its most symbolic figure refuses to stay symbolic.",
+        prompt: "Turn the story into a gothic struggle over identity and imposed purpose."
+      }
+    ],
+    whatIfDivergences: [
+      "What if the woman and the maker are both trapped by the same design?",
+      "What if the punishment transforms the wrong person first?",
+      "What if the role she refuses is necessary to keep a larger political order intact?"
+    ]
+  },
+  {
+    id: "price-of-immortality",
+    title: "The Price of Immortality",
+    era: "Ancient Myth",
+    region: "Greek myth",
+    sourceType: "myth / death bargain",
+    sourceTrail: [
+      { label: "Britannica: Tithonus", url: "https://www.britannica.com/topic/Tithonus-Greek-mythology" },
+      { label: "Theoi", url: "https://www.theoi.com/Titan/Eos.html#Tithonos" },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Tithonus" }
+    ],
+    summary: "A wish to escape death becomes its own curse when immortality arrives without the rest of what makes life livable.",
+    whyWild: "It turns one of humanity's oldest desires into a clean pressure pattern about time, regret, and the cost of getting exactly what was asked for.",
+    stakes: "Love, time, identity, and whether life without ending is still recognizably human.",
+    hinge: "What does endless life destroy in the person who wanted it most?",
+    storyDNA: ["wish turned curse", "time distortion", "erosion of self", "love against duration", "unintended bargain"],
+    charactersForces: ["the immortal seeker", "the lover who asked", "the witness to the long decline", "the power that granted the wish"],
+    tags: ["myth", "mortality", "curse", "time", "tragedy"],
+    genreRemixes: [
+      {
+        genre: "Tragic Fantasy",
+        angle: "The immortality bargain becomes a private apocalypse measured in centuries instead of fire.",
+        prompt: "Focus on how time itself becomes the punishing force."
+      },
+      {
+        genre: "Philosophical Science Fiction",
+        angle: "A longevity breakthrough gives someone endless duration but strips away the conditions that made the life meaningful.",
+        prompt: "Turn the myth into a modern story about immortality as slow loss."
+      }
+    ],
+    whatIfDivergences: [
+      "What if the person asking for immortality realizes the mistake immediately but cannot undo it?",
+      "What if the immortal outlives not just loved ones but the moral world that made the wish matter?",
+      "What if the real curse is forcing other people to carry the burden of an endless life?"
+    ]
+  },
+  {
+    id: "skookum-jims-discovery",
+    title: "Skookum Jim's Discovery",
+    era: "1896",
+    region: "Klondike, Yukon",
+    sourceType: "gold-rush origin / frontier history",
+    sourceTrail: [
+      { label: "The Canadian Encyclopedia", url: "https://www.thecanadianencyclopedia.ca/en/article/skookum-jim-mason" },
+      { label: "Historica Canada", url: "https://www.historicacanada.ca/content/heritage-minutes/klondike-gold-rush" },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Skookum_Jim" }
+    ],
+    summary: "A discovery that helps trigger the Klondike Gold Rush becomes a struggle over who gets remembered, who gets erased, and who profits from the story after the strike.",
+    whyWild: "It turns a gold-rush origin story into a pressure pattern about credit, extraction, colonial memory, and the difference between making history and owning its telling.",
+    stakes: "Credit, land, extraction, wealth, and whether discovery can survive the machinery built to rename it.",
+    hinge: "Who gets written into history when a discovery becomes too profitable for the truth to stay intact?",
+    storyDNA: ["disputed credit", "extraction pressure", "frontier reinvention", "erasure through profit", "origin myth rewritten"],
+    charactersForces: ["the discoverer", "the trading partner", "the recorder", "the land rush", "the investor who arrives too late"],
+    tags: ["frontier", "canada", "gold rush", "memory", "extraction"],
+    genreRemixes: [
+      {
+        genre: "Frontier Drama",
+        angle: "The strike matters less than the fight over whose name the new world gets built around.",
+        prompt: "Keep the pressure on credit, land, and the rewriting of origin."
+      },
+      {
+        genre: "Historical Thriller",
+        angle: "Every new arrival brings money, rumor, and a stronger incentive to bury the truth under a cleaner legend.",
+        prompt: "Turn the discovery into a race between memory and profit."
+      }
+    ],
+    whatIfDivergences: [
+      "What if the people who made the discovery refuse the version of the story investors need?",
+      "What if one witness keeps a record that could undo the gold-rush myth later?",
+      "What if the real point of no return is not the strike itself but the first shipment of news leaving the region?"
+    ]
+  },
+  {
     id: "battle-of-grunwald",
     title: "Battle of Grunwald",
     era: "1410",
