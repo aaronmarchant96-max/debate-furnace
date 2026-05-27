@@ -224,6 +224,10 @@ function pickDifferentRandomSeed(seeds, currentSeedId) {
   return candidates[Math.floor(Math.random() * candidates.length)] || null;
 }
 
+function cleanCustomAdditions(value) {
+  return String(value || "").trim().replace(/\s+/g, " ");
+}
+
 function buildFuel(seed, genre) {
   const focus = seed.storyDNA.slice(0, 3).join(", ");
   const hinge = lowerClean(seed.hinge);
@@ -247,8 +251,9 @@ function buildStoryFuel(seed) {
   ];
 }
 
-function makeSeedPacket(seed) {
-  return [
+function makeSeedPacket(seed, customAdditions = "") {
+  const custom = cleanCustomAdditions(customAdditions);
+  const lines = [
     `# ${seed.title}`,
     ``,
     `**Source type:** ${seed.sourceType}`,
@@ -272,12 +277,19 @@ function makeSeedPacket(seed) {
     ``,
     `## Source Trail`,
     seed.sourceTrail.map((source) => `- ${source.label}: ${source.url}`).join("\n")
-  ].join("\n");
+  ];
+
+  if (custom) {
+    lines.push(``, `## Custom Additions`, custom);
+  }
+
+  return lines.join("\n");
 }
 
-function makeBlueprintLines(seed, format) {
+function makeBlueprintLines(seed, format, customAdditions = "") {
   const hinge = lowerClean(seed.hinge);
   const stakes = lowerClean(seed.stakes);
+  const custom = cleanCustomAdditions(customAdditions);
   const baseLines = {
     "Novel": [
       `Premise: ${seed.hinge}`,
@@ -349,11 +361,13 @@ function makeBlueprintLines(seed, format) {
     ]
   };
 
-  return baseLines[format] || baseLines.Movie;
+  const lines = baseLines[format] || baseLines.Movie;
+  return custom ? [...lines, `Custom additions: ${custom}.`] : lines;
 }
 
-function makeBlueprintPacket(seed, format) {
-  const outline = makeBlueprintLines(seed, format);
+function makeBlueprintPacket(seed, format, customAdditions = "") {
+  const custom = cleanCustomAdditions(customAdditions);
+  const outline = makeBlueprintLines(seed, format, custom);
   const [headline, ...rest] = outline;
   const formatLabel = format;
 
@@ -428,17 +442,20 @@ function makeBlueprintPacket(seed, format) {
     ]
   };
 
+  const sectionsForFormat = sections[formatLabel] || sections.Movie;
+
   return {
     format: formatLabel,
     title: `${seed.title} ${formatLabel}`,
     summary: `${formatLabel} blueprint built from ${seed.title} with the hinge kept visible.`,
     meta: [seed.sourceType, seed.era, seed.region],
     anchor: seed.hinge,
-    sections: sections[formatLabel] || sections.Movie
+    sections: custom ? [...sectionsForFormat, { label: "Custom additions", body: custom }] : sectionsForFormat
   };
 }
 
-function makeRemixPacket(seed, genre, mutation) {
+function makeRemixPacket(seed, genre, mutation, customAdditions = "") {
+  const custom = cleanCustomAdditions(customAdditions);
   const variation = [
     "Keep the real event visible, but shift the tone and stakes enough that the fiction feels like a new work.",
     "Change the setting and cast, but preserve the pressure pattern.",
@@ -459,14 +476,16 @@ function makeRemixPacket(seed, genre, mutation) {
       { label: "Mutation", body: GENRE_MUTATION[mutation] },
       { label: "Core pressure", body: seed.hinge },
       { label: "Remix direction", body: variation },
-      { label: "Reference angle", body: angle ? `${angle.genre}: ${angle.angle}` : "No remix angle found." }
+      { label: "Reference angle", body: angle ? `${angle.genre}: ${angle.angle}` : "No remix angle found." },
+      ...(custom ? [{ label: "Custom additions", body: custom }] : [])
     ]
   };
 }
 
-function makeStoryIdeaPacket(seed, format, genre, mutation) {
-  const blueprint = makeBlueprintLines(seed, format);
-  const remix = makeRemixPacket(seed, genre, mutation);
+function makeStoryIdeaPacket(seed, format, genre, mutation, customAdditions = "") {
+  const custom = cleanCustomAdditions(customAdditions);
+  const blueprint = makeBlueprintLines(seed, format, custom);
+  const remix = makeRemixPacket(seed, genre, mutation, custom);
   const remixAngle = (seed.genreRemixes || [])[mutation % (seed.genreRemixes?.length || 1)] || seed.genreRemixes?.[0];
   const hinge = lowerClean(seed.hinge);
   const stakes = lowerClean(seed.stakes);
@@ -500,9 +519,14 @@ function makeStoryIdeaPacket(seed, format, genre, mutation) {
           `Genre: ${genre}`,
           `Mutation: ${GENRE_MUTATION[mutation]}`,
           `Hinge: ${seed.hinge}`,
-          `Story DNA: ${seed.storyDNA.slice(0, 4).join(", ")}`
+          `Story DNA: ${seed.storyDNA.slice(0, 4).join(", ")}`,
+          ...(custom ? [`Custom additions: ${custom}`] : [])
         ].join(" · ")
       },
+      ...(custom ? [{
+        label: "Custom additions",
+        body: `Use this as the transformation layer: ${custom}. Keep the seed's hinge underneath it.`
+      }] : []),
       {
         label: "Source boundary",
         body: "Inspired by the source pattern, not a retelling. Keep the real source visible, but mark the final story as fiction."
@@ -607,22 +631,23 @@ function InspirationPanel({ seed, onSeedChange, filteredSeeds, selectedTag, onTa
   );
 }
 
-function BlueprintPanel({ seed, format, onFormatChange }) {
-  const outline = useMemo(() => makeBlueprintLines(seed, format), [seed, format]);
-  const [packet, setPacket] = useState(() => makeBlueprintPacket(seed, format));
+function BlueprintPanel({ seed, format, onFormatChange, customAdditions }) {
+  const outline = useMemo(() => makeBlueprintLines(seed, format, customAdditions), [seed, format, customAdditions]);
+  const [packet, setPacket] = useState(() => makeBlueprintPacket(seed, format, customAdditions));
   const [copyState, setCopyState] = useState("");
 
   useEffect(() => {
-    setPacket(makeBlueprintPacket(seed, format));
-  }, [seed.id, format]);
+    setPacket(makeBlueprintPacket(seed, format, customAdditions));
+    setCopyState("");
+  }, [seed.id, format, customAdditions]);
 
   function generateOutline() {
-    setPacket(makeBlueprintPacket(seed, format));
+    setPacket(makeBlueprintPacket(seed, format, customAdditions));
   }
 
   async function copyOutline() {
     try {
-      const content = packet || makeBlueprintPacket(seed, format);
+      const content = packet || makeBlueprintPacket(seed, format, customAdditions);
       const text = [
         `# ${content.title}`,
         "",
@@ -708,28 +733,31 @@ function BlueprintPanel({ seed, format, onFormatChange }) {
   );
 }
 
-function RemixPanel({ seed, genre, onGenreChange, mutation, onMutationChange }) {
+function RemixPanel({ seed, genre, onGenreChange, mutation, onMutationChange, customAdditions }) {
   const [packet, setPacket] = useState(null);
   const [copyState, setCopyState] = useState("");
+  const custom = cleanCustomAdditions(customAdditions);
   const fuel = [
     `Genre: ${genre}`,
     `Mutation level: ${GENRE_MUTATION[mutation]}`,
     `Core pressure: ${seed.hinge}`,
     `Mutation logic: ${MUTATION_DESCRIPTIONS[mutation]}`,
-    ...buildFuel(seed, genre)
+    ...buildFuel(seed, genre),
+    ...(custom ? [`Custom additions: ${custom}`] : [])
   ];
 
   useEffect(() => {
     setPacket(null);
-  }, [seed.id, genre, mutation]);
+    setCopyState("");
+  }, [seed.id, genre, mutation, customAdditions]);
 
   function generateRemix() {
-    setPacket(makeRemixPacket(seed, genre, mutation));
+    setPacket(makeRemixPacket(seed, genre, mutation, customAdditions));
   }
 
   async function copyRemix() {
     try {
-      const content = packet || makeRemixPacket(seed, genre, mutation);
+      const content = packet || makeRemixPacket(seed, genre, mutation, customAdditions);
       const text = [
         `# ${content.title}`,
         "",
@@ -828,8 +856,22 @@ function RemixPanel({ seed, genre, onGenreChange, mutation, onMutationChange }) 
   );
 }
 
-function StoryIdeaPanel({ seed, format, genre, mutation, onGenerate, packet, copyState, onCopy }) {
-  const snapshot = useMemo(() => makeStoryIdeaPacket(seed, format, genre, mutation), [seed, format, genre, mutation]);
+function StoryIdeaPanel({
+  seed,
+  format,
+  genre,
+  mutation,
+  customAdditions,
+  onCustomAdditionsChange,
+  onGenerate,
+  packet,
+  copyState,
+  onCopy
+}) {
+  const snapshot = useMemo(
+    () => makeStoryIdeaPacket(seed, format, genre, mutation, customAdditions),
+    [seed, format, genre, mutation, customAdditions]
+  );
   const activePacket = packet || snapshot;
 
   return (
@@ -849,6 +891,18 @@ function StoryIdeaPanel({ seed, format, genre, mutation, onGenerate, packet, cop
             <button type="button" className="pill" onClick={() => onCopy(activePacket)}>{copyState || (packet ? "Copy story packet" : "Copy preview")}</button>
           </div>
         </div>
+      </div>
+
+      <div className="custom-additions">
+        <label className="control-label" htmlFor="custom-additions">Custom additions</label>
+        <textarea
+          id="custom-additions"
+          className="custom-additions__input"
+          value={customAdditions}
+          onChange={(event) => onCustomAdditionsChange(event.target.value)}
+          placeholder="Example: colony ship betrayal, mafia gift, haunted relic, corporate breach..."
+          rows={3}
+        />
       </div>
 
       {packet ? (
@@ -948,6 +1002,7 @@ export default function CreativeEngine() {
   const [blueprintFormat, setBlueprintFormat] = useState("Movie");
   const [remixGenre, setRemixGenre] = useState("Fantasy");
   const [remixMutation, setRemixMutation] = useState(2);
+  const [customAdditions, setCustomAdditions] = useState("");
   const [storyPacket, setStoryPacket] = useState(null);
   const [storyCopyState, setStoryCopyState] = useState("");
   const [copyState, setCopyState] = useState("");
@@ -972,7 +1027,7 @@ export default function CreativeEngine() {
   useEffect(() => {
     setStoryPacket(null);
     setStoryCopyState("");
-  }, [seedId, blueprintFormat, remixGenre, remixMutation]);
+  }, [seedId, blueprintFormat, remixGenre, remixMutation, customAdditions]);
 
   useEffect(() => {
     setCopyState("");
@@ -986,7 +1041,7 @@ export default function CreativeEngine() {
 
   async function copySeedPacket() {
     try {
-      const text = makeSeedPacket(activeSeed);
+      const text = makeSeedPacket(activeSeed, customAdditions);
       await navigator.clipboard.writeText(text);
       setCopyState("Copied seed packet");
       window.setTimeout(() => setCopyState(""), 1400);
@@ -1005,12 +1060,12 @@ export default function CreativeEngine() {
   }
 
   function generateStoryIdea() {
-    setStoryPacket(makeStoryIdeaPacket(activeSeed, blueprintFormat, remixGenre, remixMutation));
+    setStoryPacket(makeStoryIdeaPacket(activeSeed, blueprintFormat, remixGenre, remixMutation, customAdditions));
   }
 
   async function copyStoryIdea(packet) {
     try {
-      const content = packet || makeStoryIdeaPacket(activeSeed, blueprintFormat, remixGenre, remixMutation);
+      const content = packet || makeStoryIdeaPacket(activeSeed, blueprintFormat, remixGenre, remixMutation, customAdditions);
       const text = [
         `# ${content.title}`,
         "",
@@ -1120,6 +1175,8 @@ export default function CreativeEngine() {
             format={blueprintFormat}
             genre={remixGenre}
             mutation={remixMutation}
+            customAdditions={customAdditions}
+            onCustomAdditionsChange={setCustomAdditions}
             onGenerate={generateStoryIdea}
             packet={storyPacket}
             copyState={storyCopyState}
@@ -1136,7 +1193,15 @@ export default function CreativeEngine() {
                 onTagChange={setTag}
               />
             )}
-            {tab === "blueprint" && <BlueprintPanel key={activeSeed.id} seed={activeSeed} format={blueprintFormat} onFormatChange={setBlueprintFormat} />}
+            {tab === "blueprint" && (
+              <BlueprintPanel
+                key={activeSeed.id}
+                seed={activeSeed}
+                format={blueprintFormat}
+                onFormatChange={setBlueprintFormat}
+                customAdditions={customAdditions}
+              />
+            )}
             {tab === "remix" && (
               <RemixPanel
                 key={activeSeed.id}
@@ -1145,6 +1210,7 @@ export default function CreativeEngine() {
                 onGenreChange={setRemixGenre}
                 mutation={remixMutation}
                 onMutationChange={setRemixMutation}
+                customAdditions={customAdditions}
               />
             )}
             {tab === "source" && <SourceTrailPanel seed={activeSeed} />}

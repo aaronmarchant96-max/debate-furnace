@@ -107,6 +107,36 @@ function buildShareLink(payload) {
   return `${window.location.origin}${window.location.pathname}#d=${toBase64Url(payload)}`;
 }
 
+function summarizeAiFailure(error) {
+  const message = String(error?.message || "").toLowerCase();
+
+  if (message.includes("missing gemini_api_key")) {
+    return "AI generation was unavailable because GEMINI_API_KEY is not configured.";
+  }
+
+  if (message.includes("404")) {
+    return "AI generation was unavailable because the /api/debate route was not found. Local vite dev does not serve the API route by itself.";
+  }
+
+  if (message.includes("failed to fetch")) {
+    return "AI generation was unavailable because the debate API request failed before it reached Gemini.";
+  }
+
+  if (message.includes("403")) {
+    return "AI generation was unavailable because Gemini rejected the request. Check the API key and deployment configuration.";
+  }
+
+  if (message.includes("429")) {
+    return "AI generation was unavailable because Gemini rate-limited the request.";
+  }
+
+  if (message.includes("500")) {
+    return "AI generation was unavailable because the debate API returned a server error.";
+  }
+
+  return "AI generation was unavailable, so Debate Furnace used its local fallback.";
+}
+
 function safelyReplaceUrl(url) {
   if (typeof window === "undefined" || !url) return;
   try {
@@ -1435,7 +1465,20 @@ export default function DebateFurnace() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ question, sideA, sideB, intensity })
         });
-        if (!response.ok) throw new Error("AI generation unavailable");
+        if (!response.ok) {
+          let detail = "";
+          try {
+            const payload = await response.json();
+            detail = payload?.detail || payload?.error || "";
+          } catch {
+            try {
+              detail = await response.text();
+            } catch {
+              detail = "";
+            }
+          }
+          throw new Error(detail ? `${response.status}: ${detail}` : `${response.status}: AI generation unavailable`);
+        }
         result = generate(question, sideA, sideB, intensity, await response.json());
       }
       saveToHistory(summarizeDebate(question, result));
@@ -1446,11 +1489,11 @@ export default function DebateFurnace() {
       setAnalysis(true);
       setShareCopied(false);
       setRoundCopied("");
-    } catch {
+    } catch (error) {
       const fallbackDebate = generate(question, sideA, sideB, intensity);
       saveToHistory(summarizeDebate(question, fallbackDebate));
       setDebate(fallbackDebate);
-      setFallbackNotice("AI generation was unavailable, so Debate Furnace used its local fallback.");
+      setFallbackNotice(summarizeAiFailure(error));
       setRound(0);
       setFinal(false);
       setOpen(false);

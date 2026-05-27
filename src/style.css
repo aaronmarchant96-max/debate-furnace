@@ -487,6 +487,34 @@ button { font-family: inherit; }
   justify-content: flex-end;
 }
 
+.custom-additions {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+.custom-additions__input {
+  width: 100%;
+  min-height: 86px;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: var(--surface-inner);
+  color: var(--text);
+  padding: 12px 14px;
+  font: inherit;
+  line-height: 1.45;
+}
+
+.custom-additions__input::placeholder {
+  color: var(--text-muted);
+}
+
+.custom-additions__input:focus {
+  outline: 2px solid rgba(240, 199, 94, 0.22);
+  border-color: rgba(240, 199, 94, 0.45);
+}
+
 .story-idea__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
