@@ -175,6 +175,44 @@ const SEEDS = [
       "What if the expedition had a better rescue window?",
       "What if the real danger was internal betrayal instead of the ice?"
     ]
+  },
+  {
+    id: "battle-of-grunwald",
+    title: "Battle of Grunwald",
+    era: "1410",
+    region: "Central / Eastern Europe",
+    sourceType: "medieval battle / military history",
+    sourceTrail: [
+      { label: "Britannica", url: "https://www.britannica.com/event/Battle-of-Tannenberg-1410" },
+      { label: "Encyclopaedia.com", url: "https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/grunwald-battle" },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Battle_of_Grunwald" }
+    ],
+    summary: "A massive Polish-Lithuanian coalition confronts the Teutonic Knights, a powerful crusading military order, in one of medieval Europe's defining battles.",
+    whyWild: "A feared religious military order meets a multi-ethnic coalition that turns discipline, patience, and battlefield pressure against it.",
+    stakes: "Political survival, religious legitimacy, regional power, national myth, and the collapse of invincibility.",
+    hinge: "Can an elite order built on faith, discipline, and fear survive when its enemies stop being divided?",
+    storyDNA: ["coalition under pressure", "religious militarism", "false confidence", "battlefield deception", "fragile alliances", "elite collapse", "myth after victory"],
+    charactersForces: ["the Teutonic Grand Master", "the Polish king", "the Lithuanian grand duke", "the knightly order", "the coalition army", "the scouts and messengers", "the camp followers", "the chroniclers"],
+    tags: ["war", "medieval", "coalition", "political collapse", "strategy"],
+    genreRemixes: [
+      {
+        genre: "Political War Epic",
+        angle: "The battlefield victory matters less than holding the alliance together long enough to reshape the region.",
+        prompt: "Focus on coalition strain, elite overconfidence, and the power vacuum after the battle."
+      },
+      {
+        genre: "Dark Fantasy",
+        angle: "A sacred military order discovers its rituals and symbols no longer guarantee fear or obedience.",
+        prompt: "Turn the collapsing aura of holy invincibility into a mythic military downfall."
+      }
+    ],
+    whatIfDivergences: [
+      "What if the coalition fractures before the battle?",
+      "What if the Teutonic Knights win and become the dominant eastern power?",
+      "What if a messenger changes the timing of the attack?",
+      "What if the battle is remembered completely differently by each side?",
+      "What if the real victory happens after the battlefield, in the story told afterward?"
+    ]
   }
 ];
 
