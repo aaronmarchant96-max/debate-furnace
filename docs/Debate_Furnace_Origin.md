@@ -24,6 +24,44 @@ It does not pretend to be an oracle. It does not claim neutral omniscience. It s
 
 The intended user does not leave with a command. They leave with a clearer map.
 
+## CARDO REI Method
+
+Debate Furnace uses the CARDO REI Method as its evaluation frame: a dual-axis way of finding the hinge of the matter.
+
+- Axis 1: does the response land?
+- Axis 2: does the reasoning hold?
+- Final judgment: what is the hinge of the matter?
+
+That structure matters because Debate Furnace is not just measuring rhetorical force. It is separating surface performance from deeper reasoning quality, then asking what the case actually turns on.
+
+## PromptHound Labs Proof Loop
+
+PromptHound Labs uses a shared proof loop across the tools:
+
+1. Idea
+2. Framing
+3. Codex prompt
+4. Build
+5. Verify
+6. Manual review
+7. Commit
+8. Push
+9. Case study
+
+The shared pattern is:
+
+- Messy input
+- Find the pressure point
+- Separate surface signal from real structure
+- Produce a reviewable output
+- Keep human judgment and limits visible
+
+Tool mapping:
+
+- Debate Furnace: input is arguments, pressure point is the hinge the disagreement turns on, output is a pressure-tested decision path.
+- Story Forge: input is history, myth, archives, and strange sources, pressure point is the core tension inside the source, output is a story blueprint with the source trail kept visible.
+- Storm Replay: input is historical storm imagery, pressure point is visual signal versus noise, output is JSONL events, calibration metrics, review notes, and case validation.
+
 ## Product Philosophy
 
 Debate Furnace follows a few hard rules:

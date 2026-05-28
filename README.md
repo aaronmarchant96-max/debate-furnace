@@ -2,28 +2,34 @@
 
 > Pressure-test both sides. Find the hinge. Decide what matters.
 
+## CARDO REI Method
+
+Debate Furnace uses the CARDO REI Method to separate what sounds good from what actually holds up.
+
 ![Debate Furnace preview](assets/debate-furnace-preview.png)
 
 ## About Debate Furnace
 
-Debate Furnace slows arguments down. It exists because too many public arguments collapse complex questions into tribal yes/no fights.
+Debate Furnace is a structured debate tool for questions that deserve more than a quick yes or no.
 
-The goal is not fake neutrality, a louder answer, or a debate bot that declares objective truth. It is to make the strongest version of each side visible, reveal where each side holds up or breaks, and give the decision back to the user.
+The goal is to make both sides clear, show where each one holds up or breaks, and give the decision back to the user.
 
-Many disagreements are not really fact fights. They are value collisions: safety and freedom, fairness and responsibility, truth and uncertainty, progress and stability, autonomy and protection. Debate Furnace is built to make that structure visible.
+It is especially useful when the real disagreement is about values, tradeoffs, or what evidence should count.
 
-Not every disagreement needs a winner. Sometimes the real value is seeing why reasonable people can disagree, which claims survived pressure, and what the argument actually depends on.
+Not every disagreement needs a winner. Sometimes the useful part is seeing what survived the pressure and what the choice actually depends on.
 
 ## Problem / Approach / Result
 
 - **Problem:** Most tools flatten disagreement into a yes/no answer.
-- **Approach:** Build a structured debate engine that pressure-tests both sides, flags weak reasoning, surfaces the hinge, and gives the decision back to the user.
+- **Approach:** Build a structured debate engine that pressure-tests both sides, flags weak reasoning, and surfaces the decision point through the CARDO REI Method.
 - **Result:** A working app with Gemini-backed custom debates, local fallback, share links, history, mobile polish, and copyable reports.
-- **Mission:** Raise the quality of how people think and argue by moving from "who is right?" to "what does this actually depend on?"
+- **Mission:** Help people think more clearly about hard disagreements.
 
 ## Live Demo
 
-Live Vercel deployment: https://debate-furnace-prompthound.vercel.app/
+[Try Debate Furnace](https://debate-furnace-prompthound.vercel.app/)
+
+Story Forge is available from the header in the same live app.
 
 ## What It Does
 
@@ -51,6 +57,47 @@ It currently supports:
 - footer links to X and GitHub
 
 The current version is a live public prototype with a Gemini-backed custom debate path. Starter questions still use the tuned local debate engine so the app stays fast and stable when you test the most common prompts.
+
+## Story Forge
+
+Story Forge is the companion tool in the same app shell. It turns real events, old texts, and strange source material into story blueprints without losing the source trail.
+
+It is built to help with:
+
+- finding the core tension in an event or text
+- keeping the original sources visible
+- turning source material into usable story hooks
+- building around the hinge instead of flattening the material into generic summary
+
+Two worked examples show the difference between filtering an overclaim and keeping a real unresolved case open:
+
+- [UAP false positive suppression](docs/Debate_Furnace_Rich_Script_Reference.md#false-positive-suppressed-uaps): the analyzer strips out the leap from "unexplained" to "non-human" and leaves the case at "unexplained, not proven."
+- [Franklin Expedition residual candidate](docs/Debate_Furnace_Rich_Script_Reference.md#residual-candidate-kept-the-franklin-expedition): the analyzer keeps the uncertainty in play because the historical record still leaves a legitimate gap.
+
+The strongest proof pieces for Story Forge are in the source trail and the seed library, with the reusable checklist documented here:
+
+- [Story Forge QA Checklist](docs/story_forge_qa_checklist.md)
+- [Story Forge Source Bank](docs/story_forge_source_bank.md)
+
+## Method
+
+PromptHound Labs turns messy input into reviewable structure. The CARDO REI loop is the shared proof path:
+
+```text
+Messy input
+Find the pressure point
+Separate surface signal from real structure
+Produce a reviewable output
+Keep human judgment and limits visible
+```
+
+Every PromptHound Labs project follows the same proof loop: define the idea, frame the limits, build in small steps, verify the output, manually review the result, commit the evidence, push it publicly, and turn the finished slice into a case study.
+
+## Project Mapping
+
+- Debate Furnace: input is arguments, pressure point is the hinge the disagreement turns on, output is a pressure-tested decision path.
+- Story Forge: input is history, myth, archives, and strange sources, pressure point is the core tension inside the source, output is a story blueprint with the source trail kept visible.
+- Storm Replay: input is historical storm imagery, pressure point is visual signal versus noise, output is JSONL events, calibration metrics, review notes, and case validation.
 
 ## How to Use
 
@@ -143,6 +190,8 @@ The richer script and report language reference and product origin notes are arc
 
 - [Debate Furnace Rich Script Reference](docs/Debate_Furnace_Rich_Script_Reference.md)
 - [The Origin of Debate Furnace](docs/Debate_Furnace_Origin.md)
+- [Debate Furnace QA Checklist](docs/debate_furnace_qa_checklist.md)
+- [Story Forge QA Checklist](docs/story_forge_qa_checklist.md)
 
 ## Local Setup
 
