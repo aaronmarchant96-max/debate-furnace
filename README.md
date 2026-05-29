@@ -95,6 +95,13 @@ The reusable launch gate is documented here:
 
 - [CARDO GUARD Launch Gate Checklist](docs/cardo_guard_checklist.md)
 - [CARDO GUARD Manual Test Script](docs/cardo_guard_manual_test.md)
+- [CARDO GUARD Calibration Spec](docs/cardo_guard_calibration_spec.md)
+
+Future calibration path:
+
+- Arena Harness evaluation logs feed a calibration artifact
+- CARDO GUARD can consume calibrated probabilities instead of demo bands
+- the first read stays human-first, but the engine can grow into real calibration later
 
 ## Method
 

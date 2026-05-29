@@ -61,7 +61,6 @@ export default function CardoGuard() {
   const whyThisVerdict = useMemo(() => buildCardoGuardWhyThisVerdict(review), [review]);
 
   const confidenceBandLabel = `${review.confidenceBand} calibration band`;
-  const riskChanceLabel = `Chance risk is real = 100% - false alarm rate`;
 
   function updateDraft(field, value) {
     setDraft((current) => ({ ...current, [field]: value }));
@@ -107,8 +106,7 @@ export default function CardoGuard() {
           </div>
 
           <div className="cardo-guard__intro mini-card">
-            <p>AI confidence is not a decision. CARDO GUARD shows whether the business cost clears the gate.</p>
-            <p>The model gives a score. CARDO GUARD shows whether acting on it is worth the cost.</p>
+            <p>AI confidence is not a decision. CARDO GUARD compares the cost of acting with the cost of ignoring the risk.</p>
           </div>
         </section>
 
@@ -227,7 +225,7 @@ export default function CardoGuard() {
               <li>Not a prediction model.</li>
               <li>Not operational advice.</li>
               <li>Costs stay visible in real units.</li>
-              <li>The hinge should be obvious before the recommendation.</li>
+              <li>Show the hinge before the recommendation.</li>
             </ul>
           </div>
         </section>
@@ -254,21 +252,21 @@ export default function CardoGuard() {
           <div className="mini-grid">
             <Metric label="Confidence" value={`${review.confidence}%`} note={confidenceBandLabel} />
             <Metric
-              label="How often this confidence band is wrong"
+              label="How often this score band is wrong"
               value={`${Math.round(review.falseAlarmRate * 100)}%`}
               note="Synthetic band"
             />
             <Metric
-              label={riskChanceLabel}
+              label="Adjusted chance this risk is real"
               value={`${Math.round(review.calibratedEventLikelihood * 100)}%`}
               note="100% - false alarm rate"
             />
             <Metric
-              label="Expected cost if we act and the model is wrong"
+              label="Expected wasted cost if we act"
               value={formatMoney(review.expectedActionWaste)}
             />
             <Metric
-              label="Expected cost if we ignore it and the risk is real"
+              label="Risk-adjusted cost of ignoring it"
               value={formatMoney(review.expectedMissLoss)}
             />
           </div>
@@ -277,8 +275,8 @@ export default function CardoGuard() {
             <div className="card-label">The decision hinge</div>
             <div>
               {review.shouldAct
-                ? `Expected miss loss ${formatMoney(review.expectedMissLoss)} is higher than expected action waste ${formatMoney(review.expectedActionWaste)}.`
-                : `Expected action waste ${formatMoney(review.expectedActionWaste)} is higher than expected miss loss ${formatMoney(review.expectedMissLoss)}.`}
+                ? `Risk-adjusted miss loss ${formatMoney(review.expectedMissLoss)} is higher than expected action waste ${formatMoney(review.expectedActionWaste)}.`
+                : `Expected action waste ${formatMoney(review.expectedActionWaste)} is higher than risk-adjusted miss loss ${formatMoney(review.expectedMissLoss)}.`}
             </div>
           </div>
 

@@ -33,7 +33,7 @@ const expectedTabs = [
   {
     id: "cardo-guard",
     label: "CARDO GUARD",
-    subtitle: "Decision scores get a launch gate."
+    subtitle: "AI scores get checked against cost."
   }
 ];
 

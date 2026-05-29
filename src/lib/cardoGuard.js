@@ -106,18 +106,18 @@ export function calculateCardoGuardReview({
 export function buildCardoGuardComparison(review) {
   if (review.shouldAct) {
     return [
-      "Raise the cost of acting.",
-      "Show a higher calibrated false-alarm band.",
+      "Make acting more expensive.",
+      "Show this score band is wrong more often than assumed.",
       "Prove the miss cost is smaller than assumed.",
       "Show that the disruption impact is smaller or less likely than assumed."
     ];
   }
 
   return [
-    "Lower the cost of acting.",
-    "Show a lower calibrated false-alarm band.",
+    "Make acting cheaper.",
+    "Show this score band is wrong less often than assumed.",
     "Prove the miss cost is larger than assumed.",
-    "Narrow the action so the response is cheaper."
+    "Narrow the action so the response costs less."
   ];
 }
 
