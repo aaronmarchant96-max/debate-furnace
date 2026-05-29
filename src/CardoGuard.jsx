@@ -88,6 +88,25 @@ export default function CardoGuard() {
     setSubmitted(nextDraft);
   }
 
+  const loadRandomExample = () => {
+    const scenarios = CARDO_GUARD_SCENARIOS;
+    const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+
+    const confidence = Math.floor(Math.random() * 31) + 65; // 65-95%
+    const costToAct = Math.floor(Math.random() * 246000) + 5000; // $5k - $250k
+    const costToMiss = Math.floor(Math.random() * 14800000) + 200000; // $200k - $15M
+
+    const nextDraft = {
+      scenarioId: randomScenario.id,
+      confidence,
+      costToAct,
+      costToMiss,
+    };
+
+    setDraft(nextDraft);
+    setSubmitted(nextDraft); // Auto-run the check for instant feedback
+  };
+
   return (
     <section className="cardo-guard panel-stack">
       <section className="panel cardo-guard__hero">
@@ -183,10 +202,12 @@ export default function CardoGuard() {
             <div className="control-group">
               <label className="control-label" htmlFor="cardo-act">
                 Cost to act
+                <span className="mobile-label-hint">$</span>
               </label>
               <input
                 id="cardo-act"
                 type="number"
+                inputMode="decimal"
                 min="0"
                 step="1000"
                 value={draft.costToAct}
@@ -198,10 +219,12 @@ export default function CardoGuard() {
             <div className="control-group">
               <label className="control-label" htmlFor="cardo-miss">
                 Cost of missing
+                <span className="mobile-label-hint">$</span>
               </label>
               <input
                 id="cardo-miss"
                 type="number"
+                inputMode="decimal"
                 min="0"
                 step="1000"
                 value={draft.costToMiss}
@@ -217,6 +240,9 @@ export default function CardoGuard() {
             </button>
             <button type="button" className="pill" onClick={resetToScenario}>
               Reset synthetic example
+            </button>
+            <button type="button" className="pill" onClick={loadRandomExample}>
+              Random example
             </button>
           </div>
 
@@ -240,7 +266,9 @@ export default function CardoGuard() {
 
           <div className="output-anchor cardo-guard__decision">
             <div className="card-label">Recommendation</div>
-            <div className="cardo-guard__decision-line">{review.recommendation}</div>
+            <div className={`cardo-guard__decision-line ${review.shouldAct ? 'act' : 'dont-act'}`}>
+              {review.recommendation}
+            </div>
             <div className="muted">{review.explanation}</div>
           </div>
 

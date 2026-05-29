@@ -1836,6 +1836,59 @@ button { font-family: inherit; }
     justify-self: start;
   }
 
+  /* Ease of use improvements for CARDO GUARD on mobile */
+  .cardo-guard__select,
+  .cardo-guard__input {
+    padding: 14px 14px;
+    font-size: 16px;
+  }
+
+  .cardo-guard__panel-note,
+  .cardo-guard__steps,
+  .cardo-guard__costs,
+  .cardo-guard__actions,
+  .cardo-guard__rules,
+  .cardo-guard__hinge {
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+
+  /* Better separation when cost fields stack */
+  .cardo-guard__costs .control-group + .control-group {
+    margin-top: 10px;
+  }
+
+  .cardo-guard__steps-list {
+    padding-left: 16px;
+    line-height: 1.5;
+  }
+
+  .mini-grid {
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  /* More readable decision output */
+  .cardo-guard__decision-line {
+    font-size: 21px;
+    line-height: 1.2;
+  }
+
+  .cardo-guard__metric-value {
+    font-size: 17px;
+  }
+
+  .cardo-guard__math {
+    gap: 5px;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+
+  /* Better button separation when stacked */
+  .cardo-guard__actions {
+    gap: 12px;
+  }
+
   .top-tab,
   .inner-tab,
   .pill,
@@ -1869,5 +1922,163 @@ button { font-family: inherit; }
 
   .mutation-scale {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Extra tightening for CardoGuard on small phones */
+  .cardo-guard__decision {
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+
+  .cardo-guard__why-list,
+  .cardo-guard__plain-check {
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  /* Easier slider on very small screens */
+  .cardo-guard__range {
+    height: 28px;
+  }
+
+  /* === MOBILE USABILITY + STRONG RECOMMENDATION HERO (Updated from screenshots) === */
+
+  .cardo-guard__select,
+  .cardo-guard__input {
+    padding: 16px 14px;
+    font-size: 16px;
+  }
+
+  .cardo-guard__costs .control-group + .control-group {
+    margin-top: 20px;
+  }
+
+  .cardo-guard__actions {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .cardo-guard__actions .pill {
+    flex: 1 1 auto;
+    min-width: 140px;
+  }
+
+  /* Strong Recommendation Hero */
+  .cardo-guard__decision {
+    background: #1f2937;
+    border: 2px solid #334155;
+    border-radius: 16px;
+    padding: 28px 16px;
+    text-align: center;
+    margin-bottom: 28px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .cardo-guard__decision-line {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 4px 0 16px 0;
+  }
+
+  .cardo-guard__decision-line.act {
+    color: #34d399;     /* Clean emerald for ACT */
+  }
+
+  .cardo-guard__decision-line.dont-act {
+    color: #fb923c;     /* Strong amber for DO NOT ACT */
+  }
+
+  /* Better mobile slider for thumbs */
+  .cardo-guard__range {
+    height: 42px;
+    margin: 20px 0 16px;
+  }
+
+  .cardo-guard__range::-webkit-slider-thumb,
+  .cardo-guard__range::-moz-range-thumb {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: grab;
+    border: 2px solid #fff;
+  }
+
+  /* Improved readability */
+  .cardo-guard__steps-list,
+  .cardo-guard__why-list,
+  .cardo-guard__plain-check,
+  .cardo-guard__list {
+    line-height: 1.6;
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardo-guard__layout {
+    gap: 14px;
+  }
+
+  .cardo-guard__hero {
+    padding: 16px 14px 14px;
+  }
+
+  .cardo-guard__intro {
+    padding: 14px;
+  }
+
+  .panel {
+    padding: 16px 14px;
+  }
+
+  /* Prioritize readability over extreme density on tiny screens */
+  .cardo-guard__steps-list,
+  .cardo-guard__why-list,
+  .cardo-guard__plain-check,
+  .cardo-guard__list {
+    line-height: 1.55;
+  }
+
+  .cardo-guard__decision {
+    padding: 32px 18px;
+    margin-bottom: 32px;
+  }
+
+  .cardo-guard__decision-line {
+    font-size: 30px;
+  }
+
+  .cardo-guard__hero,
+  .panel {
+    padding: 18px 16px;
+  }
+
+  /* Full-width inputs + better form on mobile */
+  .cardo-guard__costs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cardo-guard__input {
+    width: 100%;
+  }
+
+  .mobile-label-hint {
+    font-size: 0.9em;
+    opacity: 0.7;
+    margin-left: 4px;
+  }
+
+  /* Subtle verdict background tint */
+  .cardo-guard__decision.act {
+    background: #1a2e25;
+    border-color: #34d39933;
+  }
+
+  .cardo-guard__decision.dont-act {
+    background: #2e2419;
+    border-color: #fb923c33;
   }
 }
