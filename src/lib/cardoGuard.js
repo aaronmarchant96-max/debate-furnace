@@ -65,6 +65,23 @@ export function formatMoney(value) {
   }).format(toMoneyNumber(value));
 }
 
+/**
+ * Calculates the miss-cost threshold at which expected miss loss equals expected action waste.
+ *
+ * Formula: (costToAct × falseAlarmRate) / (1 - falseAlarmRate)
+ * Returns 0 if falseAlarmRate is exactly 1 (defensive edge case).
+ *
+ * This is the exact hinge point: below it (for the current recommendation), one side wins;
+ * above it, the other side wins.
+ */
+export function calculateBreakevenMissCost(costToAct, falseAlarmRate) {
+  const numericCost = toMoneyNumber(costToAct);
+  const rate = Number(falseAlarmRate);
+
+  if (rate === 1) return 0;
+  return (numericCost * rate) / (1 - rate);
+}
+
 export function calculateCardoGuardReview({
   scenarioId,
   confidence,
@@ -82,6 +99,27 @@ export function calculateCardoGuardReview({
   const expectedMissLoss = numericCostToMiss * calibratedEventLikelihood;
   const recommendation = expectedMissLoss > expectedActionWaste ? "ACT" : "DO NOT ACT";
   const margin = Math.abs(expectedMissLoss - expectedActionWaste);
+
+  // New: How many times stronger is the winning side compared to the losing side?
+  const decisionMarginRatio = (expectedActionWaste === 0 && expectedMissLoss === 0)
+    ? 1
+    : (expectedActionWaste === 0)
+      ? Infinity
+      : Math.max(expectedMissLoss, expectedActionWaste) / Math.min(expectedMissLoss, expectedActionWaste);
+
+  // Decision strength label
+  let decisionStrength = "Very Close";
+  if (decisionMarginRatio >= 5) decisionStrength = "Very Strong";
+  else if (decisionMarginRatio >= 2.5) decisionStrength = "Strong";
+  else if (decisionMarginRatio >= 1.5) decisionStrength = "Moderate";
+  else if (decisionMarginRatio >= 1.1) decisionStrength = "Weak";
+
+  // New: What would the cost of missing need to be for the recommendation to flip?
+  const breakevenMissCost = calculateBreakevenMissCost(
+    numericCostToAct,
+    falseAlarmRate
+  );
+
   const shouldAct = recommendation === "ACT";
 
   return {
@@ -96,6 +134,9 @@ export function calculateCardoGuardReview({
     expectedMissLoss,
     recommendation,
     margin,
+    decisionMarginRatio,
+    breakevenMissCost,
+    decisionStrength,
     shouldAct,
     explanation: shouldAct
       ? `Acting clears the gate because the risk-adjusted cost of missing it is higher than the expected waste of acting.`
@@ -122,8 +163,16 @@ export function buildCardoGuardComparison(review) {
 }
 
 export function buildCardoGuardWhyThisVerdict(review) {
-  return [
+  const lines = [
     `Action waste = ${formatMoney(review.costToAct)} × ${Math.round(review.falseAlarmRate * 100)}% = ${formatMoney(review.expectedActionWaste)}`,
     `Miss loss = ${formatMoney(review.costToMiss)} × ${Math.round(review.calibratedEventLikelihood * 100)}% = ${formatMoney(review.expectedMissLoss)}`
   ];
+
+  // Add breakeven insight when useful
+  if (review.breakevenMissCost > 0) {
+    lines.push(`Breakeven miss cost = ${formatMoney(review.breakevenMissCost)}. At this point, miss loss and action waste are equal.`);
+  }
+
+  return lines;
 }
+
