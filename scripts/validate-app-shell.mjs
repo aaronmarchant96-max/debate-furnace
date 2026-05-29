@@ -29,6 +29,11 @@ const expectedTabs = [
     id: "storm-replay",
     label: "Storm Replay",
     subtitle: "Storm imagery gets a careful read."
+  },
+  {
+    id: "cardo-guard",
+    label: "CARDO GUARD",
+    subtitle: "Decision scores get a launch gate."
   }
 ];
 
