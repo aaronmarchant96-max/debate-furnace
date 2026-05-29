@@ -43,8 +43,12 @@ describe("CardoGuard", () => {
     expect(screen.getByText(/make acting more expensive\./i)).toBeInTheDocument();
     expect(screen.getByText(/show this score band is wrong more often than assumed\./i)).toBeInTheDocument();
     expect(screen.getByText(/synthetic demo only/i, { selector: ".status-badge--cyan" })).toBeInTheDocument();
-    expect(screen.getByText(/not a prediction model/i, { selector: ".cardo-guard__rules li" })).toBeInTheDocument();
+    expect(screen.getByText(/Synthetic demo. Costs and hinge stay visible/i)).toBeInTheDocument();
+    expect(screen.getByText(/Not a prediction model or expert replacement/i)).toBeInTheDocument();
     expect(screen.getByText(/what this is useful for/i)).toBeInTheDocument();
+    expect(screen.getByText(/AI confidence is not the decision/i)).toBeInTheDocument();
+    expect(screen.getByText(/cost-weighted consequence is the decision gate/i)).toBeInTheDocument();
+    expect(screen.getByText(/weighs the cost of acting against the cost of ignoring a risk score/i)).toBeInTheDocument();
   });
 
   it("resets to the selected synthetic example", () => {
@@ -96,5 +100,32 @@ describe("CardoGuard", () => {
     fireEvent.click(screen.getByRole("button", { name: /run guard check/i }));
 
     expect(screen.getByText(/cautious synthetic band/i)).toBeInTheDocument();
+  });
+
+  it("renders the alternate hinge text and advice when recommendation is DO NOT ACT", () => {
+    render(<CardoGuard />);
+
+    // Drive a clear DO NOT ACT outcome using high act cost + modest miss cost
+    fireEvent.change(screen.getByLabelText(/scenario/i), {
+      target: { value: "routine-inspection-nudge" }
+    });
+    fireEvent.change(screen.getByLabelText(/model confidence/i), {
+      target: { value: "78" }
+    });
+    fireEvent.change(screen.getByLabelText(/cost to act/i), {
+      target: { value: "120000" }
+    });
+    fireEvent.change(screen.getByLabelText(/cost of missing/i), {
+      target: { value: "80000" }
+    });
+    fireEvent.click(screen.getByRole("button", { name: /run guard check/i }));
+
+    expect(screen.getByText(/^DO NOT ACT$/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/expected waste of acting is higher than the risk-adjusted cost of missing it/i)
+    ).toBeInTheDocument();
+    // Covers the "lower than assumed" branch in "what would change"
+    expect(screen.getByText(/false alarm rate for this confidence band was lower than assumed/i)).toBeInTheDocument();
+    expect(screen.getByText(/make acting cheaper\./i)).toBeInTheDocument();
   });
 });
