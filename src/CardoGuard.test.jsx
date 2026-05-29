@@ -32,7 +32,7 @@ describe("CardoGuard", () => {
     expect(
       screen.getByText(/acting clears the gate because the risk-adjusted cost of missing it is higher than the expected waste of acting\./i)
     ).toBeInTheDocument();
-    expect(screen.getByText(/adjusted chance the risk is real/i, { selector: ".card-label" })).toBeInTheDocument();
+    expect(screen.getByText(/chance risk is real = 100% - false alarm rate/i, { selector: ".card-label" })).toBeInTheDocument();
     expect(screen.getByText(/how often this confidence band is wrong/i, { selector: ".card-label" })).toBeInTheDocument();
     expect(screen.getByText(/the decision hinge/i)).toBeInTheDocument();
     expect(screen.getByText(/how the gate is checked/i)).toBeInTheDocument();

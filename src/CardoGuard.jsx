@@ -61,6 +61,7 @@ export default function CardoGuard() {
   const whyThisVerdict = useMemo(() => buildCardoGuardWhyThisVerdict(review), [review]);
 
   const confidenceBandLabel = `${review.confidenceBand} calibration band`;
+  const riskChanceLabel = `Chance risk is real = 100% - false alarm rate`;
 
   function updateDraft(field, value) {
     setDraft((current) => ({ ...current, [field]: value }));
@@ -172,7 +173,10 @@ export default function CardoGuard() {
               />
               <div className="cardo-guard__range-value">{Number(draft.confidence)}%</div>
             </div>
-            <div className="muted">Synthetic calibration band updates with the selected confidence.</div>
+            <div className="muted">
+              Synthetic calibration band for this demo. In a real deployment, this would come from model evaluation
+              logs.
+            </div>
           </div>
 
           <div className="mini-grid cardo-guard__costs">
@@ -255,9 +259,9 @@ export default function CardoGuard() {
               note="Synthetic band"
             />
             <Metric
-              label="Adjusted chance the risk is real"
+              label={riskChanceLabel}
               value={`${Math.round(review.calibratedEventLikelihood * 100)}%`}
-              note="Based on the synthetic false-alarm band."
+              note="100% - false alarm rate"
             />
             <Metric
               label="Expected cost if we act and the model is wrong"

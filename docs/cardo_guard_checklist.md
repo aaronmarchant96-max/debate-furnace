@@ -13,6 +13,7 @@ Use this before shipping anything that uses CARDO GUARD language, logic, or repo
 
 - The scenario is synthetic or clearly labeled if real.
 - The confidence score is shown with its source or calibration context.
+- Synthetic calibration bands are labeled as demo-only unless they come from real evaluation logs.
 - The cost to act is stated in real units.
 - The cost of missing is stated in real units.
 - Any thresholds used are visible and easy to inspect.
