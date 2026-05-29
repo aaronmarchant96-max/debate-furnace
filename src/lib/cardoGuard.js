@@ -4,9 +4,9 @@ export const CARDO_GUARD_SCENARIOS = [
     label: "Road closure reroute",
     summary:
       "A route disruption threatens a fuel delivery. Rerouting is expensive, but missing the closure could stall work on site.",
-    defaultConfidence: 82,
-    defaultCostToAct: 180000,
-    defaultCostToMiss: 1200000
+    defaultConfidence: 89,
+    defaultCostToAct: 17000,
+    defaultCostToMiss: 1465000
   },
   {
     id: "compressor-anomaly",

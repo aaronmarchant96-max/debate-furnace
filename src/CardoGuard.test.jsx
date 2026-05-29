@@ -25,7 +25,7 @@ describe("CardoGuard", () => {
     expect(screen.getByText(/^ACT$/i)).toBeInTheDocument();
     expect(screen.getByText(/expected miss loss \$9,100 is higher than expected action waste \$450\./i)).toBeInTheDocument();
     expect(
-      screen.getByText(/calibrated event likelihood/i, { selector: ".card-label" })
+      screen.getByText(/chance the event is real after calibration/i, { selector: ".card-label" })
     ).toBeInTheDocument();
     expect(screen.getByText(/what would change the verdict/i)).toBeInTheDocument();
     expect(screen.getByText(/not a prediction model/i)).toBeInTheDocument();

@@ -10,6 +10,7 @@ Use this as a pass/fail check while clicking through the live tool.
   - Hero says `Synthetic only`.
   - Tool says `Launch gate`.
   - Default scenario is `Road closure reroute`.
+  - Default example should read like `89%`, `15%`, `85%`, `$17,000`, and `$1,465,000`.
 
 ## 2. Draft vs Report
 
