@@ -147,7 +147,7 @@ button { font-family: inherit; }
 .top-tabs {
   align-items: stretch;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
   width: 100%;
 }
@@ -754,6 +754,131 @@ button { font-family: inherit; }
 }
 
 .control-group {
+  margin-top: 12px;
+}
+
+.cardo-guard {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+}
+
+.cardo-guard__hero {
+  border-top: 1px solid rgba(73, 206, 235, 0.16);
+  background: linear-gradient(180deg, rgba(11, 15, 21, 0.98), rgba(17, 24, 39, 0.95));
+  box-shadow: var(--shadow-soft);
+}
+
+.cardo-guard__status {
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+}
+
+.cardo-guard__intro {
+  max-width: 72ch;
+  line-height: 1.55;
+}
+
+.cardo-guard__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.cardo-guard__select,
+.cardo-guard__input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: var(--surface-inner-alt);
+  color: var(--text-secondary);
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.cardo-guard__select:focus,
+.cardo-guard__input:focus,
+.cardo-guard__range:focus {
+  outline: 2px solid rgba(240, 199, 94, 0.22);
+  border-color: rgba(240, 199, 94, 0.42);
+}
+
+.cardo-guard__hint {
+  margin-top: 6px;
+}
+
+.cardo-guard__slider-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.cardo-guard__range {
+  width: 100%;
+}
+
+.cardo-guard__range-value {
+  min-width: 64px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-inner);
+  color: var(--text);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.cardo-guard__costs {
+  margin-top: 12px;
+}
+
+.cardo-guard__actions {
+  margin-top: 16px;
+}
+
+.cardo-guard__rules {
+  margin-top: 16px;
+}
+
+.cardo-guard__list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.cardo-guard__report {
+  min-height: 100%;
+}
+
+.cardo-guard__decision {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 12px;
+  border-color: rgba(240, 199, 94, 0.18);
+  background: rgba(214, 176, 76, 0.08);
+}
+
+.cardo-guard__decision-line {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.cardo-guard__metric-value {
+  margin-top: 2px;
+  font-size: 18px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.cardo-guard__hinge {
   margin-top: 12px;
 }
 
@@ -1565,6 +1690,10 @@ button { font-family: inherit; }
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .cardo-guard__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .forge-guide__grid {
     grid-template-columns: 1fr;
   }
@@ -1635,6 +1764,18 @@ button { font-family: inherit; }
 
   .top-tabs {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cardo-guard__status {
+    justify-items: start;
+  }
+
+  .cardo-guard__slider-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cardo-guard__range-value {
+    justify-self: start;
   }
 
   .top-tab,

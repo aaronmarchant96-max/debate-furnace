@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DebateFurnace from "./DebateFurnace.jsx";
 import CreativeEngine from "./CreativeEngine.jsx";
 import StormReplay from "./StormReplay.jsx";
+import CardoGuard from "./CardoGuard.jsx";
 
 const TOP_LEVEL = [
   {
@@ -18,6 +19,11 @@ const TOP_LEVEL = [
     id: "storm-replay",
     label: "Storm Replay",
     subtitle: "Storm imagery gets a careful read."
+  },
+  {
+    id: "cardo-guard",
+    label: "CARDO GUARD",
+    subtitle: "Decision scores get a launch gate."
   }
 ];
 
@@ -25,6 +31,7 @@ function getInitialTool() {
   if (typeof window === "undefined") return "furnace";
   if (window.location.hash === "#story-forge") return "story-forge";
   if (window.location.hash === "#storm-replay") return "storm-replay";
+  if (window.location.hash === "#cardo-guard") return "cardo-guard";
   return "furnace";
 }
 
@@ -33,16 +40,23 @@ export default function AppShell() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const nextHash =
-      tool === "story-forge" ? "#story-forge" : tool === "storm-replay" ? "#storm-replay" : "#furnace";
-    if (window.location.hash !== nextHash) {
-      window.history.replaceState({}, "", nextHash);
+    const hashByTool = {
+      furnace: "#furnace",
+      "story-forge": "#story-forge",
+      "storm-replay": "#storm-replay",
+      "cardo-guard": "#cardo-guard"
+    };
+    const resolvedHash = hashByTool[tool] || "#furnace";
+    if (window.location.hash !== resolvedHash) {
+      window.history.replaceState({}, "", resolvedHash);
     }
     document.title =
       tool === "story-forge"
         ? "PromptHound Labs | Story Forge"
         : tool === "storm-replay"
           ? "PromptHound Labs | Storm Replay"
+          : tool === "cardo-guard"
+            ? "PromptHound Labs | CARDO GUARD"
           : "PromptHound Labs | Debate Furnace";
   }, [tool]);
 
@@ -73,7 +87,15 @@ export default function AppShell() {
         </nav>
       </header>
       <main className="shell-main">
-        {tool === "story-forge" ? <CreativeEngine /> : tool === "storm-replay" ? <StormReplay /> : <DebateFurnace />}
+        {tool === "story-forge" ? (
+          <CreativeEngine />
+        ) : tool === "storm-replay" ? (
+          <StormReplay />
+        ) : tool === "cardo-guard" ? (
+          <CardoGuard />
+        ) : (
+          <DebateFurnace />
+        )}
       </main>
     </div>
   );

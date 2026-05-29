@@ -6,5 +6,22 @@ module.exports = {
   },
   moduleFileExtensions: ["js", "jsx", "json"],
   testMatch: ["<rootDir>/src/**/*.test.[jt]s?(x)"],
-  clearMocks: true
+  clearMocks: true,
+  bail: true,
+  testTimeout: 5000,
+  verbose: true,
+  coverageThreshold: {
+    "./src/CardoGuard.jsx": {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
+    },
+    "./src/lib/cardoGuard.js": {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
+    }
+  }
 };

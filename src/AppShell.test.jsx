@@ -34,4 +34,13 @@ describe("AppShell", () => {
     expect(screen.getByRole("button", { name: /storm replay/i })).toHaveAttribute("aria-pressed", "true");
     expect(document.title).toBe("PromptHound Labs | Storm Replay");
   });
+
+  it("loads CARDO GUARD from the hash", () => {
+    window.history.replaceState({}, "", "/#cardo-guard");
+
+    render(<AppShell />);
+
+    expect(screen.getByRole("button", { name: /cardo guard/i })).toHaveAttribute("aria-pressed", "true");
+    expect(document.title).toBe("PromptHound Labs | CARDO GUARD");
+  });
 });

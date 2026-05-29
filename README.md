@@ -80,6 +80,21 @@ The strongest proof pieces for Story Forge are in the seed library, source trail
 - [Story Forge QA Checklist](docs/story_forge_qa_checklist.md)
 - [Story Forge Source Bank](docs/story_forge_source_bank.md)
 
+## CARDO GUARD
+
+CARDO GUARD is the PromptHound Labs launch-gate tool for synthetic decision validation. It takes a scenario, a confidence score, the cost to act, and the cost of missing, then makes the hinge visible before anyone treats the score like a verdict.
+
+It is built to:
+
+- keep the workflow synthetic-first
+- compare action waste against miss loss in plain units
+- make the recommendation easy to audit
+- stay narrow instead of becoming generic AI governance
+
+The reusable launch gate is documented here:
+
+- [CARDO GUARD Launch Gate Checklist](docs/cardo_guard_checklist.md)
+
 ## Method
 
 PromptHound Labs turns messy input into reviewable structure. The CARDO REI loop is the shared proof path:
@@ -193,6 +208,7 @@ The richer script and report language reference, source-bank notes, and product 
 - [The Origin of Debate Furnace](docs/Debate_Furnace_Origin.md)
 - [Debate Furnace QA Checklist](docs/debate_furnace_qa_checklist.md)
 - [Story Forge QA Checklist](docs/story_forge_qa_checklist.md)
+- [CARDO GUARD Launch Gate Checklist](docs/cardo_guard_checklist.md)
 
 ## Local Setup
 
