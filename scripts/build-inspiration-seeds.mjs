@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import crypto from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -86,11 +87,11 @@ async function main() {
   }
 
   const manifest = {
-    generatedAt: new Date().toISOString(),
     seedCount: seeds.length,
     batchFile: path.relative(repoRoot, batchPath),
     inputFile: path.relative(repoRoot, indexPath),
     sourceDirectory: path.relative(repoRoot, seedDir),
+    buildHash: crypto.createHash("sha256").update(JSON.stringify(seeds)).digest("hex"),
     tags: [...tagCounts.entries()]
       .sort((a, b) => a[0].localeCompare(b[0]))
       .map(([tag, count]) => ({ tag, count }))

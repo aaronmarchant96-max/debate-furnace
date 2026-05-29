@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-05-26T07:05:56.691Z",
   "seedCount": 5,
   "batchFile": "data/inspiration-seeds.batch.jsonl",
   "inputFile": "public/seeds/index.json",
   "sourceDirectory": "public/seeds",
+  "buildHash": "d9f7536933e6d0f47973077a1585c993b58e40f773eae61929ceb8215086db7a",
   "tags": [
     {
       "tag": "ancient world",

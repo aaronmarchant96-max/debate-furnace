@@ -60,7 +60,7 @@ The current version is a live public prototype with a Gemini-backed custom debat
 
 ## Story Forge
 
-Story Forge is the companion tool in the same app shell. It turns real events, old texts, and strange source material into story blueprints without losing the source trail.
+Story Forge is the companion tool in the same app shell. It turns a curated seed library built from real events, old texts, and strange source material into story blueprints without losing the source trail.
 
 It is built to help with:
 
@@ -68,13 +68,14 @@ It is built to help with:
 - keeping the original sources visible
 - turning source material into usable story hooks
 - building around the hinge instead of flattening the material into generic summary
+- keeping the source boundary visible so the final output reads as inspiration, not retelling
 
 Two worked examples show the difference between filtering an overclaim and keeping a real unresolved case open:
 
 - [UAP false positive suppression](docs/Debate_Furnace_Rich_Script_Reference.md#false-positive-suppressed-uaps): the analyzer strips out the leap from "unexplained" to "non-human" and leaves the case at "unexplained, not proven."
 - [Franklin Expedition residual candidate](docs/Debate_Furnace_Rich_Script_Reference.md#residual-candidate-kept-the-franklin-expedition): the analyzer keeps the uncertainty in play because the historical record still leaves a legitimate gap.
 
-The strongest proof pieces for Story Forge are in the source trail and the seed library, with the reusable checklist documented here:
+The strongest proof pieces for Story Forge are in the seed library, source trail, and generated packets, with the reusable checklist documented here:
 
 - [Story Forge QA Checklist](docs/story_forge_qa_checklist.md)
 - [Story Forge Source Bank](docs/story_forge_source_bank.md)
@@ -186,7 +187,7 @@ user question
 
 ## Reference Docs
 
-The richer script and report language reference and product origin notes are archived here:
+The richer script and report language reference, source-bank notes, and product origin notes are archived here:
 
 - [Debate Furnace Rich Script Reference](docs/Debate_Furnace_Rich_Script_Reference.md)
 - [The Origin of Debate Furnace](docs/Debate_Furnace_Origin.md)
@@ -198,6 +199,10 @@ The richer script and report language reference and product origin notes are arc
 ```bash
 npm install
 npm run dev
+```
+
+```bash
+npm test
 ```
 
 ## Build

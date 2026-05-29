@@ -8,6 +8,8 @@
     "seeds:build": "node scripts/build-inspiration-seeds.mjs",
     "seeds:validate": "node scripts/validate-inspiration-seeds.mjs",
     "app:validate": "node scripts/validate-app-shell.mjs",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -17,7 +19,15 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
+    "@babel/preset-react": "^7.29.7",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@vitejs/plugin-react": "^4.3.1",
+    "babel-jest": "^30.4.1",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "vite": "^5.4.8"
   }
 }

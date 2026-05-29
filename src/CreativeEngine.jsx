@@ -1419,7 +1419,7 @@ export default function CreativeEngine() {
         <div className="forge-hero__copy">
           <div className="eyebrow">Creative engine</div>
           <h1>Find the real pattern. Forge a new story.</h1>
-          <p className="lead">Turn real events, old texts, and strange source material into usable story blueprints without losing the source trail.</p>
+          <p className="lead">Turn a curated seed library of real events, old texts, and strange source material into usable story blueprints without losing the source trail.</p>
           <div className="button-row forge-hero__actions">
             <button type="button" className="pill pill--primary pill--large" onClick={pickRandomSeed}>Random seed</button>
             <button type="button" className="pill" onClick={copySeedPacket}>{copyState || "Copy seed packet"}</button>
@@ -1455,7 +1455,7 @@ export default function CreativeEngine() {
             <div className="forge-guide__index">1</div>
             <div>
               <div className="card-label">Pick a seed</div>
-              <div>Start with a real event, myth, archive mystery, or strange source.</div>
+              <div>Start with a curated seed built from a real event, myth, archive mystery, or strange source.</div>
             </div>
           </div>
           <div className="forge-guide__step">
@@ -1487,7 +1487,7 @@ export default function CreativeEngine() {
             </div>
           </div>
         </div>
-        <div className="forge-guide__note">Recommended first flow: Pick a seed, choose Movie, choose Historical Mystery or Fantasy, generate Blueprint, then generate Full story idea.</div>
+        <div className="forge-guide__note">Recommended first flow: Pick a seed, choose Movie, choose Fantasy or Horror, generate Blueprint, then generate Full story idea.</div>
       </section>
 
       <section className="forge-workspace">

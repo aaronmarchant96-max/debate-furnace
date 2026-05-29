@@ -213,7 +213,14 @@ If you prioritize a definition of real that requires something more than felt in
 
 The unresolved question: which definition of real you find most honest.
 
-## 8. Rich Extraordinary Claim Example: UAPs
+## 8. Worked Example Pair: False Positive vs Residual Candidate
+
+These two cases show the analyzer doing two different jobs:
+
+- suppressing an obvious overclaim
+- preserving a legitimate unresolved case for human review
+
+### False Positive Suppressed: UAPs
 
 Question:
 
@@ -227,15 +234,64 @@ Side B:
 
 > Conventional explanations are more likely.
 
-### Key Takeaways
+### What Was Filtered
 
-- Unexplained is not the same as non-human: The anomalies may be real without their origin being settled.
-- Official acknowledgment raises the question, not the answer: Government recognition of UAPs as a real category is significant, but it does not establish origin.
-- Neither side defined what proof would be enough: That is the question the debate left open.
+- The drift from "most likely advanced non-human technology" to "UAPs are real anomalies and deserve investigation"
+- The unsupported leap from unexplained to non-human
+- The implication that official acknowledgment is the same as origin proof
 
-### Core Heat Point
+### What Remained
 
-The unresolved question is whether the remaining unexplained UAP cases are unexplained because they exceed known human capability, or because the available evidence is too incomplete to justify an extraordinary conclusion.
+- Unexplained cases still deserve analysis
+- Source reliability, sensor quality, and burden of proof
+- The distinction between anomaly, unknown, and extraterrestrial origin
+
+### Why It Stayed Filtered
+
+- The evidence does not justify the extraordinary conclusion
+- The strongest honest output is "unexplained, not proven"
+
+### Residual Candidate Kept: The Franklin Expedition
+
+Question:
+
+> What happened to the Franklin Expedition?
+
+Side A:
+
+> The expedition likely failed because environment, logistics, and leadership overwhelmed it.
+
+Side B:
+
+> The cause remains partly unresolved, and the record still leaves room for competing explanations.
+
+### What Was Filtered
+
+- Clean retellings that pretend the cause is fully settled
+- Overconfident single-cause explanations that ignore the archive gap
+- Speculation that outruns the evidence
+
+### What Remained
+
+- The real pressure pattern: ice, hunger, morale, rescue failure, and institutional overreach
+- The unresolved question of how the end unfolded
+- A legitimate residual candidate for human review, not a fake certainty
+
+### Why It Stayed
+
+- The evidence is incomplete in a way that genuinely matters
+- The analyzer should preserve uncertainty instead of pretending closure
+
+### Side-by-Side
+
+| Case | Filtered | Remained | Why |
+| --- | --- | --- | --- |
+| UAPs | Non-human origin leap, claim drift, proof by acknowledgment | Unexplained cases, sensor limits, source reliability | Extraordinary claim not established |
+| Franklin Expedition | Overconfident single-cause retellings, tidy closure | Open question, pressure pattern, archive gap | The uncertainty is real, not noise |
+
+### Reproducibility Note
+
+These examples are grounded in the seed files under `public/seeds/`, and the same source set can be rebuilt with `npm run seeds:build` to refresh `data/inspiration-seeds.batch.jsonl` and `data/inspiration-seeds.manifest.json`.
 
 ## 9. Final Report Contract
 
