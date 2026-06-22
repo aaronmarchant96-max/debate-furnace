@@ -388,6 +388,27 @@ function calculateReviewMetrics(rows, scenario) {
   };
 }
 
+export function buildTracepointSensorSeries(rows, sensorKey) {
+  const scenario = getTracepointScenarioByAssetId(rows[0]?.asset_id);
+  const sensor = TRACEPOINT_SENSOR_RULES.find((item) => item.key === sensorKey);
+  if (!sensor) return [];
+
+  return rows.map((_, index) => {
+    const prefix = rows.slice(0, index + 1);
+    const evidence = calculateSensorEvidence(prefix, sensor, scenario);
+    const row = rows[index];
+
+    return {
+      timestamp: row.timestamp,
+      value: row[sensorKey],
+      ewma: evidence.ewmaCurrent,
+      baseline: evidence.baselineMedian,
+      contribution: evidence.contribution,
+      robustZ: evidence.robustZ
+    };
+  });
+}
+
 export function calculateTracepointReview(rows) {
   const scenario = getTracepointScenarioByAssetId(rows[0]?.asset_id);
   const metrics = calculateReviewMetrics(rows, scenario);

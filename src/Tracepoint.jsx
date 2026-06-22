@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   buildTracepointRows,
   buildTracepointReviewPacket,
+  buildTracepointSensorSeries,
   calculateTracepointDecision,
   calculateTracepointReview,
   formatTracepointMoney,
@@ -109,14 +110,33 @@ function formatScenarioVersion(scenarioId) {
   return "synthetic-review-v1";
 }
 
-function ChartCard({ title, values, unitKey, tone, note }) {
+function ChartCard({ title, values, unitKey, tone, note, evidence, series, primary, markers = [] }) {
   const spark = useMemo(() => buildSparklinePath(values), [values]);
   const minLabel = formatMetric(spark.min, unitKey);
   const maxLabel = formatMetric(spark.max, unitKey);
   const latestLabel = formatMetric(spark.latest, unitKey);
+  const width = 260;
+  const height = 128;
+  const paddingX = 12;
+  const paddingY = 14;
+  const range = spark.max - spark.min || 1;
+  const valueToY = (value) => height - paddingY - ((value - spark.min) / range) * (height - paddingY * 2);
+  const valueToX = (index) => paddingX + (index / (series.length - 1 || 1)) * (width - paddingX * 2);
+  const scale = 1.4826 * (evidence?.baselineMad || 0) + 0.000001;
+  const direction = evidence?.expectedDirection || 1;
+  const baseline = evidence?.baselineMedian || spark.min;
+  const normalLimit = baseline + direction * scale * 1.15;
+  const watchLimit = baseline + direction * scale * 2.3;
+  const bandTop = direction > 0 ? valueToY(watchLimit) : valueToY(normalLimit);
+  const bandMiddle = direction > 0 ? valueToY(normalLimit) : valueToY(watchLimit);
+  const baselineY = valueToY(baseline);
+  const markerEntries = markers.map((marker) => ({
+    ...marker,
+    x: paddingX + (marker.hour / ((series.length - 1) || 1)) * (width - paddingX * 2)
+  }));
 
   return (
-    <article className={`panel tracepoint-chart tracepoint-chart--${tone}`}>
+    <article className={`panel tracepoint-chart tracepoint-chart--${tone} ${primary ? "tracepoint-chart--primary" : ""}`}>
       <div className="tracepoint-chart__head">
         <div>
           <div className="card-label">{title}</div>
@@ -127,18 +147,47 @@ function ChartCard({ title, values, unitKey, tone, note }) {
           <span>{maxLabel}</span>
         </div>
       </div>
-      <svg viewBox="0 0 260 96" className="tracepoint-chart__svg" aria-hidden="true">
+      <svg viewBox={`0 0 ${width} ${height}`} className="tracepoint-chart__svg" aria-hidden="true">
         <defs>
           <linearGradient id={`tracepoint-${tone}-fill`} x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stopColor="var(--tracepoint-accent)" stopOpacity="0.28" />
             <stop offset="100%" stopColor="var(--tracepoint-accent)" stopOpacity="0.02" />
           </linearGradient>
+          <linearGradient id={`tracepoint-${tone}-band-normal`} x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="rgba(134,168,144,0.24)" />
+            <stop offset="100%" stopColor="rgba(134,168,144,0.08)" />
+          </linearGradient>
+          <linearGradient id={`tracepoint-${tone}-band-watch`} x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="rgba(240,199,94,0.22)" />
+            <stop offset="100%" stopColor="rgba(240,199,94,0.08)" />
+          </linearGradient>
+          <linearGradient id={`tracepoint-${tone}-band-review`} x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="rgba(248,113,113,0.22)" />
+            <stop offset="100%" stopColor="rgba(248,113,113,0.08)" />
+          </linearGradient>
         </defs>
-        <line x1="10" y1="18" x2="250" y2="18" className="tracepoint-chart__gridline" />
-        <line x1="10" y1="48" x2="250" y2="48" className="tracepoint-chart__gridline" />
-        <line x1="10" y1="78" x2="250" y2="78" className="tracepoint-chart__gridline" />
+        <rect x={paddingX} y={14} width={width - paddingX * 2} height={Math.max(0, bandTop - 14)} className="tracepoint-chart__band tracepoint-chart__band--review" fill={`url(#tracepoint-${tone}-band-review)`} />
+        <rect x={paddingX} y={bandTop} width={width - paddingX * 2} height={Math.max(0, bandMiddle - bandTop)} className="tracepoint-chart__band tracepoint-chart__band--watch" fill={`url(#tracepoint-${tone}-band-watch)`} />
+        <rect x={paddingX} y={bandMiddle} width={width - paddingX * 2} height={Math.max(0, height - paddingY - bandMiddle)} className="tracepoint-chart__band tracepoint-chart__band--normal" fill={`url(#tracepoint-${tone}-band-normal)`} />
+        <line x1={paddingX} y1={baselineY} x2={width - paddingX} y2={baselineY} className="tracepoint-chart__gridline tracepoint-chart__gridline--baseline" />
+        <line x1={paddingX} y1={bandTop} x2={width - paddingX} y2={bandTop} className="tracepoint-chart__gridline tracepoint-chart__gridline--threshold" />
+        <line x1={paddingX} y1={bandMiddle} x2={width - paddingX} y2={bandMiddle} className="tracepoint-chart__gridline tracepoint-chart__gridline--threshold" />
+        {markerEntries.map((marker) => (
+          <g key={marker.label} className="tracepoint-chart__marker">
+            <line x1={marker.x} y1={14} x2={marker.x} y2={height - paddingY} className={`tracepoint-chart__marker-line tracepoint-chart__marker-line--${marker.tone}`} />
+            <text x={marker.x + 4} y={24} className="tracepoint-chart__marker-label">
+              {marker.label}
+            </text>
+          </g>
+        ))}
         {spark.area ? <path d={spark.area} className="tracepoint-chart__area" fill={`url(#tracepoint-${tone}-fill)`} /> : null}
         {spark.path ? <path d={spark.path} className="tracepoint-chart__line" /> : null}
+        {series.map((point, index) => (
+          <g key={`${point.timestamp}-${index}`} className="tracepoint-chart__point-group">
+            <circle cx={valueToX(index)} cy={valueToY(point.value)} r="2.4" className="tracepoint-chart__point" />
+            <title>{`${formatTracepointTimestamp(point.timestamp)} | Reading ${formatMetric(point.value, unitKey)} | EWMA ${formatMetric(point.ewma, unitKey)} | Baseline ${formatMetric(point.baseline, unitKey)} | Contribution ${point.contribution}%`}</title>
+          </g>
+        ))}
       </svg>
       {note ? <div className="tracepoint-chart__note">{note}</div> : null}
     </article>
@@ -150,6 +199,174 @@ function ReviewMarkButton({ active, children, ...props }) {
     <button type="button" className={active ? "pill tracepoint-pill is-active" : "pill tracepoint-pill"} {...props}>
       {children}
     </button>
+  );
+}
+
+function AssetGlyph({ assetId }) {
+  const isPump = assetId.startsWith("P-");
+  return (
+    <svg viewBox="0 0 72 48" className="tracepoint-asset" aria-hidden="true">
+      <defs>
+        <linearGradient id="tracepoint-asset-fill" x1="0" x2="1">
+          <stop offset="0%" stopColor="#f0c75e" stopOpacity="0.28" />
+          <stop offset="100%" stopColor="#9fb3a0" stopOpacity="0.16" />
+        </linearGradient>
+      </defs>
+      <rect x="2" y="33" width="68" height="5" rx="2.5" fill="rgba(255,255,255,0.08)" />
+      {isPump ? (
+        <>
+          <circle cx="20" cy="24" r="10" fill="none" stroke="url(#tracepoint-asset-fill)" strokeWidth="2.5" />
+          <circle cx="20" cy="24" r="4" fill="none" stroke="rgba(240,199,94,0.8)" strokeWidth="2" />
+          <rect x="33" y="14" width="20" height="20" rx="4" fill="rgba(240,199,94,0.1)" stroke="rgba(240,199,94,0.45)" />
+          <path d="M53 18h10v12H53" fill="none" stroke="rgba(159,179,160,0.72)" strokeWidth="2.4" />
+          <path d="M43 14v-7" stroke="rgba(255,255,255,0.28)" strokeWidth="2" strokeLinecap="round" />
+        </>
+      ) : (
+        <>
+          <rect x="10" y="12" width="18" height="20" rx="4" fill="rgba(159,179,160,0.1)" stroke="rgba(159,179,160,0.55)" />
+          <circle cx="38" cy="25" r="8" fill="none" stroke="rgba(240,199,94,0.85)" strokeWidth="2.5" />
+          <path d="M46 25h14" stroke="rgba(240,199,94,0.85)" strokeWidth="2.5" strokeLinecap="round" />
+          <path d="M20 12v-6" stroke="rgba(255,255,255,0.28)" strokeWidth="2" strokeLinecap="round" />
+        </>
+      )}
+    </svg>
+  );
+}
+
+function ScoreGauge({ score, status }) {
+  const radius = 46;
+  const circumference = 2 * Math.PI * radius;
+  const fill = (Math.max(0, Math.min(100, score)) / 100) * circumference;
+  const strokeDashoffset = circumference - fill;
+
+  return (
+    <div className="tracepoint-gauge">
+      <svg viewBox="0 0 124 124" className="tracepoint-gauge__svg" aria-hidden="true">
+        <circle cx="62" cy="62" r={radius} className="tracepoint-gauge__track" />
+        <circle
+          cx="62"
+          cy="62"
+          r={radius}
+          className={`tracepoint-gauge__arc tracepoint-gauge__arc--${status === "Review Recommended" ? "red" : status === "Watch" ? "amber" : "muted"}`}
+          strokeDasharray={`${fill} ${circumference - fill}`}
+          strokeDashoffset={circumference * 0.25}
+        />
+      </svg>
+      <div className="tracepoint-gauge__body">
+        <div className="tracepoint-gauge__score">{score.toFixed(1)}</div>
+        <div className="tracepoint-gauge__label">Signal Review Score</div>
+      </div>
+    </div>
+  );
+}
+
+function SignalTimeline({ scenario }) {
+  const phases = [
+    { label: "Stable", hour: 0, tone: "muted" },
+    { label: "Drift detected", hour: scenario.profile.wearStartHour, tone: "amber" },
+    { label: "Persistent elevation", hour: scenario.profile.pressureInstabilityHour, tone: "amber" },
+    { label: "Review threshold crossed", hour: scenario.profile.escalationHour, tone: "red" }
+  ];
+
+  return (
+    <div className="tracepoint-timeline" aria-label="Scenario event timeline">
+      {phases.map((phase, index) => (
+        <div key={phase.label} className={`tracepoint-timeline__step tracepoint-timeline__step--${phase.tone}`}>
+          <div className="tracepoint-timeline__dot" />
+          <div className="tracepoint-timeline__label">{phase.label}</div>
+          <div className="tracepoint-timeline__hour">h{phase.hour}</div>
+          {index < phases.length - 1 ? <div className="tracepoint-timeline__rule" aria-hidden="true" /> : null}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function SignalStack({ sensorDetails, concordance }) {
+  return (
+    <div className="tracepoint-stack">
+      {sensorDetails.map((detail) => (
+        <div key={detail.key} className="tracepoint-stack__row">
+          <div className="tracepoint-stack__meta">
+            <span className="tracepoint-stack__label">{detail.label}</span>
+            <span className="tracepoint-stack__detail">
+              {detail.key === "bearing_temperature"
+                ? `${detail.persistenceCount} readings elevated`
+                : detail.key === "pressure"
+                  ? "Ripple after load change"
+                  : detail.key === "flow_rate"
+                    ? "Softening trend"
+                    : "Persistent drift"}
+            </span>
+          </div>
+          <div className="tracepoint-stack__bar">
+            <span style={{ width: `${Math.max(12, Math.round(detail.contribution))}%` }} />
+          </div>
+          <div className="tracepoint-stack__score">{Math.round(detail.weight * 100)}%</div>
+        </div>
+      ))}
+      <div className="tracepoint-agreement">
+        <div className="tracepoint-agreement__label">Sensor agreement</div>
+        <div className="tracepoint-agreement__nodes" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+        <div className="tracepoint-agreement__text">{Math.round(concordance * 100)}% aligned on the drift direction</div>
+      </div>
+    </div>
+  );
+}
+
+function ActionLadder({ review, decision, recommendation }) {
+  const recommendedStep =
+    recommendation === "Targeted validation before full inspection"
+      ? "Check calibration / operator logs"
+      : recommendation === "Targeted inspection"
+        ? "Targeted inspection"
+        : recommendation === "Collect more readings"
+          ? "Collect more readings"
+          : recommendation === "Monitor"
+            ? "Monitor"
+            : review.status === "Review Recommended" && Math.abs(decision.expectedGap) < 10000
+              ? "Check calibration / operator logs"
+              : review.status === "Review Recommended" && decision.economicallyJustified
+                ? "Targeted inspection"
+                : review.status === "Watch"
+                  ? "Collect more readings"
+                  : "Monitor";
+
+  const recommendationNote =
+    recommendedStep === "Check calibration / operator logs"
+      ? "Suggested next move: lower-cost validation before full inspection"
+      : recommendedStep === "Targeted inspection"
+        ? "Suggested next move: targeted inspection"
+        : recommendedStep === "Collect more readings"
+          ? "Suggested next move: collect more readings"
+          : "Suggested next move: monitor";
+
+  const steps = [
+    "Monitor",
+    "Collect more readings",
+    "Check calibration / operator logs",
+    "Targeted inspection",
+    "Full shutdown / major intervention"
+  ];
+
+  return (
+    <div className="tracepoint-ladder" aria-label="Action ladder">
+      {steps.map((step) => {
+        const active = step === recommendedStep;
+        return (
+          <div key={step} className={active ? "tracepoint-ladder__step is-active" : "tracepoint-ladder__step"}>
+            <span>{step}</span>
+            {active ? <strong>Recommended</strong> : null}
+          </div>
+        );
+      })}
+      <div className="tracepoint-ladder__note">{recommendationNote}</div>
+    </div>
   );
 }
 
@@ -222,6 +439,15 @@ export default function Tracepoint() {
   const currentRow = rows[rows.length - 1];
   const scenarioIndex = TRACEPOINT_SCENARIOS.findIndex((item) => item.id === scenario.id);
   const sensorByKey = review.sensorMap || {};
+  const seriesByKey = useMemo(
+    () => ({
+      vibration_rms: buildTracepointSensorSeries(rows, "vibration_rms"),
+      bearing_temperature: buildTracepointSensorSeries(rows, "bearing_temperature"),
+      pressure: buildTracepointSensorSeries(rows, "pressure"),
+      flow_rate: buildTracepointSensorSeries(rows, "flow_rate")
+    }),
+    [rows]
+  );
   const vibrationEvidence = sensorByKey.vibration_rms;
   const temperatureEvidence = sensorByKey.bearing_temperature;
   const pressureEvidence = sensorByKey.pressure;
@@ -239,9 +465,15 @@ export default function Tracepoint() {
     flow_rate: "flow rate drift"
   }[review.mainDriver];
   const scoreFill = Math.max(0, Math.min(100, review.combinedScore));
-  const limitationStatement =
-    "Synthetic calibration demo only. Not operational advice, not a forecasting system, and not a replacement for inspection, maintenance procedures, or safety controls.";
   const decisionReadout = getTracepointDecisionReadout(review, decision);
+  const actionRecommendation =
+    review.status === "Review Recommended" && Math.abs(decision.expectedGap) < 10000
+      ? "Targeted validation before full inspection"
+      : review.status === "Review Recommended" && decision.economicallyJustified
+        ? "Targeted inspection"
+        : review.status === "Watch"
+          ? "Collect more readings"
+          : "Monitor";
   const reviewExplainer =
     review.status === "Review Recommended"
       ? `Review recommended. Vibration is ${vibrationEvidence ? vibrationEvidence.driftPercent : 0}% above its baseline median after EWMA smoothing. Bearing temperature is ${temperatureEvidence ? temperatureEvidence.driftPercent : 0}% above baseline and has stayed elevated for ${temperatureEvidence ? temperatureEvidence.persistenceCount : 0} readings. Pressure and flow are moving in the expected direction with ${Math.round((review.concordance || 0) * 100)}% sensor agreement.`
@@ -311,6 +543,45 @@ export default function Tracepoint() {
         </div>
       </header>
 
+      <section className="tracepoint__cockpit">
+        <article className="panel tracepoint__cockpit-gauge">
+          <div className="tracepoint__cockpit-label">Signal Review Score</div>
+          <ScoreGauge score={review.combinedScore} status={review.status} />
+          <div className="tracepoint__cockpit-meta">
+            <div className="tracepoint__cockpit-asset">
+              <AssetGlyph assetId={scenario.assetId} />
+              <div>
+                <div className="tracepoint__cockpit-asset-id">{scenario.assetId}</div>
+                <div className="tracepoint__cockpit-asset-name">{scenario.label}</div>
+              </div>
+            </div>
+            <div className="tracepoint__cockpit-chip">Synthetic calibration demo</div>
+            <div className="tracepoint__cockpit-chip">Human review required</div>
+          </div>
+        </article>
+
+        <article className="panel tracepoint__cockpit-decision">
+          <div className="card-label">Decision card</div>
+          <div className="tracepoint__cockpit-state">{decisionReadout.signalSummary}</div>
+          <div className="tracepoint__cockpit-summary">{decisionReadout.economicSummary}</div>
+          <div className="tracepoint__cockpit-move">Suggested next move: {actionRecommendation}</div>
+          <div className="tracepoint__cockpit-stack">
+            <div>
+              <span>Signal</span>
+              <strong>{decisionReadout.signalSummary}</strong>
+            </div>
+            <div>
+              <span>Economics</span>
+              <strong>{decisionReadout.economicSummary}</strong>
+            </div>
+            <div>
+              <span>Next move</span>
+              <strong>{actionRecommendation}</strong>
+            </div>
+          </div>
+        </article>
+      </section>
+
       <section className="tracepoint__cards">
         <article className="panel tracepoint-card">
           <div className="card-label">Current review status</div>
@@ -340,9 +611,31 @@ export default function Tracepoint() {
         </article>
         <article className="panel tracepoint-card">
           <div className="card-label">Data quality / provenance</div>
-          <div className="tracepoint-card__value">Deterministic synthetic generator</div>
-          <div className="tracepoint-card__note">
-            Baseline window: first 24 stable hours. Missing readings: 0. Scenario version: {provenanceVersion}.
+          <div className="tracepoint-provenance" aria-label="Run metadata">
+            <div>
+              <span>Scenario</span>
+              <strong>{provenanceVersion}</strong>
+            </div>
+            <div>
+              <span>Asset</span>
+              <strong>{scenario.assetId}</strong>
+            </div>
+            <div>
+              <span>Baseline</span>
+              <strong>first 24 stable hours</strong>
+            </div>
+            <div>
+              <span>Windows</span>
+              <strong>{rows.length}</strong>
+            </div>
+            <div>
+              <span>Missing</span>
+              <strong>0</strong>
+            </div>
+            <div>
+              <span>Generator</span>
+              <strong>deterministic-synthetic-v1</strong>
+            </div>
           </div>
         </article>
         <article className="panel tracepoint-card">
@@ -356,12 +649,14 @@ export default function Tracepoint() {
         <div className="panel__head">
           <div>
             <div className="eyebrow">Sensor trend section</div>
-            <h2>Readable time-series review</h2>
+            <h2>The chart is the story</h2>
           </div>
           <div className="tracepoint__trend-note">
-            Seven days of deterministic hourly readings for {scenario.label}.
+            Seven days of deterministic hourly readings for {scenario.label}. Hover the points for exact values.
           </div>
         </div>
+
+        <SignalTimeline scenario={scenario} />
 
         <div className="tracepoint__chart-grid">
           <ChartCard
@@ -369,6 +664,13 @@ export default function Tracepoint() {
             values={rows.map((row) => row.vibration_rms)}
             unitKey="vibration"
             tone="amber"
+            primary
+            markers={[
+              { hour: scenario.profile.wearStartHour, label: "Wear starts", tone: "amber" },
+              { hour: scenario.profile.pressureInstabilityHour, label: "Pressure instability", tone: "red" }
+            ]}
+            evidence={vibrationEvidence}
+            series={seriesByKey.vibration_rms}
             note={`Recent baseline: ${formatMetric(vibrationEvidence ? vibrationEvidence.baselineMedian : 0, "vibration")} → recent EWMA: ${formatMetric(vibrationEvidence ? vibrationEvidence.ewmaCurrent : 0, "vibration")}`}
           />
           <ChartCard
@@ -376,6 +678,8 @@ export default function Tracepoint() {
             values={rows.map((row) => row.bearing_temperature)}
             unitKey="temp"
             tone="red"
+            evidence={temperatureEvidence}
+            series={seriesByKey.bearing_temperature}
             note={`EWMA drift versus baseline: ${(temperatureEvidence ? temperatureEvidence.driftPercent : 0).toFixed(1)}%`}
           />
           <ChartCard
@@ -383,6 +687,8 @@ export default function Tracepoint() {
             values={rows.map((row) => row.pressure)}
             unitKey="pressure"
             tone="steel"
+            evidence={pressureEvidence}
+            series={seriesByKey.pressure}
             note={`Recent robust z: ${(pressureEvidence ? pressureEvidence.robustZ : 0).toFixed(2)} with ${pressureEvidence ? pressureEvidence.persistenceCount : 0} consecutive elevated readings`}
           />
           <ChartCard
@@ -390,38 +696,24 @@ export default function Tracepoint() {
             values={rows.map((row) => row.flow_rate)}
             unitKey="flow"
             tone="steel"
+            evidence={flowEvidence}
+            series={seriesByKey.flow_rate}
             note="Flow softens as wear builds and the later pressure event begins to move the system."
           />
         </div>
       </section>
-
-      <section className="tracepoint__review-grid">
-        <article className="panel tracepoint__explanation">
+      <section className="tracepoint__analysis-grid">
+        <article className="panel tracepoint__signal-panel">
           <div className="panel__head">
             <div>
-              <div className="eyebrow">Signal review explanation</div>
+              <div className="eyebrow">What the equipment data suggests</div>
               <h2>{review.status}</h2>
             </div>
           </div>
           <div className="tracepoint__evidence">
             <p>{reviewExplainer}</p>
           </div>
-          <div className="tracepoint__evidence-table">
-            {review.sensorDetails.map((detail) => (
-              <div key={detail.key} className="tracepoint__evidence-row">
-                <div>
-                  <div className="card-label">{detail.label}</div>
-                  <div className="tracepoint__evidence-value">{detail.ewmaCurrent} EWMA</div>
-                </div>
-                <div className="tracepoint__evidence-meta">
-                  <span>baseline {detail.baselineMedian}</span>
-                  <span>robust z {formatRobustZ(detail.robustZ)}</span>
-                  <span>persistence {detail.persistenceCount}</span>
-                  <span>weight {Math.round(detail.weight * 100)}%</span>
-                </div>
-              </div>
-            ))}
-          </div>
+          <SignalStack sensorDetails={review.sensorDetails} concordance={review.concordance} />
           <div className="tracepoint__alternatives">
             <div className="card-label">Possible alternative explanations</div>
             <ul>
@@ -433,7 +725,6 @@ export default function Tracepoint() {
               <li>missing or delayed data</li>
             </ul>
           </div>
-
           <details className="tracepoint__details">
             <summary>How this score was calculated</summary>
             <div className="tracepoint__formula">
@@ -447,184 +738,185 @@ export default function Tracepoint() {
           </details>
         </article>
 
-        <article className="panel tracepoint__reviewer">
+        <article className="panel tracepoint__decision-panel">
           <div className="panel__head">
             <div>
-              <div className="eyebrow">Reviewer workflow</div>
-              <h2>Mark the review, keep the judgment human</h2>
+              <div className="eyebrow">What the business should do</div>
+              <h2>Cost-aware review gate</h2>
             </div>
           </div>
-          <div className="tracepoint__reviewer-note">
-            The score prepares a review. A reviewer decides whether action is justified.
+          <div className="tracepoint__decision-grid">
+            <div className="control-group">
+              <label className="control-label" htmlFor="tracepoint-inspection-cost">
+                Inspection cost
+              </label>
+              <input
+                id="tracepoint-inspection-cost"
+                type="number"
+                min="0"
+                step="100"
+                className="tracepoint__input"
+                value={inspectionCost}
+                onChange={(event) => setInspectionCost(Number(event.target.value) || 0)}
+              />
+            </div>
+            <div className="control-group">
+              <label className="control-label" htmlFor="tracepoint-miss-cost">
+                Estimated loss if issue is real and ignored
+              </label>
+              <input
+                id="tracepoint-miss-cost"
+                type="number"
+                min="0"
+                step="100"
+                className="tracepoint__input"
+                value={missCost}
+                onChange={(event) => setMissCost(Number(event.target.value) || 0)}
+              />
+            </div>
+            <div className="control-group">
+              <label className="control-label" htmlFor="tracepoint-probability">
+                Estimated calibrated probability issue is real
+              </label>
+              <input
+                id="tracepoint-probability"
+                type="range"
+                min="0.05"
+                max="0.95"
+                step="0.01"
+                className="tracepoint__range"
+                value={calibratedProbability}
+                onChange={(event) => setCalibratedProbability(Number(event.target.value) || 0)}
+              />
+              <div className="tracepoint__inline-value">{formatTracepointPercent(calibratedProbability, 0)}</div>
+              <div className="tracepoint__range-note">Calibrated from the synthetic review score, not from a live model.</div>
+            </div>
+            <div className="control-group">
+              <label className="control-label" htmlFor="tracepoint-harm-reduction">
+                Intervention effectiveness after issue is confirmed
+              </label>
+              <input
+                id="tracepoint-harm-reduction"
+                type="range"
+                min="0.1"
+                max="0.9"
+                step="0.01"
+                className="tracepoint__range"
+                value={harmReduction}
+                onChange={(event) => setHarmReduction(Number(event.target.value) || 0)}
+              />
+              <div className="tracepoint__inline-value">{formatTracepointPercent(harmReduction, 0)}</div>
+            </div>
           </div>
 
-          <div className="button-row tracepoint__mark-row">
-            {TRACEPOINT_REVIEW_MARKS.map((mark) => (
-              <ReviewMarkButton
-                key={mark}
-                active={reviewerMark === mark}
-                onClick={() => handleMark(mark)}
-                aria-pressed={reviewerMark === mark}
-              >
-                {mark}
-              </ReviewMarkButton>
-            ))}
+          <div className="tracepoint__decision-factors">
+            <div className="mini-card">
+              <div className="card-label">Inspection finds issue</div>
+              <div className="tracepoint-card__value">{formatTracepointPercent(decisionDefaults.detectionRate, 0)}</div>
+              <div className="tracepoint-card__note">Synthetic detection rate derived from the current review strength.</div>
+            </div>
+            <div className="mini-card">
+              <div className="card-label">Action follows inspection</div>
+              <div className="tracepoint-card__value">{formatTracepointPercent(decisionDefaults.followThroughRate, 0)}</div>
+              <div className="tracepoint-card__note">Synthetic follow-through rate derived from the current review strength.</div>
+            </div>
+            <div className="mini-card">
+              <div className="card-label">Combined harm reduction</div>
+              <div className="tracepoint-card__value">
+                {formatTracepointPercent(
+                  decisionDefaults.detectionRate * decisionDefaults.followThroughRate * harmReduction,
+                  2
+                )}
+              </div>
+              <div className="tracepoint-card__note">Detection × follow-through × intervention effectiveness.</div>
+            </div>
           </div>
 
-          <div className="control-group">
-            <label className="control-label" htmlFor="tracepoint-notes">
-              Add review note
-            </label>
-            <textarea
-              id="tracepoint-notes"
-              className="tracepoint__notes"
-              value={reviewerNotes}
-              onChange={(event) => setReviewerNotes(event.target.value)}
-              placeholder="Write what you saw, what else could explain it, and what should be checked next."
-            />
+          <div className="tracepoint__cost-summary">
+            <div className="mini-card">
+              <div className="card-label">Expected cost of acting</div>
+              <div className="tracepoint-card__value">{formatTracepointMoney(decision.expectedCostAct)}</div>
+              <div className="tracepoint-card__note">
+                inspection/action cost + probability × miss cost × residual harm after action
+              </div>
+            </div>
+            <div className="mini-card">
+              <div className="card-label">Expected cost of not acting</div>
+              <div className="tracepoint-card__value">{formatTracepointMoney(decision.expectedCostNoAct)}</div>
+              <div className="tracepoint-card__note">probability × miss cost</div>
+            </div>
+            <div className="mini-card mini-card--wide">
+              <div className="card-label">Decision read</div>
+              <div className="tracepoint__decision-flag">
+                {decisionReadout.signalSummary} / {decisionReadout.economicSummary}
+              </div>
+              <div className="tracepoint__decision-line">
+                {decision.economicallyJustified ? "Inspection is economically justified." : "Inspection is not economically justified."}
+              </div>
+              <div className="muted">
+                Estimated gap: {formatTracepointMoney(Math.abs(decision.expectedGap))} in favor of{" "}
+                {decision.economicallyJustified ? "acting" : "not acting"}.
+              </div>
+              <div className="tracepoint__decision-note">{decisionReadout.reviewNote}</div>
+              <div className="tracepoint__decision-formula">
+                <div>
+                  Acting: {formatTracepointMoney(inspectionCost)} +{" "}
+                  {formatTracepointPercent(calibratedProbability, 2)} × {formatTracepointMoney(missCost)} ×{" "}
+                  {formatTracepointPercent(1 - decision.effectiveHarmReduction, 2)} ={" "}
+                  {formatTracepointMoney(decision.expectedCostAct)}
+                </div>
+                <div>
+                  Not acting: {formatTracepointPercent(calibratedProbability, 2)} × {formatTracepointMoney(missCost)} ={" "}
+                  {formatTracepointMoney(decision.expectedCostNoAct)}
+                </div>
+                <div className="tracepoint__precision-note">
+                  Figures may differ slightly because calculations use unrounded values.
+                </div>
+              </div>
+            </div>
           </div>
-
-          <div className="tracepoint__saved">Saved locally for this browser session.</div>
+          <ActionLadder review={review} decision={decision} recommendation={actionRecommendation} />
         </article>
       </section>
 
-      <section className="panel tracepoint__decision">
+      <section className="panel tracepoint__reviewer">
         <div className="panel__head">
           <div>
-            <div className="eyebrow">Decision gate</div>
-            <h2>Cost-aware review gate</h2>
+            <div className="eyebrow">Reviewer workflow</div>
+            <h2>Mark the review, keep the judgment human</h2>
           </div>
         </div>
-        <div className="tracepoint__decision-grid">
-          <div className="control-group">
-            <label className="control-label" htmlFor="tracepoint-inspection-cost">
-              Inspection cost
-            </label>
-            <input
-              id="tracepoint-inspection-cost"
-              type="number"
-              min="0"
-              step="100"
-              className="tracepoint__input"
-              value={inspectionCost}
-              onChange={(event) => setInspectionCost(Number(event.target.value) || 0)}
-            />
-          </div>
-          <div className="control-group">
-            <label className="control-label" htmlFor="tracepoint-miss-cost">
-              Estimated loss if issue is real and ignored
-            </label>
-            <input
-              id="tracepoint-miss-cost"
-              type="number"
-              min="0"
-              step="100"
-              className="tracepoint__input"
-              value={missCost}
-              onChange={(event) => setMissCost(Number(event.target.value) || 0)}
-            />
-          </div>
-          <div className="control-group">
-            <label className="control-label" htmlFor="tracepoint-probability">
-              Estimated calibrated probability issue is real
-            </label>
-            <input
-              id="tracepoint-probability"
-              type="range"
-              min="0.05"
-              max="0.95"
-              step="0.01"
-              className="tracepoint__range"
-              value={calibratedProbability}
-              onChange={(event) => setCalibratedProbability(Number(event.target.value) || 0)}
-            />
-            <div className="tracepoint__inline-value">{formatTracepointPercent(calibratedProbability, 0)}</div>
-            <div className="tracepoint__range-note">Calibrated from the synthetic review score, not from a live model.</div>
-          </div>
-          <div className="control-group">
-            <label className="control-label" htmlFor="tracepoint-harm-reduction">
-              Intervention effectiveness after issue is confirmed
-            </label>
-            <input
-              id="tracepoint-harm-reduction"
-              type="range"
-              min="0.1"
-              max="0.9"
-              step="0.01"
-              className="tracepoint__range"
-              value={harmReduction}
-              onChange={(event) => setHarmReduction(Number(event.target.value) || 0)}
-            />
-            <div className="tracepoint__inline-value">{formatTracepointPercent(harmReduction, 0)}</div>
-          </div>
+        <div className="tracepoint__reviewer-note">
+          The score prepares a review. A reviewer decides whether action is justified.
         </div>
 
-        <div className="tracepoint__decision-factors">
-          <div className="mini-card">
-            <div className="card-label">Inspection finds issue</div>
-            <div className="tracepoint-card__value">{formatTracepointPercent(decisionDefaults.detectionRate, 0)}</div>
-            <div className="tracepoint-card__note">Synthetic detection rate derived from the current review strength.</div>
-          </div>
-          <div className="mini-card">
-            <div className="card-label">Action follows inspection</div>
-            <div className="tracepoint-card__value">{formatTracepointPercent(decisionDefaults.followThroughRate, 0)}</div>
-            <div className="tracepoint-card__note">Synthetic follow-through rate derived from the current review strength.</div>
-          </div>
-            <div className="mini-card">
-            <div className="card-label">Combined harm reduction</div>
-            <div className="tracepoint-card__value">
-              {formatTracepointPercent(
-                decisionDefaults.detectionRate * decisionDefaults.followThroughRate * harmReduction,
-                2
-              )}
-            </div>
-            <div className="tracepoint-card__note">Detection × follow-through × intervention effectiveness.</div>
-          </div>
+        <div className="button-row tracepoint__mark-row">
+          {TRACEPOINT_REVIEW_MARKS.map((mark) => (
+            <ReviewMarkButton
+              key={mark}
+              active={reviewerMark === mark}
+              onClick={() => handleMark(mark)}
+              aria-pressed={reviewerMark === mark}
+            >
+              {mark}
+            </ReviewMarkButton>
+          ))}
         </div>
 
-        <div className="tracepoint__cost-summary">
-          <div className="mini-card">
-            <div className="card-label">Expected cost of acting</div>
-            <div className="tracepoint-card__value">{formatTracepointMoney(decision.expectedCostAct)}</div>
-            <div className="tracepoint-card__note">
-              inspection/action cost + probability × miss cost × residual harm after action
-            </div>
-          </div>
-          <div className="mini-card">
-            <div className="card-label">Expected cost of not acting</div>
-            <div className="tracepoint-card__value">{formatTracepointMoney(decision.expectedCostNoAct)}</div>
-            <div className="tracepoint-card__note">probability × miss cost</div>
-          </div>
-          <div className="mini-card mini-card--wide">
-            <div className="card-label">Decision read</div>
-            <div className="tracepoint__decision-flag">
-              {decisionReadout.signalSummary} / {decisionReadout.economicSummary}
-            </div>
-            <div className="tracepoint__decision-line">
-              {decision.economicallyJustified ? "Inspection is economically justified." : "Inspection is not economically justified."}
-            </div>
-            <div className="muted">
-              Estimated gap: {formatTracepointMoney(Math.abs(decision.expectedGap))} in favor of{" "}
-              {decision.economicallyJustified ? "acting" : "not acting"}.
-            </div>
-            <div className="tracepoint__decision-note">{decisionReadout.reviewNote}</div>
-            <div className="tracepoint__decision-formula">
-              <div>
-                Acting: {formatTracepointMoney(inspectionCost)} +{" "}
-                {formatTracepointPercent(calibratedProbability, 2)} × {formatTracepointMoney(missCost)} ×{" "}
-                {formatTracepointPercent(1 - decision.effectiveHarmReduction, 2)} ={" "}
-                {formatTracepointMoney(decision.expectedCostAct)}
-              </div>
-              <div>
-                Not acting: {formatTracepointPercent(calibratedProbability, 2)} × {formatTracepointMoney(missCost)} ={" "}
-                {formatTracepointMoney(decision.expectedCostNoAct)}
-              </div>
-              <div className="tracepoint__precision-note">
-                Figures may differ slightly because calculations use unrounded values.
-              </div>
-            </div>
-          </div>
+        <div className="control-group">
+          <label className="control-label" htmlFor="tracepoint-notes">
+            Add review note
+          </label>
+          <textarea
+            id="tracepoint-notes"
+            className="tracepoint__notes"
+            value={reviewerNotes}
+            onChange={(event) => setReviewerNotes(event.target.value)}
+            placeholder="Write what you saw, what else could explain it, and what should be checked next."
+          />
         </div>
+
+        <div className="tracepoint__saved">Saved locally for this browser session.</div>
       </section>
 
       <section className="panel tracepoint__limits">
@@ -692,7 +984,7 @@ export default function Tracepoint() {
       </section>
 
       <footer className="tracepoint__footer">
-        <div className="tracepoint__footer-copy">{limitationStatement}</div>
+        <div className="tracepoint__footer-copy">Synthetic calibration demo only.</div>
         <button type="button" className="pill pill--primary" onClick={exportPacket}>
           Export Review Packet
         </button>

@@ -2008,6 +2008,516 @@ button { font-family: inherit; }
   line-height: 1.45;
 }
 
+.tracepoint-chart__band {
+  shape-rendering: geometricPrecision;
+}
+
+.tracepoint-chart__band--normal {
+  opacity: 0.7;
+}
+
+.tracepoint-chart__band--watch {
+  opacity: 0.92;
+}
+
+.tracepoint-chart__band--review {
+  opacity: 0.96;
+}
+
+.tracepoint-chart__gridline--baseline {
+  stroke: rgba(159, 179, 160, 0.3);
+  stroke-dasharray: 3 3;
+}
+
+.tracepoint-chart__gridline--threshold {
+  stroke: rgba(240, 199, 94, 0.18);
+  stroke-dasharray: 2 4;
+}
+
+.tracepoint-chart__marker-line {
+  stroke-width: 1.4;
+  stroke-dasharray: 4 3;
+  opacity: 0.95;
+}
+
+.tracepoint-chart__marker-line--amber {
+  stroke: rgba(240, 199, 94, 0.88);
+}
+
+.tracepoint-chart__marker-line--red {
+  stroke: rgba(248, 113, 113, 0.9);
+}
+
+.tracepoint-chart__marker-label {
+  fill: rgba(245, 246, 248, 0.88);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tracepoint-chart__point {
+  fill: rgba(245, 246, 248, 0.9);
+  stroke: rgba(8, 10, 14, 0.95);
+  stroke-width: 1;
+}
+
+.tracepoint-chart__point-group:hover .tracepoint-chart__point {
+  fill: #f0c75e;
+  stroke: rgba(255, 255, 255, 0.95);
+}
+
+.tracepoint-chart--primary {
+  grid-column: span 2;
+  min-height: 228px;
+}
+
+.tracepoint-chart--primary .tracepoint-chart__svg {
+  min-height: 150px;
+}
+
+.tracepoint__cockpit {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.tracepoint__cockpit-gauge,
+.tracepoint__cockpit-decision,
+.tracepoint__signal-panel,
+.tracepoint__decision-panel {
+  background:
+    linear-gradient(180deg, rgba(14, 19, 24, 0.98), rgba(8, 10, 14, 0.99)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015), transparent 26%);
+}
+
+.tracepoint__cockpit-gauge {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.tracepoint__cockpit-label {
+  color: rgba(159, 179, 160, 0.78);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tracepoint-gauge {
+  display: grid;
+  grid-template-columns: 138px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+}
+
+.tracepoint-gauge__svg {
+  width: 138px;
+  height: 138px;
+  overflow: visible;
+  transform: rotate(-90deg);
+}
+
+.tracepoint-gauge__track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 10;
+}
+
+.tracepoint-gauge__arc {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dasharray 180ms ease;
+}
+
+.tracepoint-gauge__arc--red {
+  stroke: #f87171;
+}
+
+.tracepoint-gauge__arc--amber {
+  stroke: #f0c75e;
+}
+
+.tracepoint-gauge__arc--muted {
+  stroke: #9fb3a0;
+}
+
+.tracepoint-gauge__body {
+  display: grid;
+  gap: 4px;
+}
+
+.tracepoint-gauge__score {
+  color: var(--text);
+  font-size: clamp(40px, 4vw, 58px);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.05em;
+}
+
+.tracepoint-gauge__label {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.tracepoint__cockpit-meta {
+  display: grid;
+  gap: 10px;
+}
+
+.tracepoint__cockpit-asset {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-control);
+  background: rgba(6, 8, 12, 0.58);
+}
+
+.tracepoint-asset {
+  width: 74px;
+  height: 48px;
+}
+
+.tracepoint__cockpit-asset-id {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.tracepoint__cockpit-asset-name {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.tracepoint__cockpit-chip {
+  display: inline-flex;
+  width: fit-content;
+  padding: 6px 10px;
+  border: 1px solid rgba(240, 199, 94, 0.12);
+  border-radius: 999px;
+  background: rgba(214, 176, 76, 0.06);
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.tracepoint__cockpit-decision {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.tracepoint__cockpit-state {
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.tracepoint__cockpit-summary,
+.tracepoint__cockpit-move {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.tracepoint__cockpit-move {
+  padding-top: 2px;
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.tracepoint__cockpit-stack {
+  display: grid;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.tracepoint__cockpit-stack div {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-control);
+  background: rgba(7, 9, 13, 0.52);
+}
+
+.tracepoint__cockpit-stack span {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tracepoint__cockpit-stack strong {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.tracepoint-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 2px 0 4px;
+}
+
+.tracepoint-timeline__step {
+  position: relative;
+  display: grid;
+  gap: 5px;
+  align-content: start;
+  padding: 10px 12px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-control);
+  background: rgba(7, 9, 13, 0.52);
+}
+
+.tracepoint-timeline__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  width: 10px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tracepoint-timeline__step--muted {
+  border-color: rgba(159, 179, 160, 0.16);
+}
+
+.tracepoint-timeline__step--amber {
+  border-color: rgba(240, 199, 94, 0.18);
+}
+
+.tracepoint-timeline__step--red {
+  border-color: rgba(248, 113, 113, 0.18);
+}
+
+.tracepoint-timeline__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(159, 179, 160, 0.88);
+  box-shadow: 0 0 0 3px rgba(159, 179, 160, 0.12);
+}
+
+.tracepoint-timeline__step--amber .tracepoint-timeline__dot {
+  background: rgba(240, 199, 94, 0.95);
+  box-shadow: 0 0 0 3px rgba(240, 199, 94, 0.12);
+}
+
+.tracepoint-timeline__step--red .tracepoint-timeline__dot {
+  background: rgba(248, 113, 113, 0.95);
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.12);
+}
+
+.tracepoint-timeline__label {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.tracepoint-timeline__hour {
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tracepoint__analysis-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: 12px;
+}
+
+.tracepoint__signal-panel,
+.tracepoint__decision-panel {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.tracepoint-stack {
+  display: grid;
+  gap: 10px;
+  padding: 2px 0;
+}
+
+.tracepoint-stack__row {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.85fr) minmax(0, 1.5fr) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.tracepoint-stack__meta {
+  display: grid;
+  gap: 4px;
+}
+
+.tracepoint-stack__label {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.tracepoint-stack__detail {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.tracepoint-stack__bar {
+  height: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tracepoint-stack__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(240, 199, 94, 0.45), rgba(240, 199, 94, 0.95));
+}
+
+.tracepoint-stack__score {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.tracepoint-agreement {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-control);
+  background: rgba(7, 9, 13, 0.54);
+}
+
+.tracepoint-agreement__label {
+  color: rgba(159, 179, 160, 0.82);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tracepoint-agreement__nodes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tracepoint-agreement__nodes span {
+  height: 10px;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, rgba(240, 199, 94, 0.88), rgba(240, 199, 94, 0.18)),
+    rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.tracepoint-agreement__text {
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.tracepoint-ladder {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid rgba(240, 199, 94, 0.12);
+  border-radius: var(--radius-control);
+  background: rgba(214, 176, 76, 0.05);
+}
+
+.tracepoint-ladder__step {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  background: rgba(7, 9, 13, 0.5);
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.tracepoint-ladder__step.is-active {
+  border-color: rgba(240, 199, 94, 0.3);
+  background: rgba(214, 176, 76, 0.13);
+  color: var(--text);
+}
+
+.tracepoint-ladder__step strong {
+  color: #f0c75e;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tracepoint-ladder__note {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.tracepoint-provenance {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 2px;
+  font-family: var(--mono-font, SFMono-Regular, Menlo, Consolas, monospace);
+}
+
+.tracepoint-provenance div {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-control);
+  background: rgba(7, 9, 13, 0.58);
+}
+
+.tracepoint-provenance span {
+  color: rgba(159, 179, 160, 0.82);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tracepoint-provenance strong {
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 600;
+  word-break: break-word;
+}
+
 .tracepoint__review-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.86fr);
@@ -2262,7 +2772,8 @@ button { font-family: inherit; }
 .tracepoint__alternatives ul,
 .tracepoint__limits-list,
 .tracepoint-card__note,
-.tracepoint-chart__note {
+.tracepoint-chart__note,
+.tracepoint-timeline__hour {
   color: rgba(183, 189, 175, 0.9);
 }
 
@@ -2437,6 +2948,8 @@ button { font-family: inherit; }
   }
 
   .tracepoint__hero,
+  .tracepoint__cockpit,
+  .tracepoint__analysis-grid,
   .tracepoint__review-grid,
   .tracepoint__limits-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -2456,6 +2969,10 @@ button { font-family: inherit; }
   .tracepoint__decision-grid,
   .tracepoint__cost-summary {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tracepoint-chart--primary {
+    grid-column: auto;
   }
 
   .tracepoint__decision-factors {
@@ -2613,6 +3130,53 @@ button { font-family: inherit; }
   .tracepoint__chart-grid,
   .tracepoint__cost-summary {
     gap: 12px;
+  }
+
+  .tracepoint__cockpit,
+  .tracepoint__analysis-grid {
+    gap: 12px;
+  }
+
+  .tracepoint-gauge {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    text-align: center;
+  }
+
+  .tracepoint-gauge__body {
+    justify-items: center;
+  }
+
+  .tracepoint-timeline {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tracepoint-timeline__step:not(:last-child)::after {
+    right: auto;
+    top: auto;
+    left: 50%;
+    bottom: -10px;
+    width: 1px;
+    height: 10px;
+  }
+
+  .tracepoint__cockpit-asset {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+
+  .tracepoint__cockpit-stack,
+  .tracepoint-provenance {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tracepoint-stack__row {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .tracepoint-stack__score {
+    justify-self: start;
   }
 
   .tracepoint__evidence-row {
