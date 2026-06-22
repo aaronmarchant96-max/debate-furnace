@@ -3,6 +3,7 @@ import DebateFurnace from "./DebateFurnace.jsx";
 import CreativeEngine from "./CreativeEngine.jsx";
 import StormReplay from "./StormReplay.jsx";
 import CardoGuard from "./CardoGuard.jsx";
+import Tracepoint from "./Tracepoint.jsx";
 
 const TOP_LEVEL = [
   {
@@ -24,6 +25,11 @@ const TOP_LEVEL = [
     id: "cardo-guard",
     label: "CARDO GUARD",
     subtitle: "AI scores get checked against cost."
+  },
+  {
+    id: "tracepoint",
+    label: "Tracepoint",
+    subtitle: "Industrial signals stay evidence-first."
   }
 ];
 
@@ -32,6 +38,7 @@ function getInitialTool() {
   if (window.location.hash === "#story-forge") return "story-forge";
   if (window.location.hash === "#storm-replay") return "storm-replay";
   if (window.location.hash === "#cardo-guard") return "cardo-guard";
+  if (window.location.hash === "#tracepoint") return "tracepoint";
   return "furnace";
 }
 
@@ -44,7 +51,8 @@ export default function AppShell() {
       furnace: "#furnace",
       "story-forge": "#story-forge",
       "storm-replay": "#storm-replay",
-      "cardo-guard": "#cardo-guard"
+      "cardo-guard": "#cardo-guard",
+      tracepoint: "#tracepoint"
     };
     const resolvedHash = hashByTool[tool] || "#furnace";
     if (window.location.hash !== resolvedHash) {
@@ -55,9 +63,11 @@ export default function AppShell() {
         ? "PromptHound Labs | Story Forge"
         : tool === "storm-replay"
           ? "PromptHound Labs | Storm Replay"
-          : tool === "cardo-guard"
+        : tool === "cardo-guard"
             ? "PromptHound Labs | CARDO GUARD"
-          : "PromptHound Labs | Debate Furnace";
+            : tool === "tracepoint"
+              ? "PromptHound Labs | Tracepoint"
+            : "PromptHound Labs | Debate Furnace";
   }, [tool]);
 
   return (
@@ -93,6 +103,8 @@ export default function AppShell() {
           <StormReplay />
         ) : tool === "cardo-guard" ? (
           <CardoGuard />
+        ) : tool === "tracepoint" ? (
+          <Tracepoint />
         ) : (
           <DebateFurnace />
         )}

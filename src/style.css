@@ -1154,6 +1154,18 @@ button { font-family: inherit; }
   color: var(--text-secondary);
 }
 
+.status-badge--amber {
+  border-color: rgba(240, 199, 94, 0.34);
+  background: rgba(214, 176, 76, 0.14);
+  color: #f6d57c;
+}
+
+.status-badge--red {
+  border-color: rgba(248, 113, 113, 0.34);
+  background: rgba(127, 29, 29, 0.18);
+  color: #fca5a5;
+}
+
 .storm-hero__linkpanel {
   border: 1px solid rgba(73, 206, 235, 0.14);
   border-radius: var(--radius-card);
@@ -1732,6 +1744,451 @@ button { font-family: inherit; }
   max-width: 54ch;
 }
 
+.tracepoint {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+  position: relative;
+  isolation: isolate;
+}
+
+.tracepoint::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(240, 199, 94, 0.08), transparent 26%),
+    radial-gradient(circle at 86% 8%, rgba(159, 179, 160, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(8, 11, 14, 0.94), rgba(5, 7, 10, 0.98));
+  pointer-events: none;
+}
+
+.tracepoint::after {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 26px, 26px 100%;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent 94%);
+  opacity: 0.35;
+}
+
+.tracepoint__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+  gap: 18px;
+  align-items: start;
+  border-top: 1px solid rgba(240, 199, 94, 0.12);
+  background: linear-gradient(180deg, rgba(13, 17, 20, 0.98), rgba(8, 10, 14, 0.98));
+  box-shadow: var(--shadow-soft);
+}
+
+.tracepoint__hero-copy {
+  min-width: 0;
+}
+
+.tracepoint__brand {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #f0c75e;
+}
+
+.tracepoint__hero h1 {
+  margin: 4px 0 0;
+  max-width: 14ch;
+  font-size: clamp(32px, 4.2vw, 54px);
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+}
+
+.tracepoint__disclaimer {
+  margin-top: 14px;
+  max-width: 68ch;
+  padding: 12px 14px;
+  border: 1px solid rgba(240, 199, 94, 0.14);
+  border-radius: var(--radius-card);
+  background: rgba(214, 176, 76, 0.06);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.tracepoint__disclaimer strong {
+  color: var(--text);
+}
+
+.tracepoint__hero-side {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.tracepoint__status-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tracepoint__select,
+.tracepoint__input,
+.tracepoint__notes {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: rgba(11, 15, 21, 0.88);
+  color: var(--text-secondary);
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.tracepoint__select:focus,
+.tracepoint__input:focus,
+.tracepoint__notes:focus,
+.tracepoint__range:focus {
+  outline: 2px solid rgba(240, 199, 94, 0.22);
+  border-color: rgba(240, 199, 94, 0.42);
+}
+
+.tracepoint__scenario-note {
+  margin-top: 6px;
+}
+
+.tracepoint__cards {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tracepoint-card {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  min-height: 118px;
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.94), rgba(9, 13, 18, 0.98));
+  border-color: rgba(240, 199, 94, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.tracepoint-card__value {
+  font-size: 18px;
+  line-height: 1.25;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.tracepoint-card__note,
+.tracepoint__trend-note,
+.tracepoint__scenario-note,
+.tracepoint__reviewer-note,
+.tracepoint__footer-copy {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.tracepoint__trends,
+.tracepoint__review-grid,
+.tracepoint__decision,
+.tracepoint__limits {
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.96), rgba(10, 13, 18, 0.98));
+  box-shadow: var(--shadow-card);
+}
+
+.tracepoint__chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tracepoint-chart {
+  --tracepoint-accent: #f0c75e;
+  display: grid;
+  gap: 8px;
+  border-color: rgba(255, 255, 255, 0.05);
+  background:
+    linear-gradient(180deg, rgba(12, 16, 20, 0.92), rgba(8, 10, 14, 0.98)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02), transparent 20%);
+}
+
+.tracepoint-chart--amber {
+  --tracepoint-accent: #f0c75e;
+}
+
+.tracepoint-chart--red {
+  --tracepoint-accent: #f87171;
+}
+
+.tracepoint-chart--steel {
+  --tracepoint-accent: #9fb3a0;
+}
+
+.tracepoint-chart__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.tracepoint-chart__value {
+  margin-top: 3px;
+  color: var(--text);
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tracepoint-chart__meta {
+  display: grid;
+  gap: 3px;
+  color: var(--text-muted);
+  font-size: 12px;
+  text-align: right;
+}
+
+.tracepoint-chart__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.tracepoint-chart__gridline {
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 1;
+}
+
+.tracepoint-chart__area {
+  stroke: none;
+}
+
+.tracepoint-chart__line {
+  fill: none;
+  stroke: var(--tracepoint-accent);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tracepoint-chart__note {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.tracepoint__review-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.86fr);
+  gap: 10px;
+}
+
+.tracepoint__evidence {
+  padding: 12px 14px;
+  border: 1px solid rgba(240, 199, 94, 0.14);
+  border-radius: var(--radius-control);
+  background: rgba(214, 176, 76, 0.06);
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.tracepoint__evidence-table {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tracepoint__evidence-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-control);
+  background: rgba(7, 9, 13, 0.54);
+}
+
+.tracepoint__evidence-value {
+  margin-top: 3px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.tracepoint__evidence-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.tracepoint__alternatives {
+  margin-top: 12px;
+}
+
+.tracepoint__alternatives ul,
+.tracepoint__limits-list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.tracepoint__details {
+  margin-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 10px;
+}
+
+.tracepoint__details summary {
+  cursor: pointer;
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.tracepoint__formula {
+  margin-top: 8px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.tracepoint__reviewer {
+  display: grid;
+  align-content: start;
+}
+
+.tracepoint__mark-row {
+  margin-top: 10px;
+}
+
+.tracepoint-pill {
+  justify-content: center;
+}
+
+.tracepoint__notes {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.tracepoint__saved {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.tracepoint__decision-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tracepoint__decision-factors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.tracepoint__range {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tracepoint__inline-value {
+  margin-top: 6px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.tracepoint__cost-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.tracepoint__decision-line {
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.tracepoint__limits-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 12px;
+}
+
+.tracepoint__summary-card {
+  background: rgba(11, 15, 21, 0.76);
+}
+
+.tracepoint__summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.tracepoint__summary-grid div {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-control);
+  background: rgba(7, 9, 13, 0.62);
+  color: var(--text-secondary);
+}
+
+.tracepoint__summary-grid strong {
+  color: var(--text);
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tracepoint__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  padding: 2px 0 6px;
+}
+
+.tracepoint__hero .control-label,
+.tracepoint__trends .card-label,
+.tracepoint__review-grid .card-label,
+.tracepoint__decision .card-label,
+.tracepoint__limits .card-label {
+  color: rgba(159, 179, 160, 0.82);
+}
+
+.tracepoint__scenario-note,
+.tracepoint__trend-note,
+.tracepoint__reviewer-note,
+.tracepoint__footer-copy,
+.tracepoint__formula,
+.tracepoint__alternatives ul,
+.tracepoint__limits-list,
+.tracepoint-card__note,
+.tracepoint-chart__note {
+  color: rgba(183, 189, 175, 0.9);
+}
+
+.tracepoint__footer-copy {
+  max-width: 66ch;
+}
+
 @media (max-width: 900px) {
   .shell-header,
   .panel__head {
@@ -1809,6 +2266,31 @@ button { font-family: inherit; }
 
   .mutation-scale {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .tracepoint__hero,
+  .tracepoint__review-grid,
+  .tracepoint__limits-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tracepoint__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tracepoint__chart-grid,
+  .tracepoint__decision-grid,
+  .tracepoint__cost-summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tracepoint__decision-factors {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tracepoint__footer {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -1941,6 +2423,29 @@ button { font-family: inherit; }
     height: 28px;
   }
 
+  .tracepoint__cards,
+  .tracepoint__summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tracepoint__hero h1 {
+    max-width: none;
+  }
+
+  .tracepoint__chart-grid,
+  .tracepoint__cost-summary {
+    gap: 12px;
+  }
+
+  .tracepoint__evidence-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tracepoint__evidence-meta {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
   /* === MOBILE USABILITY + STRONG RECOMMENDATION HERO (Updated from screenshots) === */
 
   .cardo-guard__select,
@@ -2013,6 +2518,14 @@ button { font-family: inherit; }
     line-height: 1.6;
     padding-left: 20px;
   }
+
+  .tracepoint__hero,
+  .tracepoint-card,
+  .tracepoint__evidence,
+  .tracepoint__notes,
+  .tracepoint__summary-grid div {
+    border-radius: 12px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -2052,6 +2565,18 @@ button { font-family: inherit; }
   .cardo-guard__hero,
   .panel {
     padding: 18px 16px;
+  }
+
+  .tracepoint__hero {
+    padding: 18px 16px;
+  }
+
+  .tracepoint__cards {
+    gap: 12px;
+  }
+
+  .tracepoint-card {
+    min-height: 0;
   }
 
   /* Full-width inputs + better form on mobile */

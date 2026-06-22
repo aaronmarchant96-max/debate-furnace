@@ -43,4 +43,13 @@ describe("AppShell", () => {
     expect(screen.getByRole("button", { name: /cardo guard/i })).toHaveAttribute("aria-pressed", "true");
     expect(document.title).toBe("PromptHound Labs | CARDO GUARD");
   });
+
+  it("loads Tracepoint from the hash", () => {
+    window.history.replaceState({}, "", "/#tracepoint");
+
+    render(<AppShell />);
+
+    expect(screen.getByRole("button", { name: /tracepoint/i })).toHaveAttribute("aria-pressed", "true");
+    expect(document.title).toBe("PromptHound Labs | Tracepoint");
+  });
 });

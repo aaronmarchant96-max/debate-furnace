@@ -8,6 +8,7 @@
 - **Story Forge** — Turns messy historical/mythic sources into usable story blueprints while keeping the source trail visible.
 - **CARDO GUARD** — Synthetic decision validation tool that makes the cost-weighted breakeven (the hinge) explicit before anyone acts on an AI risk score.
 - **Storm Replay** — Historical storm imagery analysis focused on separating signal from noise with strong calibration discipline (explicitly not forecasting or alerting).
+- **Tracepoint** — Synthetic industrial signal review for one fictional pump asset, focused on evidence, calibration, and human review.
 
 ## CARDO REI Method
 
@@ -112,6 +113,27 @@ Key characteristics:
 Current focus: Tornado outbreak replays and similar high-stakes historical events, with heavy emphasis on false positive / false negative discipline.
 
 Related work lives in the broader PromptHound analysis tooling.
+
+## Tracepoint
+
+Tracepoint is a synthetic industrial QA and decision-support prototype. It reviews deterministic hourly sensor readings for fictional assets like Pump Station P-204 and Compressor C-118, and explains why the signal crosses or does not cross a review threshold.
+
+It is intentionally conservative:
+
+- synthetic calibration demo only
+- not operational advice
+- not a forecasting system
+- not a replacement for inspection, maintenance procedures, or safety controls
+
+The tool shows:
+
+- vibration, temperature, pressure, and flow trends
+- a transparent scoring rule with visible thresholds
+- reviewer marks and notes stored locally in the browser
+- a cost-aware decision gate that compares acting versus not acting
+- an exportable review packet for QA and portfolio review
+
+Tracepoint is for evidence review, not for making real operational claims.
 
 ## CARDO GUARD
 
