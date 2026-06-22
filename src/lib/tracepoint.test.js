@@ -45,7 +45,12 @@ describe("tracepoint", () => {
     expect(review.mainDriver).toBe("vibration_rms");
     expect(review.summary.totalWindows).toBe(168);
     expect(review.summary.reviewFlagsRaised).toBeGreaterThan(0);
-    expect(review.summary.falseAlarms).toBeGreaterThanOrEqual(0);
+    expect(review.summary.knownSyntheticWearWindows).toBe(
+      review.summary.truePositiveWindows + review.summary.missedSyntheticAnomalyWindows
+    );
+    expect(review.summary.reviewFlagsRaised).toBe(
+      review.summary.truePositiveWindows + review.summary.falseAlarms
+    );
     expect(review.summary.leadTimeHours).not.toBeNull();
   });
 
@@ -73,6 +78,7 @@ describe("tracepoint", () => {
       2
     );
     expect(decision.expectedCostNoAct).toBeCloseTo(0.62 * 180000, 2);
+    expect(decision.effectiveHarmReduction).toBeCloseTo(0.8 * 0.9 * 0.44, 6);
     expect(decision.economicallyJustified).toBe(true);
     expect(decision.expectedGap).toBeGreaterThan(0);
   });

@@ -93,6 +93,21 @@ function formatMetric(value, label) {
   return String(value);
 }
 
+function formatRobustZ(value) {
+  if (value >= 10) return "10+";
+  return value.toFixed(2);
+}
+
+function formatScenarioVersion(scenarioId) {
+  if (scenarioId === "pump-station-p-204") {
+    return "bearing-wear-v1";
+  }
+  if (scenarioId === "compressor-c-118") {
+    return "seal-ripple-v1";
+  }
+  return "synthetic-review-v1";
+}
+
 function ChartCard({ title, values, unitKey, tone, note }) {
   const spark = useMemo(() => buildSparklinePath(values), [values]);
   const minLabel = formatMetric(spark.min, unitKey);
@@ -210,6 +225,7 @@ export default function Tracepoint() {
   const temperatureEvidence = sensorByKey.bearing_temperature;
   const pressureEvidence = sensorByKey.pressure;
   const flowEvidence = sensorByKey.flow_rate;
+  const provenanceVersion = formatScenarioVersion(scenario.id);
   const statusTone = {
     Normal: "muted",
     Watch: "amber",
@@ -321,6 +337,13 @@ export default function Tracepoint() {
           <div className="tracepoint-card__note">Synthetic running state from the data, kept separate from the review flag.</div>
         </article>
         <article className="panel tracepoint-card">
+          <div className="card-label">Data quality / provenance</div>
+          <div className="tracepoint-card__value">Deterministic synthetic generator</div>
+          <div className="tracepoint-card__note">
+            Baseline window: first 24 stable hours. Missing readings: 0. Scenario version: {provenanceVersion}.
+          </div>
+        </article>
+        <article className="panel tracepoint-card">
           <div className="card-label">Last updated</div>
           <div className="tracepoint-card__value">{formatTracepointTimestamp(currentRow.timestamp)}</div>
           <div className="tracepoint-card__note">Latest hourly reading in the 7-day series.</div>
@@ -390,7 +413,7 @@ export default function Tracepoint() {
                 </div>
                 <div className="tracepoint__evidence-meta">
                   <span>baseline {detail.baselineMedian}</span>
-                  <span>robust z {detail.robustZ}</span>
+                  <span>robust z {formatRobustZ(detail.robustZ)}</span>
                   <span>persistence {detail.persistenceCount}</span>
                   <span>weight {Math.round(detail.weight * 100)}%</span>
                 </div>
@@ -501,7 +524,7 @@ export default function Tracepoint() {
           </div>
           <div className="control-group">
             <label className="control-label" htmlFor="tracepoint-probability">
-              Estimated calibrated probability issue is real
+              Synthetic scenario likelihood estimate
             </label>
             <input
               id="tracepoint-probability"
@@ -514,6 +537,7 @@ export default function Tracepoint() {
               onChange={(event) => setCalibratedProbability(Number(event.target.value) || 0)}
             />
             <div className="tracepoint__inline-value">{formatTracepointPercent(calibratedProbability, 0)}</div>
+            <div className="tracepoint__range-note">Calibrated from the synthetic review score, not from a live model.</div>
           </div>
           <div className="control-group">
             <label className="control-label" htmlFor="tracepoint-harm-reduction">
@@ -549,7 +573,7 @@ export default function Tracepoint() {
             <div className="tracepoint-card__value">
               {formatTracepointPercent(
                 decisionDefaults.detectionRate * decisionDefaults.followThroughRate * harmReduction,
-                0
+                2
               )}
             </div>
             <div className="tracepoint-card__note">Detection × follow-through × intervention effectiveness.</div>
@@ -576,6 +600,18 @@ export default function Tracepoint() {
             <div className="muted">
               Estimated gap: {formatTracepointMoney(decision.expectedGap)} in favor of{" "}
               {decision.economicallyJustified ? "acting" : "not acting"}.
+            </div>
+            <div className="tracepoint__decision-formula">
+              <div>
+                Acting: {formatTracepointMoney(inspectionCost)} +{" "}
+                {formatTracepointPercent(calibratedProbability, 2)} × {formatTracepointMoney(missCost)} ×{" "}
+                {formatTracepointPercent(1 - decision.effectiveHarmReduction, 2)} ={" "}
+                {formatTracepointMoney(decision.expectedCostAct)}
+              </div>
+              <div>
+                Not acting: {formatTracepointPercent(calibratedProbability, 2)} × {formatTracepointMoney(missCost)} ={" "}
+                {formatTracepointMoney(decision.expectedCostNoAct)}
+              </div>
             </div>
           </div>
         </div>

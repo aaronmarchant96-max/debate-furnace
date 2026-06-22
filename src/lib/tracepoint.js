@@ -397,8 +397,11 @@ export function calculateTracepointReview(rows) {
     const prefix = rows.slice(0, index + 1);
     return calculateReviewMetrics(prefix, scenario).status === "Review Recommended";
   });
+  const truePositiveWindows = reviewFlagWindows.filter((row) => row.synthetic_truth_label !== "normal");
   const falseAlarms = reviewFlagWindows.filter((row) => row.synthetic_truth_label === "normal");
-  const missedWindows = truthPositiveWindows.filter((row) => getTracepointStatusFromRow(row, rows) === "Normal");
+  const missedWindows = truthPositiveWindows.filter((row) =>
+    !reviewFlagWindows.includes(row)
+  );
   const firstFlagIndex = rows.findIndex((row, index) =>
     calculateReviewMetrics(rows.slice(0, index + 1), scenario).status === "Review Recommended"
   );
@@ -411,19 +414,12 @@ export function calculateTracepointReview(rows) {
       totalWindows: rows.length,
       knownSyntheticWearWindows: truthPositiveWindows.length,
       reviewFlagsRaised: reviewFlagWindows.length,
+      truePositiveWindows: truePositiveWindows.length,
       falseAlarms: falseAlarms.length,
       missedSyntheticAnomalyWindows: missedWindows.length,
       leadTimeHours
     }
   };
-}
-
-function getTracepointStatusFromRow(row, rows) {
-  const rowIndex = rows.indexOf(row);
-  const rowSlice = rows.slice(0, rowIndex + 1);
-  const scenario = getTracepointScenarioByAssetId(row.asset_id);
-  const review = calculateReviewMetrics(rowSlice, scenario);
-  return review.status;
 }
 
 export function calculateTracepointDecision({
