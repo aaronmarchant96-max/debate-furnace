@@ -26,7 +26,7 @@ describe("tracepoint", () => {
     expect(rows[0].asset_id).toBe("C-118");
     expect(rows[0].synthetic_truth_label).toBe("normal");
     expect(rows.some((row) => row.synthetic_truth_label === "seal_wear_plus_pressure_ripple")).toBe(true);
-    expect(rows[167].operating_state).toBe("watch");
+    expect(rows[167].operating_state).toBe("Running");
   });
 
   it("labels the combined score using the visible thresholds", () => {

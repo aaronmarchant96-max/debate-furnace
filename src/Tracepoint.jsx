@@ -221,6 +221,7 @@ export default function Tracepoint() {
     pressure: "pressure variability",
     flow_rate: "flow rate drift"
   }[review.mainDriver];
+  const scoreFill = Math.max(0, Math.min(100, review.combinedScore));
   const limitationStatement =
     "Synthetic calibration demo only. Not operational advice, not a forecasting system, and not a replacement for inspection, maintenance procedures, or safety controls.";
   const reviewExplainer =
@@ -301,6 +302,12 @@ export default function Tracepoint() {
         <article className="panel tracepoint-card">
           <div className="card-label">Combined signal score</div>
           <div className="tracepoint-card__value">{review.combinedScore.toFixed(1)}</div>
+          <div className="tracepoint-scorebar" aria-hidden="true">
+            <span
+              className={`tracepoint-scorebar__fill tracepoint-scorebar__fill--${statusTone}`}
+              style={{ width: `${scoreFill}%` }}
+            />
+          </div>
           <div className="tracepoint-card__note">Thresholds: Normal below 34, Watch below 67, Review Recommended at 67+.</div>
         </article>
         <article className="panel tracepoint-card">
@@ -311,7 +318,7 @@ export default function Tracepoint() {
         <article className="panel tracepoint-card">
           <div className="card-label">Current operating state</div>
           <div className="tracepoint-card__value">{currentRow.operating_state}</div>
-          <div className="tracepoint-card__note">State is synthetic and exists only for review calibration.</div>
+          <div className="tracepoint-card__note">Synthetic running state from the data, kept separate from the review flag.</div>
         </article>
         <article className="panel tracepoint-card">
           <div className="card-label">Last updated</div>
@@ -579,6 +586,22 @@ export default function Tracepoint() {
           <div>
             <div className="eyebrow">Calibration findings and limits</div>
             <h2>What this prototype can and cannot say</h2>
+          </div>
+        </div>
+        <div className="tracepoint__summary-strip">
+          <div className="mini-card">
+            <div className="card-label">Review flags raised</div>
+            <div className="tracepoint-card__value">{evaluationSummary.reviewFlagsRaised}</div>
+          </div>
+          <div className="mini-card">
+            <div className="card-label">Missed anomaly windows</div>
+            <div className="tracepoint-card__value">{evaluationSummary.missedSyntheticAnomalyWindows}</div>
+          </div>
+          <div className="mini-card">
+            <div className="card-label">Lead time before escalation</div>
+            <div className="tracepoint-card__value">
+              {evaluationSummary.leadTimeHours === null ? "n/a" : `${evaluationSummary.leadTimeHours}h`}
+            </div>
           </div>
         </div>
         <div className="tracepoint__limits-grid">

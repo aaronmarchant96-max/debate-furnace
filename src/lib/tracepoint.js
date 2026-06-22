@@ -33,12 +33,13 @@ export const TRACEPOINT_SCENARIOS = [
       currentBase: 37.8,
       currentWearGain: 3.3,
       currentInstabilityGain: 1.6,
+      runningStateLabel: "Running",
       wearStartHour: 42,
       pressureInstabilityHour: 120,
       escalationHour: 128,
       lateThermalStartHour: 108,
       lateThermalPeakHour: 156,
-      scenarioStatusLabel: "pressure watch",
+      scenarioStatusLabel: "Running",
       steadyStateLabel: "steady",
       wearStateLabel: "reduced efficiency",
       instabilityStateLabel: "loaded",
@@ -74,12 +75,13 @@ export const TRACEPOINT_SCENARIOS = [
       currentBase: 49.8,
       currentWearGain: 2.8,
       currentInstabilityGain: 3.9,
+      runningStateLabel: "Running",
       wearStartHour: 30,
       pressureInstabilityHour: 102,
       escalationHour: 138,
       lateThermalStartHour: 86,
       lateThermalPeakHour: 146,
-      scenarioStatusLabel: "watch",
+      scenarioStatusLabel: "Running",
       steadyStateLabel: "steady",
       wearStateLabel: "seal wear watch",
       instabilityStateLabel: "pressure watch",
@@ -229,11 +231,7 @@ export function buildTracepointRows(scenarioId = TRACEPOINT_SCENARIOS[0].id) {
 
     const operatingState = isEscalationWindow
       ? profile.scenarioStatusLabel
-      : isPressureInstabilityWindow
-        ? profile.instabilityStateLabel
-        : isWearWindow
-          ? profile.wearStateLabel
-          : profile.steadyStateLabel;
+      : profile.runningStateLabel;
 
     const syntheticTruthLabel = isEscalationWindow
       ? profile.truthInstabilityLabel

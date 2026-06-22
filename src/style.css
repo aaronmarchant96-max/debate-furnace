@@ -1885,6 +1885,32 @@ button { font-family: inherit; }
   letter-spacing: -0.01em;
 }
 
+.tracepoint-scorebar {
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tracepoint-scorebar__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.tracepoint-scorebar__fill--muted {
+  background: linear-gradient(90deg, rgba(159, 179, 160, 0.45), rgba(159, 179, 160, 0.9));
+}
+
+.tracepoint-scorebar__fill--amber {
+  background: linear-gradient(90deg, rgba(240, 199, 94, 0.45), rgba(240, 199, 94, 0.95));
+}
+
+.tracepoint-scorebar__fill--red {
+  background: linear-gradient(90deg, rgba(248, 113, 113, 0.45), rgba(248, 113, 113, 0.95));
+}
+
 .tracepoint-card__note,
 .tracepoint__trend-note,
 .tracepoint__scenario-note,
@@ -2134,6 +2160,13 @@ button { font-family: inherit; }
   background: rgba(11, 15, 21, 0.76);
 }
 
+.tracepoint__summary-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
 .tracepoint__summary-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2285,6 +2318,10 @@ button { font-family: inherit; }
   }
 
   .tracepoint__decision-factors {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tracepoint__summary-strip {
     grid-template-columns: minmax(0, 1fr);
   }
 
