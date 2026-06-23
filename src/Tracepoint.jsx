@@ -293,9 +293,9 @@ function SignalStack({ sensorDetails, concordance }) {
               {detail.key === "bearing_temperature"
                 ? `${detail.persistenceCount} readings elevated`
                 : detail.key === "pressure"
-                  ? "Ripple after load change"
+                  ? "2-reading instability"
                   : detail.key === "flow_rate"
-                    ? "Softening trend"
+                    ? "Downward shift"
                     : "Persistent drift"}
             </span>
           </div>
@@ -321,37 +321,37 @@ function SignalStack({ sensorDetails, concordance }) {
 
 function ActionLadder({ review, decision, recommendation }) {
   const recommendedStep =
-    recommendation === "Targeted validation before full inspection"
-      ? "Check calibration / operator logs"
+    recommendation === "Validate sensors / targeted review before full inspection"
+      ? "Validate sensors"
       : recommendation === "Targeted inspection"
         ? "Targeted inspection"
-        : recommendation === "Collect more readings"
-          ? "Collect more readings"
-          : recommendation === "Monitor"
+        : recommendation === "Collect more data"
+          ? "Collect more data"
+        : recommendation === "Monitor"
             ? "Monitor"
             : review.status === "Review Recommended" && Math.abs(decision.expectedGap) < 10000
-              ? "Check calibration / operator logs"
+              ? "Validate sensors"
               : review.status === "Review Recommended" && decision.economicallyJustified
                 ? "Targeted inspection"
                 : review.status === "Watch"
-                  ? "Collect more readings"
+                  ? "Collect more data"
                   : "Monitor";
 
   const recommendationNote =
-    recommendedStep === "Check calibration / operator logs"
-      ? "Suggested next move: lower-cost validation before full inspection"
+    recommendedStep === "Validate sensors"
+      ? "Suggested next move: validate sensors / targeted review before full inspection"
       : recommendedStep === "Targeted inspection"
         ? "Suggested next move: targeted inspection"
-        : recommendedStep === "Collect more readings"
-          ? "Suggested next move: collect more readings"
+        : recommendedStep === "Collect more data"
+          ? "Suggested next move: collect more data"
           : "Suggested next move: monitor";
 
   const steps = [
     "Monitor",
-    "Collect more readings",
-    "Check calibration / operator logs",
+    "Collect more data",
+    "Validate sensors",
     "Targeted inspection",
-    "Full shutdown / major intervention"
+    "Full intervention"
   ];
 
   return (
@@ -468,11 +468,11 @@ export default function Tracepoint() {
   const decisionReadout = getTracepointDecisionReadout(review, decision);
   const actionRecommendation =
     review.status === "Review Recommended" && Math.abs(decision.expectedGap) < 10000
-      ? "Targeted validation before full inspection"
+      ? "Validate sensors / targeted review before full inspection"
       : review.status === "Review Recommended" && decision.economicallyJustified
         ? "Targeted inspection"
-        : review.status === "Watch"
-          ? "Collect more readings"
+      : review.status === "Watch"
+          ? "Collect more data"
           : "Monitor";
   const reviewExplainer =
     review.status === "Review Recommended"
@@ -544,61 +544,34 @@ export default function Tracepoint() {
       </header>
 
       <section className="tracepoint__cockpit">
-        <article className="panel tracepoint__cockpit-gauge">
-          <div className="tracepoint__cockpit-label">Signal Review Score</div>
-          <ScoreGauge score={review.combinedScore} status={review.status} />
-          <div className="tracepoint__cockpit-meta">
-            <div className="tracepoint__cockpit-asset">
-              <AssetGlyph assetId={scenario.assetId} />
-              <div>
-                <div className="tracepoint__cockpit-asset-id">{scenario.assetId}</div>
-                <div className="tracepoint__cockpit-asset-name">{scenario.label}</div>
-              </div>
-            </div>
-            <div className="tracepoint__cockpit-chip">Synthetic calibration demo</div>
-            <div className="tracepoint__cockpit-chip">Human review required</div>
+        <article className="panel tracepoint__cockpit-panel">
+          <div className="tracepoint__cockpit-score">
+            <div className="tracepoint__cockpit-label">Signal Review Score</div>
+            <ScoreGauge score={review.combinedScore} status={review.status} />
           </div>
-        </article>
 
-        <article className="panel tracepoint__cockpit-decision">
-          <div className="card-label">Decision card</div>
-          <div className="tracepoint__cockpit-state">{decisionReadout.signalSummary}</div>
-          <div className="tracepoint__cockpit-summary">{decisionReadout.economicSummary}</div>
-          <div className="tracepoint__cockpit-move">Suggested next move: {actionRecommendation}</div>
-          <div className="tracepoint__cockpit-stack">
-            <div>
-              <span>Signal</span>
-              <strong>{decisionReadout.signalSummary}</strong>
-            </div>
-            <div>
-              <span>Economics</span>
-              <strong>{decisionReadout.economicSummary}</strong>
-            </div>
-            <div>
-              <span>Next move</span>
-              <strong>{actionRecommendation}</strong>
+          <div className="tracepoint__cockpit-copy">
+            <div className="tracepoint__cockpit-state">{review.status}</div>
+            <div className="tracepoint__cockpit-summary">{decisionReadout.economicSummary}</div>
+            <div className="tracepoint__cockpit-move">Suggested next move: {actionRecommendation}</div>
+
+            <div className="tracepoint__cockpit-strip">
+              <div className="tracepoint__cockpit-asset">
+                <AssetGlyph assetId={scenario.assetId} />
+                <div>
+                  <div className="tracepoint__cockpit-asset-id">{scenario.assetId}</div>
+                  <div className="tracepoint__cockpit-asset-name">{scenario.label}</div>
+                </div>
+              </div>
+              <div className="tracepoint__cockpit-chip tracepoint__cockpit-chip--state">Operating state: {currentRow.operating_state}</div>
+              <div className="tracepoint__cockpit-chip">Synthetic calibration demo</div>
+              <div className="tracepoint__cockpit-chip">Human review required</div>
             </div>
           </div>
         </article>
       </section>
 
       <section className="tracepoint__cards">
-        <article className="panel tracepoint-card">
-          <div className="card-label">Current review status</div>
-          <div className="tracepoint-card__value">{review.status}</div>
-          <div className="tracepoint-card__note">The score prepares a review. A reviewer decides whether action is justified.</div>
-        </article>
-        <article className="panel tracepoint-card">
-          <div className="card-label">Combined signal score</div>
-          <div className="tracepoint-card__value">{review.combinedScore.toFixed(1)}</div>
-          <div className="tracepoint-scorebar" aria-hidden="true">
-            <span
-              className={`tracepoint-scorebar__fill tracepoint-scorebar__fill--${statusTone}`}
-              style={{ width: `${scoreFill}%` }}
-            />
-          </div>
-          <div className="tracepoint-card__note">Thresholds: Normal below 34, Watch below 67, Review Recommended at 67+.</div>
-        </article>
         <article className="panel tracepoint-card">
           <div className="card-label">Main driver of the flag</div>
           <div className="tracepoint-card__value">{driverLabel}</div>
@@ -714,6 +687,20 @@ export default function Tracepoint() {
             <p>{reviewExplainer}</p>
           </div>
           <SignalStack sensorDetails={review.sensorDetails} concordance={review.concordance} />
+          <details className="tracepoint__details tracepoint__details--compact">
+            <summary>Raw per-sensor values</summary>
+            <div className="tracepoint__raw-grid">
+              {review.sensorDetails.map((detail) => (
+                <div key={detail.key} className="tracepoint__raw-row">
+                  <span>{detail.label}</span>
+                  <strong>{formatMetric(detail.latestValue, detail.unit)}</strong>
+                  <em>
+                    EWMA {formatMetric(detail.ewmaCurrent, detail.unit)} · baseline {formatMetric(detail.baselineMedian, detail.unit)} · z {formatRobustZ(detail.robustZ)}
+                  </em>
+                </div>
+              ))}
+            </div>
+          </details>
           <div className="tracepoint__alternatives">
             <div className="card-label">Possible alternative explanations</div>
             <ul>
@@ -926,61 +913,48 @@ export default function Tracepoint() {
             <h2>What this prototype can and cannot say</h2>
           </div>
         </div>
-        <div className="tracepoint__summary-strip">
-          <div className="mini-card">
-            <div className="card-label">Review flags raised</div>
-            <div className="tracepoint-card__value">{evaluationSummary.reviewFlagsRaised}</div>
-          </div>
-          <div className="mini-card">
-            <div className="card-label">Missed anomaly windows</div>
-            <div className="tracepoint-card__value">{evaluationSummary.missedSyntheticAnomalyWindows}</div>
-          </div>
-          <div className="mini-card">
-            <div className="card-label">Lead time before escalation</div>
-            <div className="tracepoint-card__value">
-              {evaluationSummary.leadTimeHours === null ? "n/a" : `${evaluationSummary.leadTimeHours}h`}
-            </div>
-          </div>
-        </div>
-        <div className="tracepoint__limits-grid">
-          <ul className="tracepoint__limits-list">
-            <li>synthetic scenario only</li>
-            <li>current thresholds may create false positives or false negatives</li>
-            <li>sensor patterns can have non-failure explanations</li>
-            <li>site-specific calibration would be required in real use</li>
-            <li>the tool does not confirm equipment failure</li>
-            <li>inspection and operating procedures remain authoritative</li>
-          </ul>
-          <div className="mini-card tracepoint__summary-card">
-            <div className="card-label">Synthetic evaluation summary</div>
-            <div className="tracepoint__summary-grid">
-              <div>
-                <span>Total data windows</span>
-                <strong>{evaluationSummary.totalWindows}</strong>
-              </div>
-              <div>
-                <span>Known synthetic wear windows</span>
-                <strong>{evaluationSummary.knownSyntheticWearWindows}</strong>
-              </div>
-              <div>
-                <span>Review flags raised</span>
-                <strong>{evaluationSummary.reviewFlagsRaised}</strong>
-              </div>
-              <div>
-                <span>False alarms</span>
-                <strong>{evaluationSummary.falseAlarms}</strong>
-              </div>
-              <div>
-                <span>Missed synthetic anomaly windows</span>
-                <strong>{evaluationSummary.missedSyntheticAnomalyWindows}</strong>
-              </div>
-              <div>
-                <span>Lead time before synthetic escalation point</span>
-                <strong>{evaluationSummary.leadTimeHours === null ? "n/a" : `${evaluationSummary.leadTimeHours}h`}</strong>
+        <details className="tracepoint__details tracepoint__details--compact">
+          <summary>Calibration findings and limits</summary>
+          <div className="tracepoint__limits-grid">
+            <ul className="tracepoint__limits-list">
+              <li>synthetic scenario only</li>
+              <li>current thresholds may create false positives or false negatives</li>
+              <li>sensor patterns can have non-failure explanations</li>
+              <li>site-specific calibration would be required in real use</li>
+              <li>the tool does not confirm equipment failure</li>
+              <li>inspection and operating procedures remain authoritative</li>
+            </ul>
+            <div className="mini-card tracepoint__summary-card">
+              <div className="card-label">Synthetic evaluation summary</div>
+              <div className="tracepoint__summary-grid">
+                <div>
+                  <span>Total data windows</span>
+                  <strong>{evaluationSummary.totalWindows}</strong>
+                </div>
+                <div>
+                  <span>Known synthetic wear windows</span>
+                  <strong>{evaluationSummary.knownSyntheticWearWindows}</strong>
+                </div>
+                <div>
+                  <span>Review flags raised</span>
+                  <strong>{evaluationSummary.reviewFlagsRaised}</strong>
+                </div>
+                <div>
+                  <span>False alarms</span>
+                  <strong>{evaluationSummary.falseAlarms}</strong>
+                </div>
+                <div>
+                  <span>Missed synthetic anomaly windows</span>
+                  <strong>{evaluationSummary.missedSyntheticAnomalyWindows}</strong>
+                </div>
+                <div>
+                  <span>Lead time before synthetic escalation point</span>
+                  <strong>{evaluationSummary.leadTimeHours === null ? "n/a" : `${evaluationSummary.leadTimeHours}h`}</strong>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </details>
       </section>
 
       <footer className="tracepoint__footer">

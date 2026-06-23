@@ -1932,13 +1932,13 @@ button { font-family: inherit; }
 .tracepoint__chart-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
 }
 
 .tracepoint-chart {
   --tracepoint-accent: #f0c75e;
   display: grid;
-  gap: 8px;
+  gap: 10px;
   border-color: rgba(255, 255, 255, 0.05);
   background:
     linear-gradient(180deg, rgba(12, 16, 20, 0.92), rgba(8, 10, 14, 0.98)),
@@ -2068,22 +2068,21 @@ button { font-family: inherit; }
 
 .tracepoint-chart--primary {
   grid-column: span 2;
-  min-height: 228px;
+  min-height: 256px;
 }
 
 .tracepoint-chart--primary .tracepoint-chart__svg {
-  min-height: 150px;
+  min-height: 168px;
 }
 
 .tracepoint__cockpit {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
   margin-top: 12px;
 }
 
-.tracepoint__cockpit-gauge,
-.tracepoint__cockpit-decision,
+.tracepoint__cockpit-panel,
 .tracepoint__signal-panel,
 .tracepoint__decision-panel {
   background:
@@ -2091,7 +2090,15 @@ button { font-family: inherit; }
     linear-gradient(90deg, rgba(255, 255, 255, 0.015), transparent 26%);
 }
 
-.tracepoint__cockpit-gauge {
+.tracepoint__cockpit-panel {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.56fr) minmax(0, 1.44fr);
+  gap: 14px;
+  align-items: center;
+  padding: 16px 18px;
+}
+
+.tracepoint__cockpit-score {
   display: grid;
   gap: 14px;
   align-content: start;
@@ -2168,6 +2175,35 @@ button { font-family: inherit; }
   gap: 10px;
 }
 
+.tracepoint__cockpit-copy {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding-left: 2px;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tracepoint__cockpit-summary {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.tracepoint__cockpit-move {
+  padding-top: 0;
+  color: var(--accent-strong);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.tracepoint__cockpit-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
 .tracepoint__cockpit-asset {
   display: grid;
   grid-template-columns: 74px minmax(0, 1fr);
@@ -2212,15 +2248,14 @@ button { font-family: inherit; }
   letter-spacing: 0.02em;
 }
 
-.tracepoint__cockpit-decision {
-  display: grid;
-  gap: 10px;
-  align-content: start;
+.tracepoint__cockpit-chip--state {
+  border-color: rgba(159, 179, 160, 0.18);
+  background: rgba(159, 179, 160, 0.08);
 }
 
 .tracepoint__cockpit-state {
   color: var(--text);
-  font-size: 22px;
+  font-size: clamp(22px, 3vw, 30px);
   line-height: 1.15;
   letter-spacing: -0.03em;
 }
@@ -2237,34 +2272,46 @@ button { font-family: inherit; }
   font-weight: 600;
 }
 
-.tracepoint__cockpit-stack {
-  display: grid;
-  gap: 10px;
-  margin-top: 6px;
+.tracepoint__details--compact {
+  margin-top: 0;
 }
 
-.tracepoint__cockpit-stack div {
+.tracepoint__raw-grid {
   display: grid;
-  gap: 4px;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tracepoint__raw-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.8fr) auto minmax(0, 1.2fr);
+  gap: 12px;
+  align-items: center;
   padding: 10px 12px;
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-control);
   background: rgba(7, 9, 13, 0.52);
 }
 
-.tracepoint__cockpit-stack span {
-  color: var(--text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+.tracepoint__raw-row span {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.tracepoint__cockpit-stack strong {
+.tracepoint__raw-row strong {
   color: var(--text);
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tracepoint__raw-row em {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.35;
   font-weight: 600;
+  font-family: var(--mono-font, SFMono-Regular, Menlo, Consolas, monospace);
 }
 
 .tracepoint-timeline {
@@ -2283,6 +2330,7 @@ button { font-family: inherit; }
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-control);
   background: rgba(7, 9, 13, 0.52);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
 .tracepoint-timeline__step:not(:last-child)::after {
@@ -2384,7 +2432,7 @@ button { font-family: inherit; }
 }
 
 .tracepoint-stack__bar {
-  height: 12px;
+  height: 14px;
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 999px;
   overflow: hidden;
@@ -2470,6 +2518,7 @@ button { font-family: inherit; }
   border-color: rgba(240, 199, 94, 0.3);
   background: rgba(214, 176, 76, 0.13);
   color: var(--text);
+  box-shadow: 0 0 0 1px rgba(240, 199, 94, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .tracepoint-ladder__step strong {
@@ -2516,6 +2565,7 @@ button { font-family: inherit; }
   line-height: 1.45;
   font-weight: 600;
   word-break: break-word;
+  font-family: var(--mono-font, SFMono-Regular, Menlo, Consolas, monospace);
 }
 
 .tracepoint__review-grid {
@@ -2748,6 +2798,14 @@ button { font-family: inherit; }
   font-variant-numeric: tabular-nums;
 }
 
+.tracepoint__limits > .tracepoint__details {
+  margin-top: 2px;
+}
+
+.tracepoint__details--compact summary {
+  font-size: 14px;
+}
+
 .tracepoint__footer {
   display: flex;
   justify-content: space-between;
@@ -2975,6 +3033,18 @@ button { font-family: inherit; }
     grid-column: auto;
   }
 
+  .tracepoint__cockpit-panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tracepoint__cockpit-strip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tracepoint__raw-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .tracepoint__decision-factors {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -3165,7 +3235,7 @@ button { font-family: inherit; }
     justify-items: start;
   }
 
-  .tracepoint__cockpit-stack,
+  .tracepoint__cockpit-strip,
   .tracepoint-provenance {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -3177,6 +3247,10 @@ button { font-family: inherit; }
 
   .tracepoint-stack__score {
     justify-self: start;
+  }
+
+  .tracepoint__raw-row {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .tracepoint__evidence-row {
