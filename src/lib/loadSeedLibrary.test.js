@@ -5,7 +5,7 @@ describe("loadSeedLibrary", () => {
     Object.defineProperty(global, "fetch", {
       configurable: true,
       writable: true,
-      value: jest.fn()
+      value: jest.fn(),
     });
   });
 
@@ -18,28 +18,28 @@ describe("loadSeedLibrary", () => {
       if (url === "/seeds/index.json") {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve({ seedFiles: ["alpha.json", "beta.json"] })
+          json: () => Promise.resolve({ seedFiles: ["alpha.json", "beta.json"] }),
         });
       }
 
       if (url === "/seeds/alpha.json") {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve({ id: "alpha", title: "Alpha" })
+          json: () => Promise.resolve({ id: "alpha", title: "Alpha" }),
         });
       }
 
       if (url === "/seeds/beta.json") {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve(null)
+          json: () => Promise.resolve(null),
         });
       }
 
       return Promise.resolve({
         ok: false,
         status: 404,
-        json: () => Promise.resolve({})
+        json: () => Promise.resolve({}),
       });
     });
 
@@ -55,7 +55,7 @@ describe("loadSeedLibrary", () => {
     global.fetch.mockResolvedValue({
       ok: false,
       status: 500,
-      json: () => Promise.resolve({})
+      json: () => Promise.resolve({}),
     });
 
     await expect(loadSeedLibrary()).rejects.toThrow("Unable to load seed index: 500");

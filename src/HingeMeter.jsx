@@ -3,7 +3,7 @@ import {
   calculateCardoGuardReview,
   formatMoney,
   getScenarioById,
-  CARDO_GUARD_SCENARIOS
+  CARDO_GUARD_SCENARIOS,
 } from "./lib/cardoGuard.js";
 
 function getInitialState() {
@@ -12,7 +12,7 @@ function getInitialState() {
     scenarioId: scenario.id,
     confidence: scenario.defaultConfidence,
     costToAct: scenario.defaultCostToAct,
-    costToMiss: scenario.defaultCostToMiss
+    costToMiss: scenario.defaultCostToMiss,
   };
 }
 
@@ -35,7 +35,7 @@ export default function HingeMeter() {
       scenarioId: scenario.id,
       confidence: scenario.defaultConfidence,
       costToAct: scenario.defaultCostToAct,
-      costToMiss: scenario.defaultCostToMiss
+      costToMiss: scenario.defaultCostToMiss,
     });
   }, [inputs.scenarioId]);
 
@@ -59,7 +59,7 @@ export default function HingeMeter() {
       scenarioId: scenario.id,
       confidence: scenario.defaultConfidence,
       costToAct: scenario.defaultCostToAct,
-      costToMiss: scenario.defaultCostToMiss
+      costToMiss: scenario.defaultCostToMiss,
     });
   }
 
@@ -69,16 +69,17 @@ export default function HingeMeter() {
     const waste = review.expectedActionWaste;
     const loss = review.expectedMissLoss;
     if (waste === 0 && loss === 0) return 0;
-    
+
     // Logarithmic scale for better visual balance across huge dollar spreads
     const ratio = Math.log10(loss + 1) / (Math.log10(waste + 1) || 1);
     const diff = loss - waste;
-    
+
     if (diff === 0) return 0;
-    
+
     // Smooth angle interpolation
     const maxAngle = 45;
-    const factor = diff > 0 ? (ratio - 1) / (ratio + 1 || 1) : (1 / ratio - 1) / (1 / ratio + 1 || 1);
+    const factor =
+      diff > 0 ? (ratio - 1) / (ratio + 1 || 1) : (1 / ratio - 1) / (1 / ratio + 1 || 1);
     const clamped = Math.max(-1, Math.min(1, factor * 2));
     return clamped * maxAngle;
   }, [review]);
@@ -94,7 +95,9 @@ export default function HingeMeter() {
         <div className="panel__head">
           <div>
             <div className="card-label">PromptHound Labs</div>
-            <div className="muted" style={{ fontSize: "0.85em", marginBottom: 4 }}>CARDO REI Decision Visualization</div>
+            <div className="muted" style={{ fontSize: "0.85em", marginBottom: 4 }}>
+              CARDO REI Decision Visualization
+            </div>
             <div className="cardo-guard__tool-name">Hinge Meter</div>
             <h2>Visualize the Cost-Weighted Hinge</h2>
             <p className="lede">
@@ -210,7 +213,18 @@ export default function HingeMeter() {
           </div>
 
           {/* Interactive Hinge Meter SVG */}
-          <div className="panel hinge-visualization-container" style={{ background: "#0c0d16", borderRadius: "8px", border: "1px solid #1e2235", padding: "16px", marginBottom: "20px", display: "flex", justifyContent: "center" }}>
+          <div
+            className="panel hinge-visualization-container"
+            style={{
+              background: "#0c0d16",
+              borderRadius: "8px",
+              border: "1px solid #1e2235",
+              padding: "16px",
+              marginBottom: "20px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             <svg
               viewBox="0 0 600 300"
               width="100%"
@@ -231,13 +245,25 @@ export default function HingeMeter() {
                   <stop offset="100%" stopColor={review.shouldAct ? "#5b8dd9" : "#c85858"} />
                 </linearGradient>
                 <radialGradient id="pivot-glow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor={review.shouldAct ? "#5b8dd9" : "#c85858"} stopOpacity="0.4" />
+                  <stop
+                    offset="0%"
+                    stopColor={review.shouldAct ? "#5b8dd9" : "#c85858"}
+                    stopOpacity="0.4"
+                  />
                   <stop offset="100%" stopColor="#0c0d16" stopOpacity="0" />
                 </radialGradient>
               </defs>
 
               {/* IMMOVABLE HINGE AXIS */}
-              <line x1="300" y1="20" x2="300" y2="240" stroke="#1e2235" strokeWidth="2" strokeDasharray="4 4" />
+              <line
+                x1="300"
+                y1="20"
+                x2="300"
+                y2="240"
+                stroke="#1e2235"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+              />
 
               {/* UNCERTAINTY ZONE */}
               <rect
@@ -264,8 +290,12 @@ export default function HingeMeter() {
               />
 
               {/* SIDE LABELS */}
-              <text x="70" y="40" fill="#c85858" fontSize="12" fontWeight="bold" opacity="0.8">DO NOT ACT</text>
-              <text x="470" y="40" fill="#5b8dd9" fontSize="12" fontWeight="bold" opacity="0.8">ACT</text>
+              <text x="70" y="40" fill="#c85858" fontSize="12" fontWeight="bold" opacity="0.8">
+                DO NOT ACT
+              </text>
+              <text x="470" y="40" fill="#5b8dd9" fontSize="12" fontWeight="bold" opacity="0.8">
+                ACT
+              </text>
 
               {/* LEFT WEIGHT (Expected Action Waste) */}
               <rect
@@ -279,8 +309,17 @@ export default function HingeMeter() {
                 onMouseLeave={() => setHoveredElement(null)}
                 style={{ transition: "all 0.3s ease", cursor: "help" }}
               />
-              <text x="150" y="225" fill="#7a8098" fontSize="11" textAnchor="middle">Action Waste</text>
-              <text x="150" y="242" fill="#c85858" fontSize="12" fontWeight="bold" textAnchor="middle">
+              <text x="150" y="225" fill="#7a8098" fontSize="11" textAnchor="middle">
+                Action Waste
+              </text>
+              <text
+                x="150"
+                y="242"
+                fill="#c85858"
+                fontSize="12"
+                fontWeight="bold"
+                textAnchor="middle"
+              >
                 {formatMoney(review.expectedActionWaste)}
               </text>
 
@@ -296,20 +335,51 @@ export default function HingeMeter() {
                 onMouseLeave={() => setHoveredElement(null)}
                 style={{ transition: "all 0.3s ease", cursor: "help" }}
               />
-              <text x="450" y="225" fill="#7a8098" fontSize="11" textAnchor="middle">Miss Loss</text>
-              <text x="450" y="242" fill="#5b8dd9" fontSize="12" fontWeight="bold" textAnchor="middle">
+              <text x="450" y="225" fill="#7a8098" fontSize="11" textAnchor="middle">
+                Miss Loss
+              </text>
+              <text
+                x="450"
+                y="242"
+                fill="#5b8dd9"
+                fontSize="12"
+                fontWeight="bold"
+                textAnchor="middle"
+              >
                 {formatMoney(review.expectedMissLoss)}
               </text>
 
               {/* NEEDLE / SWINGING BEAM */}
-              <g transform={`rotate(${angle}, 300, 200)`} style={{ transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)" }}>
+              <g
+                transform={`rotate(${angle}, 300, 200)`}
+                style={{ transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)" }}
+              >
                 {/* Pointer */}
-                <line x1="300" y1="200" x2="300" y2="60" stroke="url(#needle-gradient)" strokeWidth="4" strokeLinecap="round" />
-                <polygon points="296,65 300,50 304,65" fill={review.shouldAct ? "#5b8dd9" : "#c85858"} />
+                <line
+                  x1="300"
+                  y1="200"
+                  x2="300"
+                  y2="60"
+                  stroke="url(#needle-gradient)"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                />
+                <polygon
+                  points="296,65 300,50 304,65"
+                  fill={review.shouldAct ? "#5b8dd9" : "#c85858"}
+                />
               </g>
 
               {/* HINGE PIVOT (Interactive Center) */}
-              {pulse && <circle cx="300" cy="200" r="30" fill="url(#pivot-glow)" className="pulse-animation" />}
+              {pulse && (
+                <circle
+                  cx="300"
+                  cy="200"
+                  r="30"
+                  fill="url(#pivot-glow)"
+                  className="pulse-animation"
+                />
+              )}
               <circle
                 cx="300"
                 cy="200"
@@ -324,11 +394,25 @@ export default function HingeMeter() {
           </div>
 
           {/* Context Tooltip area */}
-          <div className="mini-card info-box" style={{ minHeight: "60px", marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "center", borderColor: "#1e2235", background: "rgba(255,255,255,0.02)" }}>
+          <div
+            className="mini-card info-box"
+            style={{
+              minHeight: "60px",
+              marginBottom: "20px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderColor: "#1e2235",
+              background: "rgba(255,255,255,0.02)",
+            }}
+          >
             <span style={{ fontSize: "0.9em", textAlign: "center", color: "#d8dce8" }}>
-              {hoveredElement === "leftWeight" && "Expected Action Waste: Loss of acting if the threat is false alarm."}
-              {hoveredElement === "rightWeight" && "Expected Miss Loss: Risk-adjusted damage of ignoring a real threat."}
-              {hoveredElement === "uncertainty" && "Uncertainty zone: Represents confidence bounds where the decision could flip."}
+              {hoveredElement === "leftWeight" &&
+                "Expected Action Waste: Loss of acting if the threat is false alarm."}
+              {hoveredElement === "rightWeight" &&
+                "Expected Miss Loss: Risk-adjusted damage of ignoring a real threat."}
+              {hoveredElement === "uncertainty" &&
+                "Uncertainty zone: Represents confidence bounds where the decision could flip."}
               {!hoveredElement && "Hover over elements in the diagram to inspect details."}
             </span>
           </div>
@@ -336,7 +420,7 @@ export default function HingeMeter() {
           {/* Decision recommendation bar */}
           <div className="output-anchor cardo-guard__decision">
             <div className="card-label">Recommendation</div>
-            <div className={`cardo-guard__decision-line ${review.shouldAct ? 'act' : 'dont-act'}`}>
+            <div className={`cardo-guard__decision-line ${review.shouldAct ? "act" : "dont-act"}`}>
               {review.recommendation}
             </div>
             <div className="muted">{review.explanation}</div>
@@ -346,12 +430,16 @@ export default function HingeMeter() {
           <div className="mini-grid" style={{ marginBottom: "20px" }}>
             <div className="mini-card">
               <div className="card-label">Decision strength</div>
-              <div style={{ fontSize: "1.25em", fontWeight: "bold" }}>{review.decisionStrength}</div>
+              <div style={{ fontSize: "1.25em", fontWeight: "bold" }}>
+                {review.decisionStrength}
+              </div>
               <div className="muted">{review.decisionMarginRatio.toFixed(1)}× margin</div>
             </div>
             <div className="mini-card">
               <div className="card-label">Breakeven miss cost</div>
-              <div style={{ fontSize: "1.25em", fontWeight: "bold" }}>{formatMoney(review.breakevenMissCost)}</div>
+              <div style={{ fontSize: "1.25em", fontWeight: "bold" }}>
+                {formatMoney(review.breakevenMissCost)}
+              </div>
               <div className="muted">Threshold to flip verdict</div>
             </div>
           </div>
@@ -365,14 +453,12 @@ export default function HingeMeter() {
                 : `Expected action waste (${formatMoney(review.expectedActionWaste)}) outweighs risk-adjusted miss loss (${formatMoney(review.expectedMissLoss)}).`}
             </div>
             <div className="muted" style={{ marginTop: 8 }}>
-              {review.breakevenMissCost > 0 && (
-                review.shouldAct
+              {review.breakevenMissCost > 0 &&
+                (review.shouldAct
                   ? `The cost of missing must fall below ${formatMoney(review.breakevenMissCost)} to flip the decision to DO NOT ACT.`
-                  : `The cost of missing must rise above ${formatMoney(review.breakevenMissCost)} to flip the decision to ACT.`
-              )}
+                  : `The cost of missing must rise above ${formatMoney(review.breakevenMissCost)} to flip the decision to ACT.`)}
             </div>
           </div>
-
         </section>
       </div>
     </section>

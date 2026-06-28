@@ -14,30 +14,30 @@ const TAGS = [
   "cosmic horror",
   "political collapse",
   "UAP",
-  "forbidden knowledge"
+  "forbidden knowledge",
 ];
 
 const GENRES = [
   {
     label: "Realistic",
-    note: "Stay close to the original event and keep the fiction layer thin."
+    note: "Stay close to the original event and keep the fiction layer thin.",
   },
   {
     label: "Grounded Fiction",
-    note: "Change names and tighten the emotional pressure without losing realism."
+    note: "Change names and tighten the emotional pressure without losing realism.",
   },
   {
     label: "Speculative",
-    note: "Add one divergent variable that changes the outcome."
+    note: "Add one divergent variable that changes the outcome.",
   },
   {
     label: "Fantasy",
-    note: "Translate the pattern into myth, prophecy, and symbolic conflict."
+    note: "Translate the pattern into myth, prophecy, and symbolic conflict.",
   },
   {
     label: "Cosmic",
-    note: "Reveal a larger, unknowable system behind the human conflict."
-  }
+    note: "Reveal a larger, unknowable system behind the human conflict.",
+  },
 ];
 
 const STORAGE_KEY = "inspiration_engine_favorites_v1";
@@ -59,7 +59,7 @@ function buildFuel(seed, genre, mutation) {
     "Rename the people, tighten the pace, and keep the emotional logic intact.",
     "Add one divergent variable that changes the outcome.",
     "Let symbolic forces replace literal history.",
-    "Push the pattern into an unknowable larger system."
+    "Push the pattern into an unknowable larger system.",
   ];
   const forceFocus = (seed.charactersForces || []).slice(0, 2).join(", ");
   const remixFocus = (seed.genreRemixes || [])
@@ -73,8 +73,10 @@ function buildFuel(seed, genre, mutation) {
     `Story DNA: Pull on ${focus} until the event becomes a usable narrative engine.`,
     `Character pressure: Force the lead to choose between survival, truth, and belonging${forceFocus ? ` through ${forceFocus}` : ""}.`,
     `Twist: ${mutationNotes[mutation]}`,
-    remixFocus ? `Remix path: ${remixFocus}.` : `Remix path: Keep the fiction distinct from the source event.`,
-    `Source trail: Keep the real event visible so the fiction feels grounded instead of generic.`
+    remixFocus
+      ? `Remix path: ${remixFocus}.`
+      : `Remix path: Keep the fiction distinct from the source event.`,
+    `Source trail: Keep the real event visible so the fiction feels grounded instead of generic.`,
   ];
 }
 
@@ -91,7 +93,7 @@ function makeCopyBlock(seed, genre, mutation) {
     ...fuel.map((line) => `- ${line}`),
     ``,
     `## Source Trail`,
-    ...((seed.sourceTrail || []).map((source) => `- ${source.label}: ${source.url}`))
+    ...(seed.sourceTrail || []).map((source) => `- ${source.label}: ${source.url}`),
   ].join("\n");
 }
 
@@ -200,7 +202,9 @@ export default function InspirationEngine() {
           <div>
             <div className="inspiration-kicker">History-powered creative engine</div>
             <h1>Find the real pattern. Forge a new story.</h1>
-            <p className="inspiration-lead">Loading curated seed files from <code>/public/seeds</code>.</p>
+            <p className="inspiration-lead">
+              Loading curated seed files from <code>/public/seeds</code>.
+            </p>
           </div>
         </section>
       </main>
@@ -233,7 +237,9 @@ export default function InspirationEngine() {
             </p>
           </div>
           <div className="inspiration-actions">
-            <button type="button" className="ie-button" onClick={() => setTag("All")}>Reset filters</button>
+            <button type="button" className="ie-button" onClick={() => setTag("All")}>
+              Reset filters
+            </button>
           </div>
         </section>
       </main>
@@ -249,15 +255,24 @@ export default function InspirationEngine() {
           <div className="inspiration-kicker">History-powered creative engine</div>
           <h1>Find the real pattern. Forge a new story.</h1>
           <p className="inspiration-lead">
-            Start from a wild real event, extract the story DNA, and remix the pressure point into original fiction.
+            Start from a wild real event, extract the story DNA, and remix the pressure point into
+            original fiction.
           </p>
         </div>
         <div className="inspiration-actions">
-          <button type="button" className="ie-button" onClick={pickRandomSeed}>Random seed</button>
-          <button type="button" className={isSaved ? "ie-button is-active" : "ie-button"} onClick={toggleFavorite}>
+          <button type="button" className="ie-button" onClick={pickRandomSeed}>
+            Random seed
+          </button>
+          <button
+            type="button"
+            className={isSaved ? "ie-button is-active" : "ie-button"}
+            onClick={toggleFavorite}
+          >
             {isSaved ? "Saved" : "Save spark"}
           </button>
-          <button type="button" className="ie-button" onClick={copySpark}>{copied || "Copy spark"}</button>
+          <button type="button" className="ie-button" onClick={copySpark}>
+            {copied || "Copy spark"}
+          </button>
         </div>
       </section>
 
@@ -308,7 +323,8 @@ export default function InspirationEngine() {
           <div className="control-group">
             <div className="control-label">What the engine is doing</div>
             <div className="engine-note">
-              It surfaces a real event, extracts the hinge, and gives you a clean creative starting point instead of a blank page.
+              It surfaces a real event, extracts the hinge, and gives you a clean creative starting
+              point instead of a blank page.
             </div>
           </div>
         </div>
@@ -321,7 +337,9 @@ export default function InspirationEngine() {
               <div className="panel-eyebrow">Historical seed</div>
               <h2>{activeSeed.title}</h2>
             </div>
-            <div className="seed-meta">{activeSeed.era} · {activeSeed.region}</div>
+            <div className="seed-meta">
+              {activeSeed.era} · {activeSeed.region}
+            </div>
           </div>
 
           <p className="seed-summary">{activeSeed.summary}</p>
@@ -345,7 +363,9 @@ export default function InspirationEngine() {
             <div className="seed-block__label">Story DNA</div>
             <div className="chip-row">
               {(activeSeed?.storyDNA || []).map((item) => (
-                <span key={item} className="dna-chip">{item}</span>
+                <span key={item} className="dna-chip">
+                  {item}
+                </span>
               ))}
             </div>
           </div>
@@ -365,16 +385,16 @@ export default function InspirationEngine() {
             <div className="seed-block__label">Characters / forces</div>
             <div className="chip-row">
               {(activeSeed?.charactersForces || []).map((item) => (
-                <span key={item} className="dna-chip">{item}</span>
+                <span key={item} className="dna-chip">
+                  {item}
+                </span>
               ))}
             </div>
           </div>
 
           <div className="seed-block">
             <div className="seed-block__label">What-if divergences</div>
-            <div className="muted-copy">
-              {(activeSeed?.whatIfDivergences || []).join(" · ")}
-            </div>
+            <div className="muted-copy">{(activeSeed?.whatIfDivergences || []).join(" · ")}</div>
           </div>
         </article>
 
@@ -384,7 +404,9 @@ export default function InspirationEngine() {
               <div className="panel-eyebrow">Remix output</div>
               <h2>{currentGenre.label}</h2>
             </div>
-            <div className="seed-meta">{activeSeed?.sourceType || "Source"} · {activeSeed?.id || "seed"}</div>
+            <div className="seed-meta">
+              {activeSeed?.sourceType || "Source"} · {activeSeed?.id || "seed"}
+            </div>
           </div>
 
           <div className="remix-card">
@@ -399,8 +421,10 @@ export default function InspirationEngine() {
           <div className="remix-card">
             <div className="remix-label">Quick remix prompt</div>
             <p className="remix-copy">
-              Turn this into a {currentGenre.label.toLowerCase()} story where the main character must face
-              <strong> {activeSeed.hinge.toLowerCase()}</strong> while the world presses in from every side.
+              Turn this into a {currentGenre.label.toLowerCase()} story where the main character
+              must face
+              <strong> {activeSeed.hinge.toLowerCase()}</strong> while the world presses in from
+              every side.
             </p>
           </div>
 
@@ -412,14 +436,21 @@ export default function InspirationEngine() {
                   const saved = seedLibrary.find((seed) => seed.id === id);
                   if (!saved) return null;
                   return (
-                    <button key={id} type="button" className="saved-pill" onClick={() => setSeedId(id)}>
+                    <button
+                      key={id}
+                      type="button"
+                      className="saved-pill"
+                      onClick={() => setSeedId(id)}
+                    >
                       {saved.title}
                     </button>
                   );
                 })}
               </div>
             ) : (
-              <div className="muted-copy">Save a seed to keep the best starting points close at hand.</div>
+              <div className="muted-copy">
+                Save a seed to keep the best starting points close at hand.
+              </div>
             )}
           </div>
         </aside>

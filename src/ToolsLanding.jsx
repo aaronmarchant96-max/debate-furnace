@@ -10,7 +10,7 @@ export const TOOL_CARDS = [
     liveHref: "/",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
-    repoLabel: "GitHub repo"
+    repoLabel: "GitHub repo",
   },
   {
     id: "story-forge",
@@ -21,7 +21,7 @@ export const TOOL_CARDS = [
     liveHref: "/#story-forge",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
-    repoLabel: "GitHub repo"
+    repoLabel: "GitHub repo",
   },
   {
     id: "storm-replay",
@@ -32,7 +32,7 @@ export const TOOL_CARDS = [
     liveHref: "/#storm-replay",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
-    repoLabel: "GitHub repo"
+    repoLabel: "GitHub repo",
   },
   {
     id: "cardo-guard",
@@ -43,7 +43,7 @@ export const TOOL_CARDS = [
     liveHref: "/#cardo-guard",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
-    repoLabel: "GitHub repo"
+    repoLabel: "GitHub repo",
   },
   {
     id: "hinge-meter",
@@ -54,7 +54,7 @@ export const TOOL_CARDS = [
     liveHref: "/#hinge-meter",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
-    repoLabel: "GitHub repo"
+    repoLabel: "GitHub repo",
   },
   {
     id: "rei",
@@ -65,18 +65,17 @@ export const TOOL_CARDS = [
     liveHref: "/#rei",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
-    repoLabel: "GitHub repo"
+    repoLabel: "GitHub repo",
   },
   {
     id: "tracepoint",
     label: "Tracepoint",
     title: "Industrial signal review for costly decisions.",
-    description:
-      "Find the signal. Show the evidence. Keep the decision human.",
+    description: "Find the signal. Show the evidence. Keep the decision human.",
     liveHref: "/#tracepoint",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
-    repoLabel: "GitHub repo"
+    repoLabel: "GitHub repo",
   },
   {
     id: "cfai",
@@ -87,14 +86,14 @@ export const TOOL_CARDS = [
     liveHref: "/#cfai",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
-    repoLabel: "GitHub repo"
-  }
+    repoLabel: "GitHub repo",
+  },
 ];
 
 const FEEDBACK_PROMPTS = [
   "Does the scoring logic make sense for your use case?",
   "What other scenarios would you want to see?",
-  "Are the thresholds intuitive, or would you adjust them?"
+  "Are the thresholds intuitive, or would you adjust them?",
 ];
 
 export default function ToolsLanding({ onOpenTool }) {
@@ -108,8 +107,8 @@ export default function ToolsLanding({ onOpenTool }) {
             Pick the slice you need, read the evidence, and keep the decision human.
           </p>
           <div className="tools-hero__sub">
-            Each tool is a focused, reviewable prototype with the same discipline: show the hinge, surface the
-            limits, and keep the output useful for a real reviewer.
+            Each tool is a focused, reviewable prototype with the same discipline: show the hinge,
+            surface the limits, and keep the output useful for a real reviewer.
           </div>
         </div>
         <div className="tools-hero__aside">
@@ -136,7 +135,12 @@ export default function ToolsLanding({ onOpenTool }) {
               >
                 {tool.liveLabel}
               </a>
-              <a className="pill tools-card__link" href={tool.repoHref} target="_blank" rel="noreferrer">
+              <a
+                className="pill tools-card__link"
+                href={tool.repoHref}
+                target="_blank"
+                rel="noreferrer"
+              >
                 {tool.repoLabel}
               </a>
             </div>

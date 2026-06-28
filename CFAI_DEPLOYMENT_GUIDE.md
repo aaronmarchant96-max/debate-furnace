@@ -13,6 +13,7 @@ The CFai tool is integrated into your existing **Debate Furnace** Vercel deploym
 ## ✅ What's Already Set Up
 
 ### Files Created:
+
 - `src/components/Cfai/CfaiInterface.jsx` - Main React component
 - `src/components/Cfai/CfaiInterface.module.css` - Styling
 - `api/cfai/route.js` - API endpoint handler
@@ -20,6 +21,7 @@ The CFai tool is integrated into your existing **Debate Furnace** Vercel deploym
 - Updated `vercel.json` - Added API route configuration
 
 ### Features:
+
 - ✅ Web-based interface for all CFai commands
 - ✅ Real-time API calls to your CFai CLI
 - ✅ Command history and results display
@@ -30,6 +32,7 @@ The CFai tool is integrated into your existing **Debate Furnace** Vercel deploym
 ## 🚀 Deployment Steps
 
 ### 1. Install Dependencies
+
 ```bash
 cd debate-furnace
 npm install
@@ -50,20 +53,24 @@ MAX_TOKENS=2048
 ```
 
 **How to set on Vercel:**
+
 1. Go to your Vercel project dashboard
 2. Navigate to Settings > Environment Variables
 3. Add the above variables
 
 ### 3. Test Locally
+
 ```bash
 npm run dev
 ```
 
 Then visit:
+
 - `http://localhost:3000/#cfai` - Direct CFai interface
 - `http://localhost:3000` - Full app with CFai in navigation
 
 ### 4. Deploy to Vercel
+
 ```bash
 # Deploy your changes
 vercel
@@ -73,7 +80,9 @@ vercel --prod
 ```
 
 ### 5. Verify Deployment
+
 Once deployed:
+
 - Visit your Vercel URL with `/#cfai` hash
 - Test all CFai commands through the web interface
 - Check that API endpoints work: `https://your-site.vercel.app/api/cfai`
@@ -81,12 +90,14 @@ Once deployed:
 ## 📡 API Endpoints
 
 ### GET `/api/cfai`
+
 ```
 https://your-site.vercel.app/api/cfai?command=help
 https://your-site.vercel.app/api/cfai?command=score&args=test,args
 ```
 
 ### POST `/api/cfai`
+
 ```json
 {
   "command": "score",
@@ -96,6 +107,7 @@ https://your-site.vercel.app/api/cfai?command=score&args=test,args
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -109,19 +121,20 @@ https://your-site.vercel.app/api/cfai?command=score&args=test,args
 
 The web interface supports all CFai commands:
 
-| Command | Description | Example |
-|---------|-------------|---------|
-| `score` | Score evidence with CARDO REI tiers | `Marriage certificate: John & Mary, 1892` |
-| `ingest` | Ingest and transcribe documents | `--file /path/to/doc.txt` |
-| `search` | Search with contextual grounding | `--query "Smith family 1880s"` |
-| `discover` | Discover lineage gaps | `--branch Smith` |
-| `validate` | Validate CSV structure | `--csv "col1,col2,col3"` |
-| `sync` | Sync genealogy data | (No args needed) |
-| `help` | Show help | (No args needed) |
+| Command    | Description                         | Example                                   |
+| ---------- | ----------------------------------- | ----------------------------------------- |
+| `score`    | Score evidence with CARDO REI tiers | `Marriage certificate: John & Mary, 1892` |
+| `ingest`   | Ingest and transcribe documents     | `--file /path/to/doc.txt`                 |
+| `search`   | Search with contextual grounding    | `--query "Smith family 1880s"`            |
+| `discover` | Discover lineage gaps               | `--branch Smith`                          |
+| `validate` | Validate CSV structure              | `--csv "col1,col2,col3"`                  |
+| `sync`     | Sync genealogy data                 | (No args needed)                          |
+| `help`     | Show help                           | (No args needed)                          |
 
 ## 🎨 Web Interface Features
 
 ### User Experience:
+
 - **Command Selector**: Dropdown with all CFai commands
 - **Smart Defaults**: Auto-populates inputs based on command
 - **History Tracking**: Shows recent commands and results
@@ -130,6 +143,7 @@ The web interface supports all CFai commands:
 - **Responsive Design**: Works on mobile and desktop
 
 ### CARDO REI Integration:
+
 - Evidence scoring uses 🟢🔵🟠🟡 tier system
 - Results maintain the methodology's standards
 - Verification workflows are respected
@@ -137,14 +151,18 @@ The web interface supports all CFai commands:
 ## ⚙️ Configuration Options
 
 ### Custom CFai Path
+
 If your CFai executable is in a different location:
+
 ```javascript
 // In api/cfai/route.js
-const CFAI_PATH = process.env.CFAI_PATH || '/path/to/your/cfai';
+const CFAI_PATH = process.env.CFAI_PATH || "/path/to/your/cfai";
 ```
 
 ### Model Configuration
+
 Set default models via environment variables:
+
 ```bash
 MODEL=groq/compound
 MAX_TOKENS=4096
@@ -168,11 +186,13 @@ TEMP=0.7
    - Check that required files (familyMemory.json, etc.) are accessible
 
 ### Debugging:
+
 Add debug logging to the API route:
+
 ```javascript
 // In api/cfai/route.js
-console.log('CFai command:', fullCommand);
-console.log('Environment:', process.env.GROQ_API_KEY ? '✓' : '✗');
+console.log("CFai command:", fullCommand);
+console.log("Environment:", process.env.GROQ_API_KEY ? "✓" : "✗");
 ```
 
 ## 📈 Performance Considerations
@@ -201,6 +221,7 @@ To update CFai after making changes:
 ## 📝 Release Notes
 
 ### v1.0.0 (2026-06-27)
+
 - Initial integration of CFai/Hinge AI into Debate Furnace
 - Web interface for all CFai commands
 - API layer for remote execution
@@ -217,6 +238,7 @@ To update CFai after making changes:
 ## 🎉 Next Steps
 
 Your CFai tool is now ready for web deployment! The integration provides:
+
 - ✅ Full CFai functionality via web interface
 - ✅ Seamless integration with existing PromptHound Labs
 - ✅ CARDO REI methodology preservation
@@ -227,4 +249,4 @@ Your CFai tool is now ready for web deployment! The integration provides:
 
 ---
 
-*For more information, refer to the main CFai documentation in `HINGEAI_REFACTOR_SUMMARY.md`*
+_For more information, refer to the main CFai documentation in `HINGEAI_REFACTOR_SUMMARY.md`_

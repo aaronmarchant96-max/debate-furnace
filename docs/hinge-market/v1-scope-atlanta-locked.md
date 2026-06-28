@@ -22,6 +22,7 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 **Single metro, deep granularity.**
 
 **Why Atlanta wins for v1 (user + validation):**
+
 - Highest flipping/investor activity among major U.S. metros (Georgia leads national flipping rate; Atlanta metro consistently tops or near-tops volume lists in 2025–2026 ATTOM/Redfin data).
 - Excellent free public data coverage (Zillow ZIP-level ZHVI, FHFA, City of Atlanta open permits).
 - Rich internal variation: urban core (e.g. 30310, 30318), intown emerging neighborhoods, and maturing suburbs → strong signal variety for renovation/flip dynamics.
@@ -37,15 +38,16 @@ This is non-negotiable for v1. Depth over breadth. We pick the 10–12 with the 
 
 ## v1 Data Strategy (Locked — User's Table + Validation)
 
-| Layer                  | Source (v1)                                      | Feasibility | Role in Tool                              |
-|------------------------|--------------------------------------------------|-------------|-------------------------------------------|
-| **Price Trends**       | Zillow ZHVI (ZIP-level) + FHFA HPI               | High (free) | Core for scenario ranges and appreciation |
-| **Permit / Construction** | City of Atlanta open data (Accela via ArcGIS Hub) | High        | New construction density + supply pressure signals |
-| **Satellite Signals**  | Google Earth Engine (Sentinel-2)                 | Medium      | Roof condition proxies, vacancy, basic change detection (new construction / vegetation loss) |
-| **Economic / Migration** | Census / BLS public data (via FRED)            | High        | Broader context (jobs, population shifts) |
-| **AI Summary + Hinge** | Gemini (structured prompts)                      | High        | Narrative "Why this score" + "What would actually change this outlook" |
+| Layer                     | Source (v1)                                       | Feasibility | Role in Tool                                                                                 |
+| ------------------------- | ------------------------------------------------- | ----------- | -------------------------------------------------------------------------------------------- |
+| **Price Trends**          | Zillow ZHVI (ZIP-level) + FHFA HPI                | High (free) | Core for scenario ranges and appreciation                                                    |
+| **Permit / Construction** | City of Atlanta open data (Accela via ArcGIS Hub) | High        | New construction density + supply pressure signals                                           |
+| **Satellite Signals**     | Google Earth Engine (Sentinel-2)                  | Medium      | Roof condition proxies, vacancy, basic change detection (new construction / vegetation loss) |
+| **Economic / Migration**  | Census / BLS public data (via FRED)               | High        | Broader context (jobs, population shifts)                                                    |
+| **AI Summary + Hinge**    | Gemini (structured prompts)                       | High        | Narrative "Why this score" + "What would actually change this outlook"                       |
 
 **Validation notes (May 2026):**
+
 - **Zillow ZIP ZHVI**: Full national `Zip_zhvi_...` CSV exists and is updated monthly. Filterable to Atlanta metro (hundreds of ZIPs with usable history). This is the backbone.
 - **FHFA HPI**: Excellent repeat-sales complement at ZIP5 level for validation.
 - **Atlanta Permits**: Raw point-level data (2019–2024+) with address, valuation, status, and NPU/ZIP attribution available via ArcGIS FeatureServer + CSV exports. Easy to aggregate to ZIP or NPU for "new construction density."
@@ -66,7 +68,7 @@ No live API calls in the first shipped prototype. (CSV upload shape can be defin
 - **Hinge emphasis**: Every output must surface uncertainty and the actual variables that can flip the recommendation. This is the CARDO REI spine.
 - **Disclaimers**: Loud, repeated, non-dismissible, in multiple locations (hero, scenario cards, flip calculator, hinge section, footer).
 - **Satellite definition for v1**: Basic Sentinel-2 change detection proxies only (new construction density, major roof/vegetation shifts). Not Planet Labs, not high-res commercial, not drone-level condition scoring.
-- **AI role**: Controlled, structured Gemini use for narrative + hinge factors is acceptable in *this* tool (it is the separate "AI expansion" vehicle). Must always be framed as synthetic illustration layered on top of the public data math. Never the primary output.
+- **AI role**: Controlled, structured Gemini use for narrative + hinge factors is acceptable in _this_ tool (it is the separate "AI expansion" vehicle). Must always be framed as synthetic illustration layered on top of the public data math. Never the primary output.
 - **Out of scope**: Whole-metro averages as the main view, property-level comps or ARV engines, live data fetching, paid imagery, ML black boxes, user accounts, more than one metro, 5-year point forecasts (scenarios + sensitivity only).
 
 ---

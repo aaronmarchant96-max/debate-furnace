@@ -14,21 +14,21 @@ import {
   getTracepointDecisionReadout,
   getTracepointScenarioById,
   TRACEPOINT_REVIEW_MARKS,
-  TRACEPOINT_SCENARIOS
+  TRACEPOINT_SCENARIOS,
 } from "./lib/tracepoint.js";
 
 const STORAGE_KEY = "prompthound.tracepoint.reviewer";
 
 const DEFAULT_COSTS = {
   inspectionCost: 91900,
-  missCost: 163900
+  missCost: 163900,
 };
 
 const DEFAULT_WORKFLOW = {
   owner: "Reliability tech",
   status: "Queued",
   nextHandoff: "Shift lead review",
-  responseSla: "Before next shift handover"
+  responseSla: "Before next shift handover",
 };
 
 const DEFAULT_BASELINE = {
@@ -37,7 +37,7 @@ const DEFAULT_BASELINE = {
   startTimestamp: "",
   endTimestamp: "",
   operator: "local",
-  source: "first 24 stable hours"
+  source: "first 24 stable hours",
 };
 
 const WORKFLOW_QUEUE = [
@@ -46,22 +46,22 @@ const WORKFLOW_QUEUE = [
     label: "Reliability tech",
     detail: "First pass on the signal and sensors",
     response: "15 min",
-    note: "Validate sensors / targeted review"
+    note: "Validate sensors / targeted review",
   },
   {
     id: "shift-lead",
     label: "Shift lead",
     detail: "Operational context and handover",
     response: "Before handover",
-    note: "Review the queue and decide next step"
+    note: "Review the queue and decide next step",
   },
   {
     id: "supervisor",
     label: "Operations supervisor",
     detail: "Escalation if the signal stays elevated",
     response: "As needed",
-    note: "Escalate only if the review stays open"
-  }
+    note: "Escalate only if the review stays open",
+  },
 ];
 
 function safeReadState() {
@@ -116,14 +116,14 @@ function formatAuditStamp(timestamp) {
   return new Intl.DateTimeFormat("en-CA", {
     timeStyle: "short",
     dateStyle: "short",
-    timeZone: "America/Edmonton"
+    timeZone: "America/Edmonton",
   }).format(new Date(timestamp));
 }
 
 function formatBaselineStamp(timestamp) {
   return new Intl.DateTimeFormat("en-CA", {
     dateStyle: "medium",
-    timeZone: "America/Edmonton"
+    timeZone: "America/Edmonton",
   }).format(new Date(timestamp));
 }
 
@@ -154,7 +154,7 @@ function buildSparklinePath(values, width = 260, height = 96) {
     area,
     min,
     max,
-    latest: values[values.length - 1]
+    latest: values[values.length - 1],
   };
 }
 
@@ -183,7 +183,17 @@ function formatScenarioVersion(scenarioId) {
   return "synthetic-review-v1";
 }
 
-function ChartCard({ title, values, unitKey, tone, note, evidence, series, primary, markers = [] }) {
+function ChartCard({
+  title,
+  values,
+  unitKey,
+  tone,
+  note,
+  evidence,
+  series,
+  primary,
+  markers = [],
+}) {
   const spark = useMemo(() => buildSparklinePath(values), [values]);
   const minLabel = formatMetric(spark.min, unitKey);
   const maxLabel = formatMetric(spark.max, unitKey);
@@ -193,8 +203,10 @@ function ChartCard({ title, values, unitKey, tone, note, evidence, series, prima
   const paddingX = 12;
   const paddingY = 14;
   const range = spark.max - spark.min || 1;
-  const valueToY = (value) => height - paddingY - ((value - spark.min) / range) * (height - paddingY * 2);
-  const valueToX = (index) => paddingX + (index / (series.length - 1 || 1)) * (width - paddingX * 2);
+  const valueToY = (value) =>
+    height - paddingY - ((value - spark.min) / range) * (height - paddingY * 2);
+  const valueToX = (index) =>
+    paddingX + (index / (series.length - 1 || 1)) * (width - paddingX * 2);
   const scale = 1.4826 * (evidence?.baselineMad || 0) + 0.000001;
   const direction = evidence?.expectedDirection || 1;
   const baseline = evidence?.baselineMedian || spark.min;
@@ -205,11 +217,13 @@ function ChartCard({ title, values, unitKey, tone, note, evidence, series, prima
   const baselineY = valueToY(baseline);
   const markerEntries = markers.map((marker) => ({
     ...marker,
-    x: paddingX + (marker.hour / ((series.length - 1) || 1)) * (width - paddingX * 2)
+    x: paddingX + (marker.hour / (series.length - 1 || 1)) * (width - paddingX * 2),
   }));
 
   return (
-    <article className={`panel tracepoint-chart tracepoint-chart--${tone} ${primary ? "tracepoint-chart--primary" : ""}`}>
+    <article
+      className={`panel tracepoint-chart tracepoint-chart--${tone} ${primary ? "tracepoint-chart--primary" : ""}`}
+    >
       <div className="tracepoint-chart__head">
         <div>
           <div className="card-label">{title}</div>
@@ -239,25 +253,81 @@ function ChartCard({ title, values, unitKey, tone, note, evidence, series, prima
             <stop offset="100%" stopColor="rgba(248,113,113,0.08)" />
           </linearGradient>
         </defs>
-        <rect x={paddingX} y={14} width={width - paddingX * 2} height={Math.max(0, bandTop - 14)} className="tracepoint-chart__band tracepoint-chart__band--review" fill={`url(#tracepoint-${tone}-band-review)`} />
-        <rect x={paddingX} y={bandTop} width={width - paddingX * 2} height={Math.max(0, bandMiddle - bandTop)} className="tracepoint-chart__band tracepoint-chart__band--watch" fill={`url(#tracepoint-${tone}-band-watch)`} />
-        <rect x={paddingX} y={bandMiddle} width={width - paddingX * 2} height={Math.max(0, height - paddingY - bandMiddle)} className="tracepoint-chart__band tracepoint-chart__band--normal" fill={`url(#tracepoint-${tone}-band-normal)`} />
-        <line x1={paddingX} y1={baselineY} x2={width - paddingX} y2={baselineY} className="tracepoint-chart__gridline tracepoint-chart__gridline--baseline" />
-        <line x1={paddingX} y1={bandTop} x2={width - paddingX} y2={bandTop} className="tracepoint-chart__gridline tracepoint-chart__gridline--threshold" />
-        <line x1={paddingX} y1={bandMiddle} x2={width - paddingX} y2={bandMiddle} className="tracepoint-chart__gridline tracepoint-chart__gridline--threshold" />
+        <rect
+          x={paddingX}
+          y={14}
+          width={width - paddingX * 2}
+          height={Math.max(0, bandTop - 14)}
+          className="tracepoint-chart__band tracepoint-chart__band--review"
+          fill={`url(#tracepoint-${tone}-band-review)`}
+        />
+        <rect
+          x={paddingX}
+          y={bandTop}
+          width={width - paddingX * 2}
+          height={Math.max(0, bandMiddle - bandTop)}
+          className="tracepoint-chart__band tracepoint-chart__band--watch"
+          fill={`url(#tracepoint-${tone}-band-watch)`}
+        />
+        <rect
+          x={paddingX}
+          y={bandMiddle}
+          width={width - paddingX * 2}
+          height={Math.max(0, height - paddingY - bandMiddle)}
+          className="tracepoint-chart__band tracepoint-chart__band--normal"
+          fill={`url(#tracepoint-${tone}-band-normal)`}
+        />
+        <line
+          x1={paddingX}
+          y1={baselineY}
+          x2={width - paddingX}
+          y2={baselineY}
+          className="tracepoint-chart__gridline tracepoint-chart__gridline--baseline"
+        />
+        <line
+          x1={paddingX}
+          y1={bandTop}
+          x2={width - paddingX}
+          y2={bandTop}
+          className="tracepoint-chart__gridline tracepoint-chart__gridline--threshold"
+        />
+        <line
+          x1={paddingX}
+          y1={bandMiddle}
+          x2={width - paddingX}
+          y2={bandMiddle}
+          className="tracepoint-chart__gridline tracepoint-chart__gridline--threshold"
+        />
         {markerEntries.map((marker) => (
           <g key={marker.label} className="tracepoint-chart__marker">
-            <line x1={marker.x} y1={14} x2={marker.x} y2={height - paddingY} className={`tracepoint-chart__marker-line tracepoint-chart__marker-line--${marker.tone}`} />
+            <line
+              x1={marker.x}
+              y1={14}
+              x2={marker.x}
+              y2={height - paddingY}
+              className={`tracepoint-chart__marker-line tracepoint-chart__marker-line--${marker.tone}`}
+            />
             <text x={marker.x + 4} y={24} className="tracepoint-chart__marker-label">
               {marker.label}
             </text>
           </g>
         ))}
-        {spark.area ? <path d={spark.area} className="tracepoint-chart__area" fill={`url(#tracepoint-${tone}-fill)`} /> : null}
+        {spark.area ? (
+          <path
+            d={spark.area}
+            className="tracepoint-chart__area"
+            fill={`url(#tracepoint-${tone}-fill)`}
+          />
+        ) : null}
         {spark.path ? <path d={spark.path} className="tracepoint-chart__line" /> : null}
         {series.map((point, index) => (
           <g key={`${point.timestamp}-${index}`} className="tracepoint-chart__point-group">
-            <circle cx={valueToX(index)} cy={valueToY(point.value)} r="2.4" className="tracepoint-chart__point" />
+            <circle
+              cx={valueToX(index)}
+              cy={valueToY(point.value)}
+              r="2.4"
+              className="tracepoint-chart__point"
+            />
             <title>{`${formatTracepointTimestamp(point.timestamp)} | Reading ${formatMetric(point.value, unitKey)} | EWMA ${formatMetric(point.ewma, unitKey)} | Baseline ${formatMetric(point.baseline, unitKey)} | Contribution ${point.contribution}%`}</title>
           </g>
         ))}
@@ -272,7 +342,7 @@ function CorrelationCard({ snapshot, rows }) {
     const sampleRows = rows.slice(-24);
     const points = sampleRows.map((row) => ({
       x: row[pair.xKey],
-      y: row[pair.yKey]
+      y: row[pair.yKey],
     }));
     const xValues = points.map((point) => point.x);
     const yValues = points.map((point) => point.y);
@@ -293,7 +363,7 @@ function CorrelationCard({ snapshot, rows }) {
       xMin,
       yMin,
       xRange,
-      yRange
+      yRange,
     };
   });
 
@@ -313,12 +383,31 @@ function CorrelationCard({ snapshot, rows }) {
               <strong>{tile.label}</strong>
               <span>{(tile.recent * 100).toFixed(0)}%</span>
             </div>
-            <svg viewBox={`0 0 ${tile.width} ${tile.height}`} className="tracepoint-correlation__svg" aria-hidden="true">
-              <line x1="10" y1={tile.height - 10} x2={tile.width - 10} y2="10" className="tracepoint-correlation__trend" />
+            <svg
+              viewBox={`0 0 ${tile.width} ${tile.height}`}
+              className="tracepoint-correlation__svg"
+              aria-hidden="true"
+            >
+              <line
+                x1="10"
+                y1={tile.height - 10}
+                x2={tile.width - 10}
+                y2="10"
+                className="tracepoint-correlation__trend"
+              />
               {tile.points.map((point, index) => {
                 const cx = 10 + ((point.x - tile.xMin) / tile.xRange) * (tile.width - 20);
-                const cy = tile.height - 10 - ((point.y - tile.yMin) / tile.yRange) * (tile.height - 20);
-                return <circle key={`${tile.id}-${index}`} cx={cx} cy={cy} r="2.1" className="tracepoint-correlation__point" />;
+                const cy =
+                  tile.height - 10 - ((point.y - tile.yMin) / tile.yRange) * (tile.height - 20);
+                return (
+                  <circle
+                    key={`${tile.id}-${index}`}
+                    cx={cx}
+                    cy={cy}
+                    r="2.1"
+                    className="tracepoint-correlation__point"
+                  />
+                );
               })}
             </svg>
           </div>
@@ -329,7 +418,10 @@ function CorrelationCard({ snapshot, rows }) {
           <div key={pair.id} className="tracepoint-correlation__meta-row">
             <span>{pair.label}</span>
             <strong>{(pair.recent * 100).toFixed(0)}%</strong>
-            <em>{pair.delta >= 0 ? "+" : ""}{(pair.delta * 100).toFixed(0)} vs baseline</em>
+            <em>
+              {pair.delta >= 0 ? "+" : ""}
+              {(pair.delta * 100).toFixed(0)} vs baseline
+            </em>
           </div>
         ))}
       </div>
@@ -339,7 +431,11 @@ function CorrelationCard({ snapshot, rows }) {
 
 function ReviewMarkButton({ active, children, ...props }) {
   return (
-    <button type="button" className={active ? "pill tracepoint-pill is-active" : "pill tracepoint-pill"} {...props}>
+    <button
+      type="button"
+      className={active ? "pill tracepoint-pill is-active" : "pill tracepoint-pill"}
+      {...props}
+    >
       {children}
     </button>
   );
@@ -358,18 +454,63 @@ function AssetGlyph({ assetId }) {
       <rect x="2" y="33" width="68" height="5" rx="2.5" fill="rgba(255,255,255,0.08)" />
       {isPump ? (
         <>
-          <circle cx="20" cy="24" r="10" fill="none" stroke="url(#tracepoint-asset-fill)" strokeWidth="2.5" />
+          <circle
+            cx="20"
+            cy="24"
+            r="10"
+            fill="none"
+            stroke="url(#tracepoint-asset-fill)"
+            strokeWidth="2.5"
+          />
           <circle cx="20" cy="24" r="4" fill="none" stroke="rgba(240,199,94,0.8)" strokeWidth="2" />
-          <rect x="33" y="14" width="20" height="20" rx="4" fill="rgba(240,199,94,0.1)" stroke="rgba(240,199,94,0.45)" />
+          <rect
+            x="33"
+            y="14"
+            width="20"
+            height="20"
+            rx="4"
+            fill="rgba(240,199,94,0.1)"
+            stroke="rgba(240,199,94,0.45)"
+          />
           <path d="M53 18h10v12H53" fill="none" stroke="rgba(159,179,160,0.72)" strokeWidth="2.4" />
-          <path d="M43 14v-7" stroke="rgba(255,255,255,0.28)" strokeWidth="2" strokeLinecap="round" />
+          <path
+            d="M43 14v-7"
+            stroke="rgba(255,255,255,0.28)"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
         </>
       ) : (
         <>
-          <rect x="10" y="12" width="18" height="20" rx="4" fill="rgba(159,179,160,0.1)" stroke="rgba(159,179,160,0.55)" />
-          <circle cx="38" cy="25" r="8" fill="none" stroke="rgba(240,199,94,0.85)" strokeWidth="2.5" />
-          <path d="M46 25h14" stroke="rgba(240,199,94,0.85)" strokeWidth="2.5" strokeLinecap="round" />
-          <path d="M20 12v-6" stroke="rgba(255,255,255,0.28)" strokeWidth="2" strokeLinecap="round" />
+          <rect
+            x="10"
+            y="12"
+            width="18"
+            height="20"
+            rx="4"
+            fill="rgba(159,179,160,0.1)"
+            stroke="rgba(159,179,160,0.55)"
+          />
+          <circle
+            cx="38"
+            cy="25"
+            r="8"
+            fill="none"
+            stroke="rgba(240,199,94,0.85)"
+            strokeWidth="2.5"
+          />
+          <path
+            d="M46 25h14"
+            stroke="rgba(240,199,94,0.85)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+          <path
+            d="M20 12v-6"
+            stroke="rgba(255,255,255,0.28)"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
         </>
       )}
     </svg>
@@ -407,18 +548,27 @@ function SignalTimeline({ scenario }) {
   const phases = [
     { label: "Stable", hour: 0, tone: "muted" },
     { label: "Drift detected", hour: scenario.profile.wearStartHour, tone: "amber" },
-    { label: "Persistent elevation", hour: scenario.profile.pressureInstabilityHour, tone: "amber" },
-    { label: "Review threshold crossed", hour: scenario.profile.escalationHour, tone: "red" }
+    {
+      label: "Persistent elevation",
+      hour: scenario.profile.pressureInstabilityHour,
+      tone: "amber",
+    },
+    { label: "Review threshold crossed", hour: scenario.profile.escalationHour, tone: "red" },
   ];
 
   return (
     <div className="tracepoint-timeline" aria-label="Scenario event timeline">
       {phases.map((phase, index) => (
-        <div key={phase.label} className={`tracepoint-timeline__step tracepoint-timeline__step--${phase.tone}`}>
+        <div
+          key={phase.label}
+          className={`tracepoint-timeline__step tracepoint-timeline__step--${phase.tone}`}
+        >
           <div className="tracepoint-timeline__dot" />
           <div className="tracepoint-timeline__label">{phase.label}</div>
           <div className="tracepoint-timeline__hour">h{phase.hour}</div>
-          {index < phases.length - 1 ? <div className="tracepoint-timeline__rule" aria-hidden="true" /> : null}
+          {index < phases.length - 1 ? (
+            <div className="tracepoint-timeline__rule" aria-hidden="true" />
+          ) : null}
         </div>
       ))}
     </div>
@@ -456,7 +606,9 @@ function SignalStack({ sensorDetails, concordance }) {
           <span />
           <span />
         </div>
-        <div className="tracepoint-agreement__text">{Math.round(concordance * 100)}% aligned on the drift direction</div>
+        <div className="tracepoint-agreement__text">
+          {Math.round(concordance * 100)}% aligned on the drift direction
+        </div>
       </div>
     </div>
   );
@@ -470,7 +622,7 @@ function ActionLadder({ review, decision, recommendation }) {
         ? "Targeted inspection"
         : recommendation === "Collect more data"
           ? "Collect more data"
-        : recommendation === "Monitor"
+          : recommendation === "Monitor"
             ? "Monitor"
             : review.status === "Review Recommended" && Math.abs(decision.expectedGap) < 10000
               ? "Validate sensors"
@@ -494,7 +646,7 @@ function ActionLadder({ review, decision, recommendation }) {
     "Collect more data",
     "Validate sensors",
     "Targeted inspection",
-    "Full intervention"
+    "Full intervention",
   ];
 
   return (
@@ -502,7 +654,10 @@ function ActionLadder({ review, decision, recommendation }) {
       {steps.map((step) => {
         const active = step === recommendedStep;
         return (
-          <div key={step} className={active ? "tracepoint-ladder__step is-active" : "tracepoint-ladder__step"}>
+          <div
+            key={step}
+            className={active ? "tracepoint-ladder__step is-active" : "tracepoint-ladder__step"}
+          >
             <span>{step}</span>
             {active ? <strong>Recommended</strong> : null}
           </div>
@@ -527,7 +682,9 @@ export default function Tracepoint() {
   const [reviewerNotes, setReviewerNotes] = useState("");
   const [inspectionCost, setInspectionCost] = useState(DEFAULT_COSTS.inspectionCost);
   const [missCost, setMissCost] = useState(DEFAULT_COSTS.missCost);
-  const [calibratedProbability, setCalibratedProbability] = useState(decisionDefaults.calibratedProbability);
+  const [calibratedProbability, setCalibratedProbability] = useState(
+    decisionDefaults.calibratedProbability
+  );
   const [harmReduction, setHarmReduction] = useState(decisionDefaults.harmReduction);
   const [workflowOwner, setWorkflowOwner] = useState(DEFAULT_WORKFLOW.owner);
   const [workflowStatus, setWorkflowStatus] = useState(DEFAULT_WORKFLOW.status);
@@ -539,7 +696,7 @@ export default function Tracepoint() {
     label: scenario.label,
     startTimestamp: rows[0]?.timestamp || "",
     endTimestamp: rows[23]?.timestamp || rows[0]?.timestamp || "",
-    source: "first 24 stable hours"
+    source: "first 24 stable hours",
   });
   const [auditTrail, setAuditTrail] = useState([createAuditEntry("Tracepoint opened for review")]);
   const [savedStateLoaded, setSavedStateLoaded] = useState(false);
@@ -552,7 +709,9 @@ export default function Tracepoint() {
       setReviewerNotes(entry.reviewerNotes || "");
       setInspectionCost(Number(entry.inspectionCost) || DEFAULT_COSTS.inspectionCost);
       setMissCost(Number(entry.missCost) || DEFAULT_COSTS.missCost);
-      setCalibratedProbability(Number(entry.calibratedProbability) || decisionDefaults.calibratedProbability);
+      setCalibratedProbability(
+        Number(entry.calibratedProbability) || decisionDefaults.calibratedProbability
+      );
       setHarmReduction(Number(entry.harmReduction) || decisionDefaults.harmReduction);
       setWorkflowOwner(entry.workflowOwner || DEFAULT_WORKFLOW.owner);
       setWorkflowStatus(entry.workflowStatus || DEFAULT_WORKFLOW.status);
@@ -565,10 +724,14 @@ export default function Tracepoint() {
           label: scenario.label,
           startTimestamp: rows[0]?.timestamp || "",
           endTimestamp: rows[23]?.timestamp || rows[0]?.timestamp || "",
-          source: "first 24 stable hours"
+          source: "first 24 stable hours",
         }
       );
-      setAuditTrail(Array.isArray(entry.auditTrail) && entry.auditTrail.length ? entry.auditTrail : [createAuditEntry("Review reopened from saved state")]);
+      setAuditTrail(
+        Array.isArray(entry.auditTrail) && entry.auditTrail.length
+          ? entry.auditTrail
+          : [createAuditEntry("Review reopened from saved state")]
+      );
     } else {
       setCalibratedProbability(decisionDefaults.calibratedProbability);
       setHarmReduction(decisionDefaults.harmReduction);
@@ -582,12 +745,19 @@ export default function Tracepoint() {
         label: scenario.label,
         startTimestamp: rows[0]?.timestamp || "",
         endTimestamp: rows[23]?.timestamp || rows[0]?.timestamp || "",
-        source: "first 24 stable hours"
+        source: "first 24 stable hours",
       });
       setAuditTrail([createAuditEntry("Tracepoint opened for review")]);
     }
     setSavedStateLoaded(true);
-  }, [decisionDefaults.calibratedProbability, decisionDefaults.harmReduction, rows, scenario.assetId, scenario.id, scenario.label]);
+  }, [
+    decisionDefaults.calibratedProbability,
+    decisionDefaults.harmReduction,
+    rows,
+    scenario.assetId,
+    scenario.id,
+    scenario.label,
+  ]);
 
   useEffect(() => {
     if (!savedStateLoaded) return;
@@ -606,8 +776,8 @@ export default function Tracepoint() {
         workflowNextHandoff,
         workflowResponseSla,
         baselineState,
-        auditTrail
-      }
+        auditTrail,
+      },
     };
 
     safeWriteState(next);
@@ -625,7 +795,7 @@ export default function Tracepoint() {
     workflowOwner,
     workflowResponseSla,
     workflowStatus,
-    baselineState
+    baselineState,
   ]);
 
   const decision = useMemo(
@@ -636,9 +806,16 @@ export default function Tracepoint() {
         calibratedProbability,
         detectionRate: decisionDefaults.detectionRate,
         followThroughRate: decisionDefaults.followThroughRate,
-        harmReduction
+        harmReduction,
       }),
-    [calibratedProbability, decisionDefaults.detectionRate, decisionDefaults.followThroughRate, harmReduction, inspectionCost, missCost]
+    [
+      calibratedProbability,
+      decisionDefaults.detectionRate,
+      decisionDefaults.followThroughRate,
+      harmReduction,
+      inspectionCost,
+      missCost,
+    ]
   );
 
   const currentRow = rows[rows.length - 1];
@@ -650,7 +827,7 @@ export default function Tracepoint() {
       vibration_rms: buildTracepointSensorSeries(rows, "vibration_rms"),
       bearing_temperature: buildTracepointSensorSeries(rows, "bearing_temperature"),
       pressure: buildTracepointSensorSeries(rows, "pressure"),
-      flow_rate: buildTracepointSensorSeries(rows, "flow_rate")
+      flow_rate: buildTracepointSensorSeries(rows, "flow_rate"),
     }),
     [rows]
   );
@@ -662,13 +839,13 @@ export default function Tracepoint() {
   const statusTone = {
     Normal: "muted",
     Watch: "amber",
-    "Review Recommended": "red"
+    "Review Recommended": "red",
   }[review.status];
   const driverLabel = {
     vibration_rms: "vibration deviation",
     bearing_temperature: "bearing temperature trend",
     pressure: "pressure variability",
-    flow_rate: "flow rate drift"
+    flow_rate: "flow rate drift",
   }[review.mainDriver];
   const scoreFill = Math.max(0, Math.min(100, review.combinedScore));
   const decisionReadout = getTracepointDecisionReadout(review, decision);
@@ -677,14 +854,14 @@ export default function Tracepoint() {
       ? "Validate sensors / targeted review before full inspection"
       : review.status === "Review Recommended" && decision.economicallyJustified
         ? "Targeted inspection"
-      : review.status === "Watch"
+        : review.status === "Watch"
           ? "Collect more data"
           : "Monitor";
   const workflowQueue = useMemo(
     () =>
       WORKFLOW_QUEUE.map((item) => ({
         ...item,
-        active: item.label === workflowOwner
+        active: item.label === workflowOwner,
       })),
     [workflowOwner]
   );
@@ -703,7 +880,13 @@ export default function Tracepoint() {
 
   function routeWorkflow(item) {
     setWorkflowOwner(item.label);
-    setWorkflowStatus(item.id === "supervisor" ? "Escalated" : item.id === "shift-lead" ? "Queued for shift review" : "Queued");
+    setWorkflowStatus(
+      item.id === "supervisor"
+        ? "Escalated"
+        : item.id === "shift-lead"
+          ? "Queued for shift review"
+          : "Queued"
+    );
     setWorkflowNextHandoff(item.note);
     setWorkflowResponseSla(item.response);
     setAuditTrail((trail) => [createAuditEntry(`Queued for ${item.label}`), ...trail].slice(0, 8));
@@ -716,9 +899,11 @@ export default function Tracepoint() {
       startTimestamp: rows[0]?.timestamp || "",
       endTimestamp: rows[23]?.timestamp || rows[0]?.timestamp || "",
       operator: "local",
-      source: "first 24 stable hours"
+      source: "first 24 stable hours",
     });
-    setAuditTrail((trail) => [createAuditEntry(`Saved asset baseline for ${scenario.assetId}`), ...trail].slice(0, 8));
+    setAuditTrail((trail) =>
+      [createAuditEntry(`Saved asset baseline for ${scenario.assetId}`), ...trail].slice(0, 8)
+    );
   }
 
   function exportHandoverReport() {
@@ -735,10 +920,10 @@ export default function Tracepoint() {
         nextHandoff: workflowNextHandoff,
         responseSla: workflowResponseSla,
         recommendedAction: actionRecommendation,
-        baseline: baselineState
+        baseline: baselineState,
       },
       auditTrail,
-      exportTimestamp: new Date().toISOString()
+      exportTimestamp: new Date().toISOString(),
     });
 
     const markdown = [
@@ -766,15 +951,19 @@ export default function Tracepoint() {
       "",
       "## Audit trail",
       ...(report.audit_trail.length
-        ? report.audit_trail.map((entry) => `- ${formatAuditStamp(entry.timestamp)}: ${entry.message}`)
+        ? report.audit_trail.map(
+            (entry) => `- ${formatAuditStamp(entry.timestamp)}: ${entry.message}`
+          )
         : ["- No workflow actions logged."]),
       "",
       `Limitation: ${report.limitation_statement}`,
-      `Exported: ${report.export_timestamp}`
+      `Exported: ${report.export_timestamp}`,
     ].join("\n");
 
     downloadTextFile("tracepoint-handover-report.md", markdown);
-    setAuditTrail((trail) => [createAuditEntry("Exported shift handover report"), ...trail].slice(0, 8));
+    setAuditTrail((trail) =>
+      [createAuditEntry("Exported shift handover report"), ...trail].slice(0, 8)
+    );
   }
 
   function exportPacket() {
@@ -784,7 +973,7 @@ export default function Tracepoint() {
       decision,
       reviewerMark,
       reviewerNotes,
-      exportTimestamp: new Date().toISOString()
+      exportTimestamp: new Date().toISOString(),
     });
 
     downloadJsonFile("tracepoint-p-204-review-packet.json", packet);
@@ -799,8 +988,9 @@ export default function Tracepoint() {
           <h1>Industrial signal review for costly decisions.</h1>
           <p className="lead">Find the signal. Show the evidence. Keep the decision human.</p>
           <div className="tracepoint__disclaimer">
-            <strong>Synthetic calibration demo only.</strong> Not operational advice, not a forecasting system, and
-            not a replacement for inspection, maintenance procedures, or safety controls.
+            <strong>Synthetic calibration demo only.</strong> Not operational advice, not a
+            forecasting system, and not a replacement for inspection, maintenance procedures, or
+            safety controls.
           </div>
         </div>
 
@@ -844,7 +1034,9 @@ export default function Tracepoint() {
           <div className="tracepoint__cockpit-copy">
             <div className="tracepoint__cockpit-state">{review.status}</div>
             <div className="tracepoint__cockpit-summary">{decisionReadout.economicSummary}</div>
-            <div className="tracepoint__cockpit-move">Suggested next move: {actionRecommendation}</div>
+            <div className="tracepoint__cockpit-move">
+              Suggested next move: {actionRecommendation}
+            </div>
 
             <div className="tracepoint__cockpit-strip">
               <div className="tracepoint__cockpit-asset">
@@ -854,7 +1046,9 @@ export default function Tracepoint() {
                   <div className="tracepoint__cockpit-asset-name">{scenario.label}</div>
                 </div>
               </div>
-              <div className="tracepoint__cockpit-chip tracepoint__cockpit-chip--state">Operating state: {currentRow.operating_state}</div>
+              <div className="tracepoint__cockpit-chip tracepoint__cockpit-chip--state">
+                Operating state: {currentRow.operating_state}
+              </div>
               <div className="tracepoint__cockpit-chip">Synthetic calibration demo</div>
               <div className="tracepoint__cockpit-chip">Human review required</div>
             </div>
@@ -866,12 +1060,16 @@ export default function Tracepoint() {
         <article className="panel tracepoint-card">
           <div className="card-label">Main driver of the flag</div>
           <div className="tracepoint-card__value">{driverLabel}</div>
-          <div className="tracepoint-card__note">Highest component score in the current synthetic window.</div>
+          <div className="tracepoint-card__note">
+            Highest component score in the current synthetic window.
+          </div>
         </article>
         <article className="panel tracepoint-card">
           <div className="card-label">Current operating state</div>
           <div className="tracepoint-card__value">{currentRow.operating_state}</div>
-          <div className="tracepoint-card__note">Synthetic running state from the data, kept separate from the review flag.</div>
+          <div className="tracepoint-card__note">
+            Synthetic running state from the data, kept separate from the review flag.
+          </div>
         </article>
         <article className="panel tracepoint-card">
           <div className="card-label">Data quality / provenance</div>
@@ -907,8 +1105,13 @@ export default function Tracepoint() {
               <span>{baselineState.assetId || scenario.assetId}</span>
               <strong>{baselineState.source}</strong>
               <span>
-                {baselineState.startTimestamp ? formatBaselineStamp(baselineState.startTimestamp) : "n/a"} to{" "}
-                {baselineState.endTimestamp ? formatBaselineStamp(baselineState.endTimestamp) : "n/a"}
+                {baselineState.startTimestamp
+                  ? formatBaselineStamp(baselineState.startTimestamp)
+                  : "n/a"}{" "}
+                to{" "}
+                {baselineState.endTimestamp
+                  ? formatBaselineStamp(baselineState.endTimestamp)
+                  : "n/a"}
               </span>
               <span>Operator: {baselineState.operator}</span>
             </div>
@@ -921,7 +1124,9 @@ export default function Tracepoint() {
         </article>
         <article className="panel tracepoint-card">
           <div className="card-label">Last updated</div>
-          <div className="tracepoint-card__value">{formatTracepointTimestamp(currentRow.timestamp)}</div>
+          <div className="tracepoint-card__value">
+            {formatTracepointTimestamp(currentRow.timestamp)}
+          </div>
           <div className="tracepoint-card__note">Latest hourly reading in the 7-day series.</div>
         </article>
       </section>
@@ -933,7 +1138,8 @@ export default function Tracepoint() {
             <h2>The chart is the story</h2>
           </div>
           <div className="tracepoint__trend-note">
-            Seven days of deterministic hourly readings for {scenario.label}. Hover the points for exact values.
+            Seven days of deterministic hourly readings for {scenario.label}. Hover the points for
+            exact values.
           </div>
         </div>
 
@@ -950,7 +1156,11 @@ export default function Tracepoint() {
             primary
             markers={[
               { hour: scenario.profile.wearStartHour, label: "Wear starts", tone: "amber" },
-              { hour: scenario.profile.pressureInstabilityHour, label: "Pressure instability", tone: "red" }
+              {
+                hour: scenario.profile.pressureInstabilityHour,
+                label: "Pressure instability",
+                tone: "red",
+              },
             ]}
             evidence={vibrationEvidence}
             series={seriesByKey.vibration_rms}
@@ -1005,7 +1215,9 @@ export default function Tracepoint() {
                   <span>{detail.label}</span>
                   <strong>{formatMetric(detail.latestValue, detail.unit)}</strong>
                   <em>
-                    EWMA {formatMetric(detail.ewmaCurrent, detail.unit)} · baseline {formatMetric(detail.baselineMedian, detail.unit)} · z {formatRobustZ(detail.robustZ)}
+                    EWMA {formatMetric(detail.ewmaCurrent, detail.unit)} · baseline{" "}
+                    {formatMetric(detail.baselineMedian, detail.unit)} · z{" "}
+                    {formatRobustZ(detail.robustZ)}
                   </em>
                 </div>
               ))}
@@ -1025,11 +1237,26 @@ export default function Tracepoint() {
           <details className="tracepoint__details">
             <summary>How this score was calculated</summary>
             <div className="tracepoint__formula">
-              <p>1. Baseline: we use the first steady-state hours to establish a median and MAD for each sensor.</p>
-              <p>2. EWMA: we smooth the latest 12 hours so one noisy point does not dominate the review.</p>
-              <p>3. Robust deviation: each sensor gets a robust z-score from its EWMA versus baseline.</p>
-              <p>4. Weighted evidence: each sensor contributes a visible weight capped so one sensor cannot dominate.</p>
-              <p>5. Persistence and concordance: repeated elevated readings and cross-sensor agreement raise the score.</p>
+              <p>
+                1. Baseline: we use the first steady-state hours to establish a median and MAD for
+                each sensor.
+              </p>
+              <p>
+                2. EWMA: we smooth the latest 12 hours so one noisy point does not dominate the
+                review.
+              </p>
+              <p>
+                3. Robust deviation: each sensor gets a robust z-score from its EWMA versus
+                baseline.
+              </p>
+              <p>
+                4. Weighted evidence: each sensor contributes a visible weight capped so one sensor
+                cannot dominate.
+              </p>
+              <p>
+                5. Persistence and concordance: repeated elevated readings and cross-sensor
+                agreement raise the score.
+              </p>
               <p>Thresholds: Normal below 34, Watch below 67, Review Recommended at 67 or above.</p>
             </div>
           </details>
@@ -1085,8 +1312,12 @@ export default function Tracepoint() {
                 value={calibratedProbability}
                 onChange={(event) => setCalibratedProbability(Number(event.target.value) || 0)}
               />
-              <div className="tracepoint__inline-value">{formatTracepointPercent(calibratedProbability, 0)}</div>
-              <div className="tracepoint__range-note">Calibrated from the synthetic review score, not from a live model.</div>
+              <div className="tracepoint__inline-value">
+                {formatTracepointPercent(calibratedProbability, 0)}
+              </div>
+              <div className="tracepoint__range-note">
+                Calibrated from the synthetic review score, not from a live model.
+              </div>
             </div>
             <div className="control-group">
               <label className="control-label" htmlFor="tracepoint-harm-reduction">
@@ -1102,44 +1333,62 @@ export default function Tracepoint() {
                 value={harmReduction}
                 onChange={(event) => setHarmReduction(Number(event.target.value) || 0)}
               />
-              <div className="tracepoint__inline-value">{formatTracepointPercent(harmReduction, 0)}</div>
+              <div className="tracepoint__inline-value">
+                {formatTracepointPercent(harmReduction, 0)}
+              </div>
             </div>
           </div>
 
           <div className="tracepoint__decision-factors">
             <div className="mini-card">
               <div className="card-label">Inspection finds issue</div>
-              <div className="tracepoint-card__value">{formatTracepointPercent(decisionDefaults.detectionRate, 0)}</div>
-              <div className="tracepoint-card__note">Synthetic detection rate derived from the current review strength.</div>
+              <div className="tracepoint-card__value">
+                {formatTracepointPercent(decisionDefaults.detectionRate, 0)}
+              </div>
+              <div className="tracepoint-card__note">
+                Synthetic detection rate derived from the current review strength.
+              </div>
             </div>
             <div className="mini-card">
               <div className="card-label">Action follows inspection</div>
-              <div className="tracepoint-card__value">{formatTracepointPercent(decisionDefaults.followThroughRate, 0)}</div>
-              <div className="tracepoint-card__note">Synthetic follow-through rate derived from the current review strength.</div>
+              <div className="tracepoint-card__value">
+                {formatTracepointPercent(decisionDefaults.followThroughRate, 0)}
+              </div>
+              <div className="tracepoint-card__note">
+                Synthetic follow-through rate derived from the current review strength.
+              </div>
             </div>
             <div className="mini-card">
               <div className="card-label">Combined harm reduction</div>
               <div className="tracepoint-card__value">
                 {formatTracepointPercent(
-                  decisionDefaults.detectionRate * decisionDefaults.followThroughRate * harmReduction,
+                  decisionDefaults.detectionRate *
+                    decisionDefaults.followThroughRate *
+                    harmReduction,
                   2
                 )}
               </div>
-              <div className="tracepoint-card__note">Detection × follow-through × intervention effectiveness.</div>
+              <div className="tracepoint-card__note">
+                Detection × follow-through × intervention effectiveness.
+              </div>
             </div>
           </div>
 
           <div className="tracepoint__cost-summary">
             <div className="mini-card">
               <div className="card-label">Expected cost of acting</div>
-              <div className="tracepoint-card__value">{formatTracepointMoney(decision.expectedCostAct)}</div>
+              <div className="tracepoint-card__value">
+                {formatTracepointMoney(decision.expectedCostAct)}
+              </div>
               <div className="tracepoint-card__note">
                 inspection/action cost + probability × miss cost × residual harm after action
               </div>
             </div>
             <div className="mini-card">
               <div className="card-label">Expected cost of not acting</div>
-              <div className="tracepoint-card__value">{formatTracepointMoney(decision.expectedCostNoAct)}</div>
+              <div className="tracepoint-card__value">
+                {formatTracepointMoney(decision.expectedCostNoAct)}
+              </div>
               <div className="tracepoint-card__note">probability × miss cost</div>
             </div>
             <div className="mini-card mini-card--wide">
@@ -1148,7 +1397,9 @@ export default function Tracepoint() {
                 {decisionReadout.signalSummary} / {decisionReadout.economicSummary}
               </div>
               <div className="tracepoint__decision-line">
-                {decision.economicallyJustified ? "Inspection is economically justified." : "Inspection is not economically justified."}
+                {decision.economicallyJustified
+                  ? "Inspection is economically justified."
+                  : "Inspection is not economically justified."}
               </div>
               <div className="muted">
                 Estimated gap: {formatTracepointMoney(Math.abs(decision.expectedGap))} in favor of{" "}
@@ -1158,12 +1409,14 @@ export default function Tracepoint() {
               <div className="tracepoint__decision-formula">
                 <div>
                   Acting: {formatTracepointMoney(inspectionCost)} +{" "}
-                  {formatTracepointPercent(calibratedProbability, 2)} × {formatTracepointMoney(missCost)} ×{" "}
+                  {formatTracepointPercent(calibratedProbability, 2)} ×{" "}
+                  {formatTracepointMoney(missCost)} ×{" "}
                   {formatTracepointPercent(1 - decision.effectiveHarmReduction, 2)} ={" "}
                   {formatTracepointMoney(decision.expectedCostAct)}
                 </div>
                 <div>
-                  Not acting: {formatTracepointPercent(calibratedProbability, 2)} × {formatTracepointMoney(missCost)} ={" "}
+                  Not acting: {formatTracepointPercent(calibratedProbability, 2)} ×{" "}
+                  {formatTracepointMoney(missCost)} ={" "}
                   {formatTracepointMoney(decision.expectedCostNoAct)}
                 </div>
                 <div className="tracepoint__precision-note">
@@ -1240,7 +1493,9 @@ export default function Tracepoint() {
                 <button
                   key={item.id}
                   type="button"
-                  className={item.active ? "tracepoint__queue-item is-active" : "tracepoint__queue-item"}
+                  className={
+                    item.active ? "tracepoint__queue-item is-active" : "tracepoint__queue-item"
+                  }
                   onClick={() => routeWorkflow(item)}
                 >
                   <span className="tracepoint__queue-item-title">{item.label}</span>
@@ -1254,7 +1509,10 @@ export default function Tracepoint() {
               <div className="card-label">Audit trail</div>
               <div className="tracepoint__audit-trail">
                 {auditTrail.slice(0, 4).map((entry) => (
-                  <div key={`${entry.timestamp}-${entry.message}`} className="tracepoint__audit-entry">
+                  <div
+                    key={`${entry.timestamp}-${entry.message}`}
+                    className="tracepoint__audit-entry"
+                  >
                     <span>{formatAuditStamp(entry.timestamp)}</span>
                     <strong>{entry.message}</strong>
                   </div>
@@ -1267,7 +1525,8 @@ export default function Tracepoint() {
                 Export Handover Report
               </button>
               <div className="tracepoint__workflow-note">
-                Shift handover captures the current queue, notes, and audit trail for the next reviewer.
+                Shift handover captures the current queue, notes, and audit trail for the next
+                reviewer.
               </div>
             </div>
           </div>
@@ -1317,7 +1576,11 @@ export default function Tracepoint() {
                 </div>
                 <div>
                   <span>Lead time before synthetic escalation point</span>
-                  <strong>{evaluationSummary.leadTimeHours === null ? "n/a" : `${evaluationSummary.leadTimeHours}h`}</strong>
+                  <strong>
+                    {evaluationSummary.leadTimeHours === null
+                      ? "n/a"
+                      : `${evaluationSummary.leadTimeHours}h`}
+                  </strong>
                 </div>
               </div>
             </div>

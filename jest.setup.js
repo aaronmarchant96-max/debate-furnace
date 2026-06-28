@@ -6,7 +6,7 @@ global.localStorage = {
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
-  clear: jest.fn()
+  clear: jest.fn(),
 };
 
 // Mock matchMedia for CSS tests
@@ -18,5 +18,5 @@ window.matchMedia = (query) => ({
   removeListener: jest.fn(),
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),
-  dispatchEvent: jest.fn()
+  dispatchEvent: jest.fn(),
 });

@@ -22,16 +22,38 @@
   --radius-large: 18px;
 }
 
-* { box-sizing: border-box; }
-html, body, #root { min-height: 100%; margin: 0; }
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
 body {
   background: var(--page);
   color: var(--text);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
-a { color: inherit; }
-button, textarea, input { -webkit-tap-highlight-color: transparent; }
-button { font-family: inherit; }
+a {
+  color: inherit;
+}
+button,
+textarea,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  font-family: inherit;
+}
 
 .app-shell {
   min-height: 100vh;
@@ -128,7 +150,12 @@ button { font-family: inherit; }
   border-radius: var(--radius-control);
   padding: 10px 12px;
   cursor: pointer;
-  transition: border-color 140ms ease, background 140ms ease, color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+  transition:
+    border-color 140ms ease,
+    background 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
 }
 
 .inner-tab {
@@ -182,7 +209,14 @@ button { font-family: inherit; }
 .storm-summary__row,
 .storm-table,
 .storm-tagline {
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
 .top-tab.is-active,
@@ -191,7 +225,9 @@ button { font-family: inherit; }
   border-color: rgba(214, 176, 76, 0.7);
   background: linear-gradient(180deg, rgba(214, 176, 76, 0.16), rgba(17, 24, 39, 0.96));
   color: var(--accent-strong);
-  box-shadow: 0 0 0 1px rgba(214, 176, 76, 0.16), var(--shadow-card);
+  box-shadow:
+    0 0 0 1px rgba(214, 176, 76, 0.16),
+    var(--shadow-card);
 }
 
 .pill--primary {
@@ -1252,7 +1288,8 @@ button { font-family: inherit; }
   background: rgba(131, 243, 255, 0.12);
   border: 1px solid rgba(131, 243, 255, 0.24);
   color: #83f3ff;
-  font-family: "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family:
+    "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   font-size: 12px;
   font-weight: 700;
 }
@@ -1422,15 +1459,27 @@ button { font-family: inherit; }
 }
 
 .storm-heatmap__bar--motion::after {
-  background: linear-gradient(90deg, rgba(131, 243, 255, 0.18), rgba(131, 243, 255, calc(0.16 + var(--heat) * 0.84)));
+  background: linear-gradient(
+    90deg,
+    rgba(131, 243, 255, 0.18),
+    rgba(131, 243, 255, calc(0.16 + var(--heat) * 0.84))
+  );
 }
 
 .storm-heatmap__bar--intensity::after {
-  background: linear-gradient(90deg, rgba(164, 108, 255, 0.18), rgba(164, 108, 255, calc(0.16 + var(--heat) * 0.84)));
+  background: linear-gradient(
+    90deg,
+    rgba(164, 108, 255, 0.18),
+    rgba(164, 108, 255, calc(0.16 + var(--heat) * 0.84))
+  );
 }
 
 .storm-heatmap__bar--combined::after {
-  background: linear-gradient(90deg, rgba(214, 176, 76, 0.18), rgba(214, 176, 76, calc(0.16 + var(--heat) * 0.84)));
+  background: linear-gradient(
+    90deg,
+    rgba(214, 176, 76, 0.18),
+    rgba(214, 176, 76, calc(0.16 + var(--heat) * 0.84))
+  );
 }
 
 .storm-card {
@@ -1473,7 +1522,8 @@ button { font-family: inherit; }
 }
 
 .storm-metric {
-  font-family: "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family:
+    "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   color: var(--text);
   font-size: 16px;
   line-height: 1.35;
@@ -1604,7 +1654,8 @@ button { font-family: inherit; }
 }
 
 .storm-table__mono {
-  font-family: "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family:
+    "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   color: var(--text);
 }
 
@@ -1671,7 +1722,8 @@ button { font-family: inherit; }
   background: rgba(131, 243, 255, 0.12);
   border: 1px solid rgba(131, 243, 255, 0.24);
   color: #83f3ff;
-  font-family: "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family:
+    "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   font-size: 12px;
   font-weight: 700;
 }
@@ -1774,7 +1826,9 @@ button { font-family: inherit; }
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 100% 26px, 26px 100%;
+  background-size:
+    100% 26px,
+    26px 100%;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent 94%);
   opacity: 0.35;
 }
@@ -2629,7 +2683,9 @@ button { font-family: inherit; }
   border-color: rgba(240, 199, 94, 0.3);
   background: rgba(214, 176, 76, 0.13);
   color: var(--text);
-  box-shadow: 0 0 0 1px rgba(240, 199, 94, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  box-shadow:
+    0 0 0 1px rgba(240, 199, 94, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
 .tracepoint-ladder__step strong {
@@ -3339,8 +3395,13 @@ button { font-family: inherit; }
 }
 
 @media (max-width: 720px) {
-  button { min-height: 40px; }
-  textarea, input { font-size: 16px !important; }
+  button {
+    min-height: 40px;
+  }
+  textarea,
+  input {
+    font-size: 16px !important;
+  }
 
   .shell-header {
     align-items: stretch;
@@ -3587,11 +3648,11 @@ button { font-family: inherit; }
   }
 
   .cardo-guard__decision-line.act {
-    color: #34d399;     /* Clean emerald for ACT */
+    color: #34d399; /* Clean emerald for ACT */
   }
 
   .cardo-guard__decision-line.dont-act {
-    color: #fb923c;     /* Strong amber for DO NOT ACT */
+    color: #fb923c; /* Strong amber for DO NOT ACT */
   }
 
   /* Better mobile slider for thumbs */

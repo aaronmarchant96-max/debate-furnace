@@ -10,14 +10,15 @@ const LIMITATION_STATEMENT = [
   "Storm Replay is not a forecasting system.",
   "Storm Replay is not a warning system.",
   "Storm Replay does not confirm tornado formation.",
-  "It reviews historical weather imagery and prepares evidence for human inspection."
+  "It reviews historical weather imagery and prepares evidence for human inspection.",
 ].join(" ");
-const CONTACT_SHEET_URL = "https://github.com/aaronmarchant96-max/uap-footage-analyzer/tree/main/storm-replay";
+const CONTACT_SHEET_URL =
+  "https://github.com/aaronmarchant96-max/uap-footage-analyzer/tree/main/storm-replay";
 
 const METRICS = {
   motion: { min: 0.0, max: 0.0162 },
   intensity: { min: 0.3791, max: 0.3844 },
-  combined: { min: 0.0015, max: 0.0176 }
+  combined: { min: 0.0015, max: 0.0176 },
 };
 
 const REVIEW_MARK_OPTIONS = [
@@ -25,14 +26,10 @@ const REVIEW_MARK_OPTIONS = [
   "needs review",
   "possible false positive",
   "possible missed activity",
-  "ignore"
+  "ignore",
 ];
 
-const HOW_IT_WORKS_STEPS = [
-  "Load imagery",
-  "Extract signals",
-  "Review evidence"
-];
+const HOW_IT_WORKS_STEPS = ["Load imagery", "Extract signals", "Review evidence"];
 
 function formatScore(value) {
   return Number(value).toFixed(4);
@@ -41,9 +38,8 @@ function formatScore(value) {
 function buildFrames() {
   const rows = [];
   const motionValues = [
-    0.0000, 0.0141, 0.0139, 0.0139, 0.0138, 0.0128, 0.0114, 0.0101,
-    0.0096, 0.0100, 0.0098, 0.0093, 0.0074, 0.0053, 0.0040, 0.0041,
-    0.0067, 0.0092, 0.0093, 0.0108, 0.0137, 0.0153, 0.0162, 0.0156
+    0.0, 0.0141, 0.0139, 0.0139, 0.0138, 0.0128, 0.0114, 0.0101, 0.0096, 0.01, 0.0098, 0.0093,
+    0.0074, 0.0053, 0.004, 0.0041, 0.0067, 0.0092, 0.0093, 0.0108, 0.0137, 0.0153, 0.0162, 0.0156,
   ];
   const timestamps = [
     "2021-12-10 18:00 CST",
@@ -69,7 +65,7 @@ function buildFrames() {
     "2021-12-10 23:00 CST",
     "2021-12-10 23:15 CST",
     "2021-12-10 23:30 CST",
-    "2021-12-10 23:45 CST"
+    "2021-12-10 23:45 CST",
   ];
   const frameNames = [
     "000_202112101800.png",
@@ -95,17 +91,15 @@ function buildFrames() {
     "020_202112102300.png",
     "021_202112102315.png",
     "022_202112102330.png",
-    "023_202112102345.png"
+    "023_202112102345.png",
   ];
   const intensityValues = [
-    0.3839, 0.3839, 0.3826, 0.3837, 0.3841, 0.3837, 0.3842, 0.3841,
-    0.3835, 0.3822, 0.3815, 0.3823, 0.3828, 0.3835, 0.3838, 0.3825,
-    0.3806, 0.3791, 0.3801, 0.3794, 0.3796, 0.3802, 0.3829, 0.3844
+    0.3839, 0.3839, 0.3826, 0.3837, 0.3841, 0.3837, 0.3842, 0.3841, 0.3835, 0.3822, 0.3815, 0.3823,
+    0.3828, 0.3835, 0.3838, 0.3825, 0.3806, 0.3791, 0.3801, 0.3794, 0.3796, 0.3802, 0.3829, 0.3844,
   ];
   const combinedValues = [
-    0.0015, 0.0156, 0.0141, 0.0152, 0.0155, 0.0141, 0.0132, 0.0118,
-    0.0107, 0.0102, 0.0107, 0.0094, 0.0078, 0.0064, 0.0054, 0.0042,
-    0.0085, 0.0125, 0.0116, 0.0138, 0.0165, 0.0175, 0.0167, 0.0176
+    0.0015, 0.0156, 0.0141, 0.0152, 0.0155, 0.0141, 0.0132, 0.0118, 0.0107, 0.0102, 0.0107, 0.0094,
+    0.0078, 0.0064, 0.0054, 0.0042, 0.0085, 0.0125, 0.0116, 0.0138, 0.0165, 0.0175, 0.0167, 0.0176,
   ];
 
   for (let index = 0; index < FRAMES_REVIEWED; index += 1) {
@@ -116,7 +110,7 @@ function buildFrames() {
       intensity_score: intensityValues[index],
       combined_score: combinedValues[index],
       label: "low_activity",
-      reviewer_mark: ""
+      reviewer_mark: "",
     });
   }
 
@@ -146,9 +140,12 @@ function MetricCard({ label, value, note }) {
 }
 
 function buildPreviewSvg(row) {
-  const motionBand = Math.max(0.08, Math.min(1, (row.motion_score / METRICS.motion.max) || 0));
-  const intensityBand = Math.max(0.08, Math.min(1, (row.intensity_score / METRICS.intensity.max) || 0));
-  const combinedBand = Math.max(0.08, Math.min(1, (row.combined_score / METRICS.combined.max) || 0));
+  const motionBand = Math.max(0.08, Math.min(1, row.motion_score / METRICS.motion.max || 0));
+  const intensityBand = Math.max(
+    0.08,
+    Math.min(1, row.intensity_score / METRICS.intensity.max || 0)
+  );
+  const combinedBand = Math.max(0.08, Math.min(1, row.combined_score / METRICS.combined.max || 0));
   const glowScale = 0.18 + combinedBand * 0.28;
   const fogScale = 0.4 + intensityBand * 0.25;
 
@@ -197,7 +194,7 @@ export default function StormReplay() {
       "A few later frames rise slightly in motion score, but they still remain low_activity.",
       "No obvious false positives appeared in this pass because the detector stayed conservative.",
       "If there is meaningful storm structure in this slice, current thresholding may be too conservative to surface it.",
-      "low_activity seems fair overall for this first calibration pass."
+      "low_activity seems fair overall for this first calibration pass.",
     ].join(" ")
   );
   const [rows, setRows] = useState(buildFrames);
@@ -207,7 +204,7 @@ export default function StormReplay() {
       motion_score: "0.0000 to 0.0162",
       intensity_score: "0.3791 to 0.3844",
       combined_score: "0.0015 to 0.0176",
-      label_count: "low_activity 24"
+      label_count: "low_activity 24",
     }),
     []
   );
@@ -216,11 +213,14 @@ export default function StormReplay() {
     () =>
       rows.map((row) => ({
         ...row,
-        motionLevel: (row.motion_score - METRICS.motion.min) / (METRICS.motion.max - METRICS.motion.min || 1),
+        motionLevel:
+          (row.motion_score - METRICS.motion.min) / (METRICS.motion.max - METRICS.motion.min || 1),
         intensityLevel:
-          (row.intensity_score - METRICS.intensity.min) / (METRICS.intensity.max - METRICS.intensity.min || 1),
+          (row.intensity_score - METRICS.intensity.min) /
+          (METRICS.intensity.max - METRICS.intensity.min || 1),
         combinedLevel:
-          (row.combined_score - METRICS.combined.min) / (METRICS.combined.max - METRICS.combined.min || 1)
+          (row.combined_score - METRICS.combined.min) /
+          (METRICS.combined.max - METRICS.combined.min || 1),
       })),
     [rows]
   );
@@ -229,7 +229,7 @@ export default function StormReplay() {
     () =>
       rows.slice(0, 6).map((row) => ({
         ...row,
-        previewSrc: buildPreviewSvg(row)
+        previewSrc: buildPreviewSvg(row),
       })),
     [rows]
   );
@@ -249,7 +249,7 @@ export default function StormReplay() {
       frame: row.frame,
       timestamp: row.timestamp,
       reviewer_mark: row.reviewer_mark || "ignore",
-      label: row.label
+      label: row.label,
     }));
 
     const payload = {
@@ -258,7 +258,7 @@ export default function StormReplay() {
       notes: reviewerNotes,
       summary_metrics: summaryMetrics,
       limitation_statement: LIMITATION_STATEMENT,
-      exported_at: new Date().toISOString()
+      exported_at: new Date().toISOString(),
     };
 
     downloadJsonFile(`storm-replay-${CASE_ID}-review-packet.json`, payload);
@@ -322,16 +322,29 @@ export default function StormReplay() {
             </div>
           </div>
           <div className="storm-placeholder">
-            <div className="storm-placeholder__title">Local preview tiles are generated from the current replay rows.</div>
-            <div className="storm-placeholder__text">The source repo still holds the rendered SVG contact sheet.</div>
-            <a className="storm-placeholder__link" href={CONTACT_SHEET_URL} target="_blank" rel="noreferrer">
+            <div className="storm-placeholder__title">
+              Local preview tiles are generated from the current replay rows.
+            </div>
+            <div className="storm-placeholder__text">
+              The source repo still holds the rendered SVG contact sheet.
+            </div>
+            <a
+              className="storm-placeholder__link"
+              href={CONTACT_SHEET_URL}
+              target="_blank"
+              rel="noreferrer"
+            >
               Open source repo
             </a>
           </div>
           <div className="storm-preview-strip" aria-label="Storm Replay preview montage">
             {previewFrames.map((frame) => (
               <figure key={frame.frame} className="storm-preview-tile">
-                <img className="storm-preview-tile__img" src={frame.previewSrc} alt={`${frame.frame} preview`} />
+                <img
+                  className="storm-preview-tile__img"
+                  src={frame.previewSrc}
+                  alt={`${frame.frame} preview`}
+                />
                 <figcaption className="storm-preview-tile__caption">{frame.timestamp}</figcaption>
               </figure>
             ))}
@@ -368,28 +381,41 @@ export default function StormReplay() {
             <div className="eyebrow">Visual summary</div>
             <h2>Calibration at a glance</h2>
           </div>
-          <div className="meta">{rows.length}/{FRAMES_REVIEWED} frames reviewed</div>
+          <div className="meta">
+            {rows.length}/{FRAMES_REVIEWED} frames reviewed
+          </div>
         </div>
 
         <div className="storm-insight">
           <div className="storm-insight__label">Key insight</div>
           <div className="storm-insight__text">
-            All 24 frames labeled low_activity, so conservative thresholding may miss subtle signals.
+            All 24 frames labeled low_activity, so conservative thresholding may miss subtle
+            signals.
           </div>
         </div>
 
         <div className="storm-window">
           <div className="storm-window__label">Known tornado activity window</div>
           <div className="storm-window__value">{KNOWN_ACTIVITY_WINDOW}</div>
-          <div className="storm-window__note">Use this band to check whether later motion spikes line up with the event.</div>
+          <div className="storm-window__note">
+            Use this band to check whether later motion spikes line up with the event.
+          </div>
         </div>
 
         <div className="storm-progress" aria-label="Calibration progress">
           <div className="storm-progress__head">
             <span className="card-label">Calibration pass</span>
-            <span className="storm-metric">{rows.length}/{FRAMES_REVIEWED}</span>
+            <span className="storm-metric">
+              {rows.length}/{FRAMES_REVIEWED}
+            </span>
           </div>
-          <div className="storm-progress__bar" role="progressbar" aria-valuemin="0" aria-valuemax={FRAMES_REVIEWED} aria-valuenow={rows.length}>
+          <div
+            className="storm-progress__bar"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax={FRAMES_REVIEWED}
+            aria-valuenow={rows.length}
+          >
             <div className="storm-progress__fill" style={{ width: `${progressPercent}%` }} />
           </div>
           <div className="storm-progress__note">24/24 frames reviewed</div>
@@ -397,9 +423,15 @@ export default function StormReplay() {
 
         <div className="storm-heatmap">
           <div className="storm-heatmap__legend">
-            <span><i className="legend-swatch legend-swatch--motion" /> motion</span>
-            <span><i className="legend-swatch legend-swatch--intensity" /> intensity</span>
-            <span><i className="legend-swatch legend-swatch--combined" /> combined</span>
+            <span>
+              <i className="legend-swatch legend-swatch--motion" /> motion
+            </span>
+            <span>
+              <i className="legend-swatch legend-swatch--intensity" /> intensity
+            </span>
+            <span>
+              <i className="legend-swatch legend-swatch--combined" /> combined
+            </span>
           </div>
           <div className="storm-heatmap__grid">
             {visualFrames.map((row) => (
@@ -464,7 +496,8 @@ export default function StormReplay() {
         </div>
 
         <div className="storm-table__cue">
-          All 24 rows are <span>low_activity</span>. Use reviewer marks to flag anything worth a second look.
+          All 24 rows are <span>low_activity</span>. Use reviewer marks to flag anything worth a
+          second look.
         </div>
 
         <div className="storm-table-wrap">
@@ -482,7 +515,12 @@ export default function StormReplay() {
             </thead>
             <tbody>
               {rows.map((row, index) => (
-                <tr key={row.frame} className={index % 2 === 0 ? "storm-table__row" : "storm-table__row storm-table__row--alt"}>
+                <tr
+                  key={row.frame}
+                  className={
+                    index % 2 === 0 ? "storm-table__row" : "storm-table__row storm-table__row--alt"
+                  }
+                >
                   <td className="storm-table__mono">{row.frame}</td>
                   <td>{row.timestamp}</td>
                   <td className="storm-table__mono">{formatScore(row.motion_score)}</td>
@@ -528,9 +566,7 @@ export default function StormReplay() {
             onChange={(event) => setReviewerNotes(event.target.value)}
             placeholder="Write quick calibration notes here."
           />
-          <div className="storm-note">
-            Quick calibration notes for human review.
-          </div>
+          <div className="storm-note">Quick calibration notes for human review.</div>
         </div>
 
         <div className="panel storm-card">
@@ -561,7 +597,8 @@ export default function StormReplay() {
           <div className="meta">Human review first</div>
         </div>
         <div className="storm-how__copy">
-          Historical replay compares extracted signals against a known event window. That makes calibration easier and keeps the output away from prediction language.
+          Historical replay compares extracted signals against a known event window. That makes
+          calibration easier and keeps the output away from prediction language.
         </div>
         <div className="storm-how__steps">
           {HOW_IT_WORKS_STEPS.map((step, index) => (
@@ -578,7 +615,10 @@ export default function StormReplay() {
           Export review packet
         </button>
         <div className="storm-footer__meta">
-          <div className="storm-note">Exports include case_id, reviewer marks, notes, summary metrics, limitation statement, and timestamp.</div>
+          <div className="storm-note">
+            Exports include case_id, reviewer marks, notes, summary metrics, limitation statement,
+            and timestamp.
+          </div>
           <div className="storm-note">Downloads happen locally in the browser.</div>
         </div>
       </section>

@@ -12,8 +12,19 @@
   "whyWild": "The event becomes a brutal test of leadership, trust, and what people will sacrifice when the trip stops being a journey and becomes a trap.",
   "stakes": "Life, moral compromise, and whether desperation can erase the line between necessity and collapse.",
   "hinge": "Whether survival justifies moral compromise.",
-  "storyDNA": ["isolation", "leadership failure", "winter pressure", "resource collapse", "survival guilt"],
-  "charactersForces": ["the exhausted leader", "the family unit", "the storm", "the dwindling supply"],
+  "storyDNA": [
+    "isolation",
+    "leadership failure",
+    "winter pressure",
+    "resource collapse",
+    "survival guilt"
+  ],
+  "charactersForces": [
+    "the exhausted leader",
+    "the family unit",
+    "the storm",
+    "the dwindling supply"
+  ],
   "tags": ["survival", "frontier", "winter", "moral collapse", "tragedy"],
   "genreRemixes": [
     {

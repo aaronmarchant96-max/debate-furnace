@@ -44,11 +44,26 @@ The app should feel like a clear argument refinery:
 import { useState } from "react";
 
 const T = {
-  bg: "#080810", surface: "#0f0f1a", card: "#13131f", border: "#1e2235",
-  ember: "#e8742a", emberDim: "#c8782244", brass: "#b8943a", gold: "#d4a83a",
-  molten: "#f05020", charcoal: "#1a1a28", sideA: "#5b8dd9", sideB: "#c85858",
-  smoke: "#f0a030", smokeDim: "#f0a03022", judge: "#4aaa70", judgeDim: "#4aaa7022",
-  muted: "#4a5068", text: "#d8dce8", textDim: "#7a8098", warn: "#e05050",
+  bg: "#080810",
+  surface: "#0f0f1a",
+  card: "#13131f",
+  border: "#1e2235",
+  ember: "#e8742a",
+  emberDim: "#c8782244",
+  brass: "#b8943a",
+  gold: "#d4a83a",
+  molten: "#f05020",
+  charcoal: "#1a1a28",
+  sideA: "#5b8dd9",
+  sideB: "#c85858",
+  smoke: "#f0a030",
+  smokeDim: "#f0a03022",
+  judge: "#4aaa70",
+  judgeDim: "#4aaa7022",
+  muted: "#4a5068",
+  text: "#d8dce8",
+  textDim: "#7a8098",
+  warn: "#e05050",
 };
 
 const STARTERS = [
@@ -61,9 +76,24 @@ const STARTERS = [
 ];
 
 const INTENSITY = [
-  { id: "balanced", label: "Balanced", desc: "Steel-man both sides. Measured pressure.", heat: "Low-Medium" },
-  { id: "aggressive", label: "Aggressive", desc: "Attack weak logic. No free passes.", heat: "Medium-High" },
-  { id: "ruthless", label: "Ruthless", desc: "Maximum pressure. Expose every crack.", heat: "High-Critical" },
+  {
+    id: "balanced",
+    label: "Balanced",
+    desc: "Steel-man both sides. Measured pressure.",
+    heat: "Low-Medium",
+  },
+  {
+    id: "aggressive",
+    label: "Aggressive",
+    desc: "Attack weak logic. No free passes.",
+    heat: "Medium-High",
+  },
+  {
+    id: "ruthless",
+    label: "Ruthless",
+    desc: "Maximum pressure. Expose every crack.",
+    heat: "High-Critical",
+  },
 ];
 ```
 
@@ -79,26 +109,109 @@ function inferSides(q, qt) {
   if (qt === "product" && (l.includes("chatgpt") || l.includes("grok")))
     return { a: "ChatGPT is better than Grok", b: "Grok is better than ChatGPT" };
   if (qt === "conspiracy" && (l.includes("uap") || l.includes("ufo")))
-    return { a: "UAPs are most likely advanced non-human technology", b: "Conventional explanations are more likely" };
+    return {
+      a: "UAPs are most likely advanced non-human technology",
+      b: "Conventional explanations are more likely",
+    };
   if (qt === "policy" && l.includes("gun"))
-    return { a: "Gun control reduces harm", b: "Gun control does not reduce harm enough to justify the tradeoffs" };
+    return {
+      a: "Gun control reduces harm",
+      b: "Gun control does not reduce harm enough to justify the tradeoffs",
+    };
   return { a: "Side A", b: "Side B" };
 }
 
 function classifyQ(q) {
   const l = q.toLowerCase();
   const hits = {
-    product: ["better than","vs ","versus","chatgpt","grok","claude","gemini","gpt","llm","model","app","tool","platform","software"].filter(t=>l.includes(t)).length,
-    policy: ["should govern","should schools","should we ban","regulate","ban guns","gun control","mandate","legislation","tax ","invest in"].filter(t=>l.includes(t)).length,
-    moral: ["real art","is love","is consciousness","is free will","moral","is real","authentic","meaning of","is ai art","philosophical"].filter(t=>l.includes(t)).length,
-    practical: ["remote work","office work","should i","move cities","take this job","rent or buy","freelance","side hustle"].filter(t=>l.includes(t)).length,
-    factual: ["climate change","human caused","seed oil","vaccine","statistically","proven","disproven","causes","linked to","evidence shows"].filter(t=>l.includes(t)).length,
-    conspiracy: ["uap","ufo","alien","cover up","non-human","non human","government hiding","conspiracy","false flag"].filter(t=>l.includes(t)).length,
+    product: [
+      "better than",
+      "vs ",
+      "versus",
+      "chatgpt",
+      "grok",
+      "claude",
+      "gemini",
+      "gpt",
+      "llm",
+      "model",
+      "app",
+      "tool",
+      "platform",
+      "software",
+    ].filter((t) => l.includes(t)).length,
+    policy: [
+      "should govern",
+      "should schools",
+      "should we ban",
+      "regulate",
+      "ban guns",
+      "gun control",
+      "mandate",
+      "legislation",
+      "tax ",
+      "invest in",
+    ].filter((t) => l.includes(t)).length,
+    moral: [
+      "real art",
+      "is love",
+      "is consciousness",
+      "is free will",
+      "moral",
+      "is real",
+      "authentic",
+      "meaning of",
+      "is ai art",
+      "philosophical",
+    ].filter((t) => l.includes(t)).length,
+    practical: [
+      "remote work",
+      "office work",
+      "should i",
+      "move cities",
+      "take this job",
+      "rent or buy",
+      "freelance",
+      "side hustle",
+    ].filter((t) => l.includes(t)).length,
+    factual: [
+      "climate change",
+      "human caused",
+      "seed oil",
+      "vaccine",
+      "statistically",
+      "proven",
+      "disproven",
+      "causes",
+      "linked to",
+      "evidence shows",
+    ].filter((t) => l.includes(t)).length,
+    conspiracy: [
+      "uap",
+      "ufo",
+      "alien",
+      "cover up",
+      "non-human",
+      "non human",
+      "government hiding",
+      "conspiracy",
+      "false flag",
+    ].filter((t) => l.includes(t)).length,
   };
   if (hits.conspiracy > 0) return "conspiracy";
-  if ((l.includes("better than") || l.includes(" vs ") || l.includes("versus")) && hits.policy === 0) return "product";
-  let best = "policy", max = 0;
-  for (const [k,v] of Object.entries(hits)) { if (v > max) { max = v; best = k; } }
+  if (
+    (l.includes("better than") || l.includes(" vs ") || l.includes("versus")) &&
+    hits.policy === 0
+  )
+    return "product";
+  let best = "policy",
+    max = 0;
+  for (const [k, v] of Object.entries(hits)) {
+    if (v > max) {
+      max = v;
+      best = k;
+    }
+  }
   return best;
 }
 ```
@@ -289,10 +402,10 @@ Side B:
 
 ### Side-by-Side
 
-| Case | Filtered | Remained | Why |
-| --- | --- | --- | --- |
-| UAPs | Non-human origin leap, claim drift, proof by acknowledgment | Unexplained cases, sensor limits, source reliability | Extraordinary claim not established |
-| Franklin Expedition | Overconfident single-cause retellings, tidy closure | Open question, pressure pattern, archive gap | The uncertainty is real, not noise |
+| Case                | Filtered                                                    | Remained                                             | Why                                 |
+| ------------------- | ----------------------------------------------------------- | ---------------------------------------------------- | ----------------------------------- |
+| UAPs                | Non-human origin leap, claim drift, proof by acknowledgment | Unexplained cases, sensor limits, source reliability | Extraordinary claim not established |
+| Franklin Expedition | Overconfident single-cause retellings, tidy closure         | Open question, pressure pattern, archive gap         | The uncertainty is real, not noise  |
 
 ### Reproducibility Note
 

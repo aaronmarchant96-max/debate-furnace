@@ -5,7 +5,7 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 
 # Hinge Meter — Design Spec (v0.2)
 
-**Purpose:** Create a visceral yet technically serious visualization that makes the decision *hinge* feel physically real and emotionally immediate.
+**Purpose:** Create a visceral yet technically serious visualization that makes the decision _hinge_ feel physically real and emotionally immediate.
 
 **Core Principle:** "The user should feel the tradeoff in their gut before they fully understand it intellectually."
 
@@ -16,12 +16,14 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 ## Design Decisions (Locked from User Input)
 
 ### 1. Physical Metaphor
+
 - **Style:** Semi-abstract force diagram
 - **Implementation:** Clean bars or vectors pulling on a central pivot
 - **Feel:** Well-engineered mechanism (not a cartoon or literal physics toy)
 - **Avoid:** Literal weights, chains, gravity, or playful illustrations
 
 ### 2. Uncertainty Visualization
+
 - **Primary:** Shaded / gradient zone on the needle’s landing axis
   - Shows "the true hinge could be anywhere in this range"
   - This directly visualizes decision risk / proximity to flip
@@ -29,6 +31,7 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 - **Avoid:** Wrapping uncertainty around the weights themselves (this explains input noise, not decision risk)
 
 ### 3. Snap / Decision Flip Feedback
+
 - **Visual:** Needle snaps to the new side with a sharp color inversion
 - **Additional cue:** The hinge pivot pulses once (single, clean pulse)
 - **Rules:**
@@ -38,6 +41,7 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
   - "Elegant, not flashy"
 
 ### 4. Weight Visualization
+
 - **Primary:** Fixed-width bars that grow and shrink in height only
 - **Fill:** Subtle gradient from neutral base color toward the side color (GO or NO-GO)
 - **Secondary:** Very faint ghosted outline (dashed or low opacity) showing the weight’s uncertainty range
@@ -74,6 +78,7 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 ```
 
 **Key Elements:**
+
 - Central vertical line = the immovable hinge
 - Left side pulls toward "DO NOT ACT"
 - Right side pulls toward "ACT"
@@ -105,5 +110,5 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 **Status:** Ready for your review and iteration.  
 **Next:** Once you approve the direction, we can move to implementation planning (React/SVG component structure, animation approach, data binding, etc.).
 
-*Spec version: 0.2*  
-*Incorporates user's detailed feedback on metaphor, uncertainty, snap, and weight design*
+_Spec version: 0.2_  
+_Incorporates user's detailed feedback on metaphor, uncertainty, snap, and weight design_

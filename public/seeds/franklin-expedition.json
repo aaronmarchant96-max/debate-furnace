@@ -12,7 +12,13 @@
   "whyWild": "It is a lost expedition story with enough historical weight to support horror, survival, or imperial collapse narratives.",
   "stakes": "Discovery, empire, and the cost of trying to map the impossible.",
   "hinge": "Whether ambition can outrun environment.",
-  "storyDNA": ["arctic isolation", "imperial ambition", "slow collapse", "failed rescue", "unknown fate"],
+  "storyDNA": [
+    "arctic isolation",
+    "imperial ambition",
+    "slow collapse",
+    "failed rescue",
+    "unknown fate"
+  ],
   "charactersForces": ["the expedition leader", "the crew", "the ice", "the imperial mission"],
   "tags": ["lost expedition", "survival", "frontier", "political collapse", "tragedy"],
   "genreRemixes": [

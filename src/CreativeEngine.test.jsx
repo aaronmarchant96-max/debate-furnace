@@ -6,34 +6,48 @@ const donnerLikeSeed = {
   era: "1846-1847",
   region: "Sierra Nevada, North America",
   sourceType: "history",
-  summary: "A wagon train was trapped by winter, and survival pressure pushed the group toward starvation, breakdown, and rescue failure.",
-  whyWild: "The event becomes a brutal test of leadership, trust, and what people will sacrifice when the trip stops being a journey and becomes a trap.",
-  stakes: "Life, moral compromise, and whether desperation can erase the line between necessity and collapse.",
+  summary:
+    "A wagon train was trapped by winter, and survival pressure pushed the group toward starvation, breakdown, and rescue failure.",
+  whyWild:
+    "The event becomes a brutal test of leadership, trust, and what people will sacrifice when the trip stops being a journey and becomes a trap.",
+  stakes:
+    "Life, moral compromise, and whether desperation can erase the line between necessity and collapse.",
   hinge: "Whether survival justifies moral compromise.",
-  storyDNA: ["isolation", "leadership failure", "winter pressure", "resource collapse", "survival guilt"],
-  charactersForces: ["the exhausted leader", "the family unit", "the storm", "the dwindling supply"],
+  storyDNA: [
+    "isolation",
+    "leadership failure",
+    "winter pressure",
+    "resource collapse",
+    "survival guilt",
+  ],
+  charactersForces: [
+    "the exhausted leader",
+    "the family unit",
+    "the storm",
+    "the dwindling supply",
+  ],
   tags: ["survival", "frontier", "winter", "moral collapse", "tragedy"],
   genreRemixes: [
     {
       genre: "Horror",
       angle: "The snowbound camp is surrounded by something that feeds on desperation.",
-      prompt: "Turn the survival pressure into escalating horror."
+      prompt: "Turn the survival pressure into escalating horror.",
     },
     {
       genre: "Drama",
       angle: "The wagon train becomes a study of leadership under collapse.",
-      prompt: "Focus on family fracture, blame, and impossible choices."
-    }
+      prompt: "Focus on family fracture, blame, and impossible choices.",
+    },
   ],
   whatIfDivergences: [
     "What if the winter hit two weeks later?",
     "What if a rescue party reached them sooner?",
-    "What if the group had better leadership and less friction?"
+    "What if the group had better leadership and less friction?",
   ],
   sourceTrail: [
     { label: "Britannica", url: "https://www.britannica.com/event/Donner-Party" },
-    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Donner_Party" }
-  ]
+    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Donner_Party" },
+  ],
 };
 
 describe("CreativeEngine packet builders", () => {

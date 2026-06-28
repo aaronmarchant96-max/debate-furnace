@@ -16,7 +16,7 @@ const batchInstruction = [
   "You are generating original story ideas from a real historical seed.",
   "Do not retell the event as fiction.",
   "Extract the reusable conflict pattern, then produce new creative directions that are clearly transformed.",
-  "Return concise JSON with: summary, whyWild, stakes, hinge, storyDNA, storyFuel, and sourceTrail."
+  "Return concise JSON with: summary, whyWild, stakes, hinge, storyDNA, storyFuel, and sourceTrail.",
 ].join(" ");
 
 const normalizeList = (value) =>
@@ -39,9 +39,9 @@ const seedToPrompt = (seed) => ({
     charactersForces: normalizeList(seed.charactersForces),
     genreRemixes: Array.isArray(seed.genreRemixes) ? seed.genreRemixes : [],
     whatIfDivergences: normalizeList(seed.whatIfDivergences),
-    sourceTrail: Array.isArray(seed.sourceTrail) ? seed.sourceTrail : []
+    sourceTrail: Array.isArray(seed.sourceTrail) ? seed.sourceTrail : [],
   },
-  instruction: batchInstruction
+  instruction: batchInstruction,
 });
 
 async function readSeedLibrary() {
@@ -73,7 +73,7 @@ async function main() {
       custom_id: `inspiration-seed-${seed.id}`,
       seed_id: seed.id,
       seed_title: seed.title,
-      prompt: seedToPrompt(seed)
+      prompt: seedToPrompt(seed),
     })
   );
 
@@ -94,7 +94,7 @@ async function main() {
     buildHash: crypto.createHash("sha256").update(JSON.stringify(seeds)).digest("hex"),
     tags: [...tagCounts.entries()]
       .sort((a, b) => a[0].localeCompare(b[0]))
-      .map(([tag, count]) => ({ tag, count }))
+      .map(([tag, count]) => ({ tag, count })),
   };
 
   await fs.writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");

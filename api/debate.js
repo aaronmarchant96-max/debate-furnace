@@ -63,10 +63,12 @@ function isGenericDebate(debate) {
     ...(Array.isArray(debate.take) ? debate.take.flat() : []),
     ...(Array.isArray(debate.changeA) ? debate.changeA : []),
     ...(Array.isArray(debate.changeB) ? debate.changeB : []),
-    ...(Array.isArray(debate.rounds) ? debate.rounds.flatMap((round) => {
-      if (Array.isArray(round)) return round;
-      return [round?.aArg, round?.bArg];
-    }) : []),
+    ...(Array.isArray(debate.rounds)
+      ? debate.rounds.flatMap((round) => {
+          if (Array.isArray(round)) return round;
+          return [round?.aArg, round?.bArg];
+        })
+      : []),
   ];
 
   return fields.some(containsGenericPhrasing);
@@ -167,7 +169,7 @@ async function requestGemini(apiKey, prompt, temperature) {
     console.error("[debate] Gemini API error", {
       status: response.status,
       statusText: response.statusText,
-      body: truncate(errorText)
+      body: truncate(errorText),
     });
     throw new Error(`Gemini API returned ${response.status}: ${truncate(errorText, 300)}`);
   }
@@ -176,7 +178,7 @@ async function requestGemini(apiKey, prompt, temperature) {
   const text = body.candidates?.[0]?.content?.parts?.map((part) => part?.text || "").join("") || "";
   if (!text.trim()) {
     console.error("[debate] Empty Gemini candidate payload", {
-      body: truncate(JSON.stringify(body))
+      body: truncate(JSON.stringify(body)),
     });
   }
   return extractJson(text);
@@ -205,18 +207,22 @@ export default async function handler(req, res) {
 
     if (isGenericDebate(debate)) {
       console.warn("[debate] Generic debate detected, retrying once with stricter prompt");
-      debate = await requestGemini(apiKey, buildPrompt(question, sideA, sideB, intensity, true), Math.max(0.35, temperature - 0.15));
+      debate = await requestGemini(
+        apiKey,
+        buildPrompt(question, sideA, sideB, intensity, true),
+        Math.max(0.35, temperature - 0.15)
+      );
     }
 
     return res.status(200).json(debate);
   } catch (error) {
     console.error("[debate] AI debate generation failed", {
       message: error instanceof Error ? error.message : "Unknown error",
-      stack: error instanceof Error ? error.stack : undefined
+      stack: error instanceof Error ? error.stack : undefined,
     });
     return res.status(500).json({
       error: "AI debate generation failed",
-      detail: error instanceof Error ? error.message : "Unknown error"
+      detail: error instanceof Error ? error.message : "Unknown error",
     });
   }
 }

@@ -12,48 +12,49 @@ const TOP_LEVEL = [
   {
     id: "tools",
     label: "Tools",
-    subtitle: "Pick the slice you need."
+    subtitle: "Pick the slice you need.",
   },
   {
     id: "furnace",
     label: "Debate Furnace",
-    subtitle: "Arguments get pressure-tested here."
+    subtitle: "Arguments get pressure-tested here.",
   },
   {
     id: "story-forge",
     label: "Story Forge",
-    subtitle: "Old sources turn into story blueprints."
+    subtitle: "Old sources turn into story blueprints.",
   },
   {
     id: "storm-replay",
     label: "Storm Replay",
-    subtitle: "Storm imagery gets a careful read."
+    subtitle: "Storm imagery gets a careful read.",
   },
   {
     id: "cardo-guard",
     label: "CARDO GUARD",
-    subtitle: "AI scores get checked against cost."
+    subtitle: "AI scores get checked against cost.",
   },
   {
     id: "hinge-meter",
     label: "Hinge Meter",
-    subtitle: "Visualize balance & decision flips."
+    subtitle: "Visualize balance & decision flips.",
   },
   {
     id: "rei",
     label: "REI",
-    subtitle: "Methodology engine overview."
+    subtitle: "Methodology engine overview.",
   },
   {
     id: "tracepoint",
     label: "Tracepoint",
-    subtitle: "Industrial signals stay evidence-first."
-  }
+    subtitle: "Industrial signals stay evidence-first.",
+  },
 ];
 
 function getInitialTool() {
   if (typeof window === "undefined") return "furnace";
-  if (window.location.pathname === "/tools" || window.location.pathname === "/tools/") return "tools";
+  if (window.location.pathname === "/tools" || window.location.pathname === "/tools/")
+    return "tools";
   if (window.location.hash === "#story-forge") return "story-forge";
   if (window.location.hash === "#storm-replay") return "storm-replay";
   if (window.location.hash === "#cardo-guard") return "cardo-guard";
@@ -87,18 +88,18 @@ export default function AppShell() {
       tool === "tools"
         ? "PromptHound Labs | Tools"
         : tool === "story-forge"
-        ? "PromptHound Labs | Story Forge"
-        : tool === "storm-replay"
-          ? "PromptHound Labs | Storm Replay"
-        : tool === "cardo-guard"
-            ? "PromptHound Labs | CARDO GUARD"
-            : tool === "hinge-meter"
-              ? "PromptHound Labs | Hinge Meter"
-              : tool === "rei"
-                ? "PromptHound Labs | REI"
-                : tool === "tracepoint"
-                  ? "PromptHound Labs | Tracepoint"
-                  : "PromptHound Labs | Debate Furnace";
+          ? "PromptHound Labs | Story Forge"
+          : tool === "storm-replay"
+            ? "PromptHound Labs | Storm Replay"
+            : tool === "cardo-guard"
+              ? "PromptHound Labs | CARDO GUARD"
+              : tool === "hinge-meter"
+                ? "PromptHound Labs | Hinge Meter"
+                : tool === "rei"
+                  ? "PromptHound Labs | REI"
+                  : tool === "tracepoint"
+                    ? "PromptHound Labs | Tracepoint"
+                    : "PromptHound Labs | Debate Furnace";
   }, [tool]);
 
   return (
@@ -109,7 +110,9 @@ export default function AppShell() {
           <div className="shell-brand__title">PromptHound Labs</div>
           <div className="shell-brand__sub">Structured outputs for messy input.</div>
           <div className="shell-brand__method">Bring the hard question. We’ll find the hinge.</div>
-          <div className="shell-brand__method shell-brand__method--sub">CARDO REI loop: build the slice, test what holds, keep the limits visible.</div>
+          <div className="shell-brand__method shell-brand__method--sub">
+            CARDO REI loop: build the slice, test what holds, keep the limits visible.
+          </div>
         </div>
 
         <nav className="top-tabs" aria-label="Top-level tools">

@@ -11,7 +11,10 @@ describe("AppShell", () => {
     render(<AppShell />);
 
     expect(screen.getByText("PromptHound Labs")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /debate furnace/i })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: /debate furnace/i })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
     expect(document.title).toBe("PromptHound Labs | Debate Furnace");
 
     fireEvent.click(screen.getByRole("button", { name: /story forge/i }));
@@ -22,7 +25,10 @@ describe("AppShell", () => {
     await waitFor(() => {
       expect(document.title).toBe("PromptHound Labs | Story Forge");
     });
-    expect(screen.getByRole("button", { name: /story forge/i })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: /story forge/i })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
     expect(screen.getByText("Find the real pattern. Forge a new story.")).toBeInTheDocument();
   });
 
@@ -46,7 +52,10 @@ describe("AppShell", () => {
 
     render(<AppShell />);
 
-    expect(screen.getByRole("button", { name: /storm replay/i })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: /storm replay/i })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
     expect(document.title).toBe("PromptHound Labs | Storm Replay");
   });
 
@@ -55,7 +64,10 @@ describe("AppShell", () => {
 
     render(<AppShell />);
 
-    expect(screen.getByRole("button", { name: /cardo guard/i })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: /cardo guard/i })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
     expect(document.title).toBe("PromptHound Labs | CARDO GUARD");
   });
 
@@ -64,7 +76,10 @@ describe("AppShell", () => {
 
     render(<AppShell />);
 
-    expect(screen.getByRole("button", { name: /tracepoint/i })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: /tracepoint/i })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
     expect(document.title).toBe("PromptHound Labs | Tracepoint");
   });
 

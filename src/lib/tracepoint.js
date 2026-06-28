@@ -45,8 +45,8 @@ export const TRACEPOINT_SCENARIOS = [
       instabilityStateLabel: "loaded",
       truthWearLabel: "bearing_wear",
       truthInstabilityLabel: "pressure_instability",
-      truthCombinedLabel: "wear_plus_pressure_instability"
-    }
+      truthCombinedLabel: "wear_plus_pressure_instability",
+    },
   },
   {
     id: "compressor-c-118",
@@ -87,21 +87,17 @@ export const TRACEPOINT_SCENARIOS = [
       instabilityStateLabel: "pressure watch",
       truthWearLabel: "seal_wear",
       truthInstabilityLabel: "pressure_ripple",
-      truthCombinedLabel: "seal_wear_plus_pressure_ripple"
-    }
-  }
+      truthCombinedLabel: "seal_wear_plus_pressure_ripple",
+    },
+  },
 ];
 
 export const TRACEPOINT_STATUS_THRESHOLDS = {
   normal: 34,
-  watch: 67
+  watch: 67,
 };
 
-export const TRACEPOINT_REVIEW_MARKS = [
-  "valid concern",
-  "false alarm",
-  "needs more data"
-];
+export const TRACEPOINT_REVIEW_MARKS = ["valid concern", "false alarm", "needs more data"];
 
 export const TRACEPOINT_SENSOR_RULES = [
   {
@@ -109,29 +105,29 @@ export const TRACEPOINT_SENSOR_RULES = [
     label: "Vibration",
     unit: "vibration",
     weight: 0.35,
-    expectedDirection: 1
+    expectedDirection: 1,
   },
   {
     key: "bearing_temperature",
     label: "Bearing temperature",
     unit: "temp",
     weight: 0.3,
-    expectedDirection: 1
+    expectedDirection: 1,
   },
   {
     key: "pressure",
     label: "Pressure",
     unit: "pressure",
     weight: 0.2,
-    expectedDirection: -1
+    expectedDirection: -1,
   },
   {
     key: "flow_rate",
     label: "Flow rate",
     unit: "flow",
     weight: 0.15,
-    expectedDirection: -1
-  }
+    expectedDirection: -1,
+  },
 ];
 
 export function getTracepointScenarioById(id) {
@@ -139,7 +135,9 @@ export function getTracepointScenarioById(id) {
 }
 
 export function getTracepointScenarioByAssetId(assetId) {
-  return TRACEPOINT_SCENARIOS.find((scenario) => scenario.assetId === assetId) || TRACEPOINT_SCENARIOS[0];
+  return (
+    TRACEPOINT_SCENARIOS.find((scenario) => scenario.assetId === assetId) || TRACEPOINT_SCENARIOS[0]
+  );
 }
 
 function clamp(value, min, max) {
@@ -187,18 +185,40 @@ export function buildTracepointRows(scenarioId = TRACEPOINT_SCENARIOS[0].id) {
     const isPressureInstabilityWindow = hourIndex >= profile.pressureInstabilityHour;
     const isEscalationWindow = hourIndex >= profile.escalationHour;
 
-    const wearRamp = clamp((hourIndex - profile.wearStartHour) / (profile.escalationHour - profile.wearStartHour), 0, 1);
-    const instabilityRamp = clamp((hourIndex - profile.pressureInstabilityHour) / (profile.escalationHour - profile.pressureInstabilityHour), 0, 1);
+    const wearRamp = clamp(
+      (hourIndex - profile.wearStartHour) / (profile.escalationHour - profile.wearStartHour),
+      0,
+      1
+    );
+    const instabilityRamp = clamp(
+      (hourIndex - profile.pressureInstabilityHour) /
+        (profile.escalationHour - profile.pressureInstabilityHour),
+      0,
+      1
+    );
 
     const vibrationBase = profile.vibrationBase + wearRamp * profile.vibrationWearGain;
     const vibrationRms = roundTo(
-      vibrationBase + wave(hourIndex, 12, 0.07) + wave(hourIndex, 7, 0.04) + wearRamp * profile.vibrationPressureCoupling,
+      vibrationBase +
+        wave(hourIndex, 12, 0.07) +
+        wave(hourIndex, 7, 0.04) +
+        wearRamp * profile.vibrationPressureCoupling,
       3
     );
 
     const thermalRamp = clamp((hourIndex - 72) / 72, 0, 1);
-    const lateThermalRamp = clamp((hourIndex - profile.lateThermalStartHour) / (profile.escalationHour - profile.lateThermalStartHour), 0, 1);
-    const lateRunUp = clamp((hourIndex - profile.lateThermalPeakHour) / (profile.escalationHour - profile.lateThermalPeakHour || 1), 0, 1);
+    const lateThermalRamp = clamp(
+      (hourIndex - profile.lateThermalStartHour) /
+        (profile.escalationHour - profile.lateThermalStartHour),
+      0,
+      1
+    );
+    const lateRunUp = clamp(
+      (hourIndex - profile.lateThermalPeakHour) /
+        (profile.escalationHour - profile.lateThermalPeakHour || 1),
+      0,
+      1
+    );
     const bearingTemperatureBase =
       profile.temperatureBase +
       thermalRamp * profile.temperatureWearGain +
@@ -207,25 +227,45 @@ export function buildTracepointRows(scenarioId = TRACEPOINT_SCENARIOS[0].id) {
       lateThermalRamp * profile.temperatureLateGain +
       lateRunUp * profile.temperatureFinalGain;
     const bearingTemperature = roundTo(
-      bearingTemperatureBase + wave(hourIndex, 24, 0.12) + wave(hourIndex, 9, 0.06) + wearRamp * 0.05,
+      bearingTemperatureBase +
+        wave(hourIndex, 24, 0.12) +
+        wave(hourIndex, 9, 0.06) +
+        wearRamp * 0.05,
       2
     );
 
-    const pressureBase = profile.pressureBase - wearRamp * profile.pressureWearDrop - instabilityRamp * profile.pressureInstabilityDrop;
+    const pressureBase =
+      profile.pressureBase -
+      wearRamp * profile.pressureWearDrop -
+      instabilityRamp * profile.pressureInstabilityDrop;
     const pressureTransient = isPressureInstabilityWindow
-      ? wave(hourIndex - profile.pressureInstabilityHour, profile.pressureTransientCycle, profile.pressureTransientAmplitude) +
-        wave(hourIndex - profile.pressureInstabilityHour, profile.pressureTransientCycle * 2, profile.pressureTransientAmplitude / 2)
+      ? wave(
+          hourIndex - profile.pressureInstabilityHour,
+          profile.pressureTransientCycle,
+          profile.pressureTransientAmplitude
+        ) +
+        wave(
+          hourIndex - profile.pressureInstabilityHour,
+          profile.pressureTransientCycle * 2,
+          profile.pressureTransientAmplitude / 2
+        )
       : wave(hourIndex, 18, 0.35);
     const pressure = roundTo(pressureBase + pressureTransient, 2);
 
-    const flowBase = profile.flowBase - wearRamp * profile.flowWearDrop - instabilityRamp * profile.flowInstabilityDrop;
+    const flowBase =
+      profile.flowBase -
+      wearRamp * profile.flowWearDrop -
+      instabilityRamp * profile.flowInstabilityDrop;
     const flowRate = roundTo(flowBase + wave(hourIndex, 24, 2.1) - wave(hourIndex, 8, 0.8), 2);
 
     const rpmBase = isEscalationWindow ? profile.rpmEscalationBase : profile.rpmBase;
     const rpm = Math.round(rpmBase + wave(hourIndex, 24, 4.5) - wearRamp * 3);
 
     const motorCurrent = roundTo(
-      profile.currentBase + wearRamp * profile.currentWearGain + instabilityRamp * profile.currentInstabilityGain + wave(hourIndex, 12, 0.55),
+      profile.currentBase +
+        wearRamp * profile.currentWearGain +
+        instabilityRamp * profile.currentInstabilityGain +
+        wave(hourIndex, 12, 0.55),
       2
     );
 
@@ -251,7 +291,7 @@ export function buildTracepointRows(scenarioId = TRACEPOINT_SCENARIOS[0].id) {
       rpm,
       motor_current: motorCurrent,
       operating_state: operatingState,
-      synthetic_truth_label: syntheticTruthLabel
+      synthetic_truth_label: syntheticTruthLabel,
     });
   }
 
@@ -284,20 +324,20 @@ export function buildTracepointCorrelationSnapshot(rows) {
       id: "vibration-temperature",
       label: "Vibration / temperature",
       xKey: "vibration_rms",
-      yKey: "bearing_temperature"
+      yKey: "bearing_temperature",
     },
     {
       id: "pressure-flow",
       label: "Pressure / flow",
       xKey: "pressure",
-      yKey: "flow_rate"
+      yKey: "flow_rate",
     },
     {
       id: "vibration-pressure",
       label: "Vibration / pressure",
       xKey: "vibration_rms",
-      yKey: "pressure"
-    }
+      yKey: "pressure",
+    },
   ];
 
   const correlations = pairs.map((pair) => {
@@ -314,7 +354,7 @@ export function buildTracepointCorrelationSnapshot(rows) {
       ...pair,
       recent,
       baseline,
-      delta
+      delta,
     };
   });
 
@@ -327,7 +367,7 @@ export function buildTracepointCorrelationSnapshot(rows) {
     windowHours: 24,
     correlations,
     breakSignals,
-    crossSensorFlag
+    crossSensorFlag,
   };
 }
 
@@ -356,8 +396,7 @@ function countConsecutiveAboveThreshold(values, threshold, expectedDirection) {
   let count = 0;
   for (let index = values.length - 1; index >= 0; index -= 1) {
     const value = values[index];
-    const isAbove =
-      expectedDirection >= 0 ? value >= threshold : value <= threshold;
+    const isAbove = expectedDirection >= 0 ? value >= threshold : value <= threshold;
     if (isAbove) {
       count += 1;
     } else {
@@ -368,8 +407,12 @@ function countConsecutiveAboveThreshold(values, threshold, expectedDirection) {
 }
 
 function getBaselineRows(rows, scenario) {
-  const steadyRows = rows.filter((row) => row.operating_state === scenario.profile.steadyStateLabel);
-  return steadyRows.length >= BASELINE_HOURS ? steadyRows.slice(0, BASELINE_HOURS) : rows.slice(0, BASELINE_HOURS);
+  const steadyRows = rows.filter(
+    (row) => row.operating_state === scenario.profile.steadyStateLabel
+  );
+  return steadyRows.length >= BASELINE_HOURS
+    ? steadyRows.slice(0, BASELINE_HOURS)
+    : rows.slice(0, BASELINE_HOURS);
 }
 
 export function getTracepointStatus(score) {
@@ -389,11 +432,19 @@ function calculateSensorEvidence(rows, sensor, scenario) {
   const ewmaCurrent = calculateEwma(recentValues, 0.25, seed);
   const signedDelta = (ewmaCurrent - baselineMedian) * sensor.expectedDirection;
   const robustZ = Math.abs(signedDelta) / scale;
-  const contribution = roundTo(sensor.weight * clamp(robustZ / 3, 0, 1) * (signedDelta > 0 ? 1 : 0.2) * 100, 1);
+  const contribution = roundTo(
+    sensor.weight * clamp(robustZ / 3, 0, 1) * (signedDelta > 0 ? 1 : 0.2) * 100,
+    1
+  );
   const threshold = baselineMedian + sensor.expectedDirection * scale * 1.15;
-  const persistenceCount = countConsecutiveAboveThreshold(recentValues, threshold, sensor.expectedDirection);
+  const persistenceCount = countConsecutiveAboveThreshold(
+    recentValues,
+    threshold,
+    sensor.expectedDirection
+  );
   const persistenceBoost = persistenceCount >= 3 ? 1 + Math.min(persistenceCount - 2, 5) * 0.06 : 1;
-  const driftPercent = baselineMedian === 0 ? 0 : ((ewmaCurrent - baselineMedian) / baselineMedian) * 100;
+  const driftPercent =
+    baselineMedian === 0 ? 0 : ((ewmaCurrent - baselineMedian) / baselineMedian) * 100;
 
   return {
     key: sensor.key,
@@ -410,7 +461,7 @@ function calculateSensorEvidence(rows, sensor, scenario) {
     robustZ: roundTo(robustZ, 2),
     persistenceCount,
     persistenceBoost: roundTo(persistenceBoost, 2),
-    contribution
+    contribution,
   };
 }
 
@@ -436,17 +487,23 @@ function calculateConcordance(sensorDetails) {
 }
 
 function calculateReviewMetrics(rows, scenario) {
-  const sensorDetails = TRACEPOINT_SENSOR_RULES.map((sensor) => calculateSensorEvidence(rows, sensor, scenario));
+  const sensorDetails = TRACEPOINT_SENSOR_RULES.map((sensor) =>
+    calculateSensorEvidence(rows, sensor, scenario)
+  );
   const sensorMap = Object.fromEntries(sensorDetails.map((detail) => [detail.key, detail]));
   const baseSignalScore = sensorDetails.reduce((sum, detail) => sum + detail.contribution, 0);
   const maxPersistence = Math.max(...sensorDetails.map((detail) => detail.persistenceCount));
   const persistenceMultiplier = 1 + Math.min(Math.max(maxPersistence - 2, 0), 4) * 0.05;
   const concordance = calculateConcordance(sensorDetails);
   const concordanceMultiplier = 0.75 + 0.25 * concordance;
-  const combinedScore = roundTo(clamp(baseSignalScore * persistenceMultiplier * concordanceMultiplier, 0, 100), 1);
+  const combinedScore = roundTo(
+    clamp(baseSignalScore * persistenceMultiplier * concordanceMultiplier, 0, 100),
+    1
+  );
   const status = getTracepointStatus(combinedScore);
-  const mainDriver = [...sensorDetails]
-    .sort((a, b) => b.contribution - a.contribution || b.robustZ - a.robustZ)[0];
+  const mainDriver = [...sensorDetails].sort(
+    (a, b) => b.contribution - a.contribution || b.robustZ - a.robustZ
+  )[0];
 
   return {
     sensorDetails,
@@ -457,7 +514,7 @@ function calculateReviewMetrics(rows, scenario) {
     concordanceMultiplier: roundTo(concordanceMultiplier, 2),
     combinedScore,
     status,
-    mainDriver: mainDriver ? mainDriver.key : TRACEPOINT_SENSOR_RULES[0].key
+    mainDriver: mainDriver ? mainDriver.key : TRACEPOINT_SENSOR_RULES[0].key,
   };
 }
 
@@ -477,7 +534,7 @@ export function buildTracepointSensorSeries(rows, sensorKey) {
       ewma: evidence.ewmaCurrent,
       baseline: evidence.baselineMedian,
       contribution: evidence.contribution,
-      robustZ: evidence.robustZ
+      robustZ: evidence.robustZ,
     };
   });
 }
@@ -491,13 +548,14 @@ export function calculateTracepointReview(rows) {
     const prefix = rows.slice(0, index + 1);
     return calculateReviewMetrics(prefix, scenario).status === "Review Recommended";
   });
-  const truePositiveWindows = reviewFlagWindows.filter((row) => row.synthetic_truth_label !== "normal");
-  const falseAlarms = reviewFlagWindows.filter((row) => row.synthetic_truth_label === "normal");
-  const missedWindows = truthPositiveWindows.filter((row) =>
-    !reviewFlagWindows.includes(row)
+  const truePositiveWindows = reviewFlagWindows.filter(
+    (row) => row.synthetic_truth_label !== "normal"
   );
-  const firstFlagIndex = rows.findIndex((row, index) =>
-    calculateReviewMetrics(rows.slice(0, index + 1), scenario).status === "Review Recommended"
+  const falseAlarms = reviewFlagWindows.filter((row) => row.synthetic_truth_label === "normal");
+  const missedWindows = truthPositiveWindows.filter((row) => !reviewFlagWindows.includes(row));
+  const firstFlagIndex = rows.findIndex(
+    (row, index) =>
+      calculateReviewMetrics(rows.slice(0, index + 1), scenario).status === "Review Recommended"
   );
   const leadTimeHours = firstFlagIndex >= 0 ? Math.max(0, ESCALATION_HOUR - firstFlagIndex) : null;
 
@@ -511,8 +569,8 @@ export function calculateTracepointReview(rows) {
       truePositiveWindows: truePositiveWindows.length,
       falseAlarms: falseAlarms.length,
       missedSyntheticAnomalyWindows: missedWindows.length,
-      leadTimeHours
-    }
+      leadTimeHours,
+    },
   };
 }
 
@@ -522,7 +580,7 @@ export function calculateTracepointDecision({
   calibratedProbability,
   detectionRate,
   followThroughRate,
-  harmReduction
+  harmReduction,
 }) {
   const numericInspectionCost = Math.max(0, Number(inspectionCost) || 0);
   const numericMissCost = Math.max(0, Number(missCost) || 0);
@@ -532,7 +590,8 @@ export function calculateTracepointDecision({
   const reduction = clamp(Number(harmReduction) || 0, 0, 0.95);
   const effectiveHarmReduction = detection * followThrough * reduction;
   const residualHarmAfterAction = 1 - effectiveHarmReduction;
-  const expectedCostAct = numericInspectionCost + probability * numericMissCost * residualHarmAfterAction;
+  const expectedCostAct =
+    numericInspectionCost + probability * numericMissCost * residualHarmAfterAction;
   const expectedCostNoAct = probability * numericMissCost;
   const economicallyJustified = expectedCostAct <= expectedCostNoAct;
 
@@ -548,7 +607,7 @@ export function calculateTracepointDecision({
     expectedCostAct: roundTo(expectedCostAct, 2),
     expectedCostNoAct: roundTo(expectedCostNoAct, 2),
     economicallyJustified,
-    expectedGap: roundTo(expectedCostNoAct - expectedCostAct, 2)
+    expectedGap: roundTo(expectedCostNoAct - expectedCostAct, 2),
   };
 }
 
@@ -562,7 +621,7 @@ export function getTracepointDecisionInputsFromScore(combinedScore) {
     calibratedProbability: roundTo(probability, 3),
     detectionRate: roundTo(detectionRate, 3),
     followThroughRate: roundTo(followThroughRate, 3),
-    harmReduction: roundTo(harmReduction, 3)
+    harmReduction: roundTo(harmReduction, 3),
   };
 }
 
@@ -580,15 +639,14 @@ export function getTracepointDecisionReadout(review, decision) {
       : decision?.economicallyJustified
         ? "Economics support acting"
         : "Economics lean against acting";
-  const reviewNote =
-    decision?.economicallyJustified
-      ? "Inspection is supported by both the signal and the expected-cost check."
-      : "Review is justified on the evidence signal even though the expected-dollar case is weak.";
+  const reviewNote = decision?.economicallyJustified
+    ? "Inspection is supported by both the signal and the expected-cost check."
+    : "Review is justified on the evidence signal even though the expected-dollar case is weak.";
 
   return {
     signalSummary,
     economicSummary,
-    reviewNote
+    reviewNote,
   };
 }
 
@@ -596,7 +654,7 @@ export function formatTracepointMoney(value) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-    maximumFractionDigits: 0
+    maximumFractionDigits: 0,
   }).format(Math.max(0, Number(value) || 0));
 }
 
@@ -608,7 +666,7 @@ export function formatTracepointTimestamp(timestamp) {
   return new Intl.DateTimeFormat("en-CA", {
     dateStyle: "medium",
     timeStyle: "short",
-    timeZone: "America/Edmonton"
+    timeZone: "America/Edmonton",
   }).format(new Date(timestamp));
 }
 
@@ -618,7 +676,7 @@ export function buildTracepointReviewPacket({
   decision,
   reviewerMark,
   reviewerNotes,
-  exportTimestamp
+  exportTimestamp,
 }) {
   return {
     scenario_metadata: {
@@ -626,7 +684,7 @@ export function buildTracepointReviewPacket({
       asset_id: scenario.assetId,
       label: scenario.label,
       subtitle: scenario.subtitle,
-      data_type: "Synthetic hourly sensor readings over 7 days"
+      data_type: "Synthetic hourly sensor readings over 7 days",
     },
     current_scores: {
       combined_review_score: review.combinedScore,
@@ -635,7 +693,7 @@ export function buildTracepointReviewPacket({
       persistence_multiplier: review.persistenceMultiplier,
       status: review.status,
       main_driver: review.mainDriver,
-      sensor_evidence: review.sensorDetails
+      sensor_evidence: review.sensorDetails,
     },
     reviewer_mark: reviewerMark || "unmarked",
     reviewer_notes: reviewerNotes || "",
@@ -645,7 +703,7 @@ export function buildTracepointReviewPacket({
       calibrated_probability_issue_is_real: decision.calibratedProbability,
       inspection_detection_rate: decision.detectionRate,
       action_follow_through_rate: decision.followThroughRate,
-      estimated_harm_reduction: decision.harmReduction
+      estimated_harm_reduction: decision.harmReduction,
     },
     decision_result: {
       economically_justified: decision.economicallyJustified,
@@ -653,11 +711,11 @@ export function buildTracepointReviewPacket({
       expected_cost_not_act: decision.expectedCostNoAct,
       expected_gap: decision.expectedGap,
       effective_harm_reduction: decision.effectiveHarmReduction,
-      residual_harm_after_action: decision.residualHarmAfterAction
+      residual_harm_after_action: decision.residualHarmAfterAction,
     },
     limitation_statement:
       "Synthetic calibration demo only. Not operational advice, not a forecasting system, and not a replacement for inspection, maintenance procedures, or safety controls.",
-    export_timestamp: exportTimestamp
+    export_timestamp: exportTimestamp,
   };
 }
 
@@ -670,7 +728,7 @@ export function buildTracepointHandoverReport({
   queueState,
   auditTrail,
   baselineState,
-  exportTimestamp
+  exportTimestamp,
 }) {
   return {
     report_title: "Tracepoint shift handover",
@@ -679,7 +737,7 @@ export function buildTracepointHandoverReport({
       asset_id: scenario.assetId,
       label: scenario.label,
       baseline_scope: "Asset-specific baseline",
-      operating_context: scenario.subtitle
+      operating_context: scenario.subtitle,
     },
     baseline_metadata: baselineState
       ? {
@@ -688,7 +746,7 @@ export function buildTracepointHandoverReport({
           source: baselineState.source || "first 24 stable hours",
           start_timestamp: baselineState.startTimestamp || "",
           end_timestamp: baselineState.endTimestamp || "",
-          operator: baselineState.operator || "local"
+          operator: baselineState.operator || "local",
         }
       : null,
     review_snapshot: {
@@ -696,25 +754,25 @@ export function buildTracepointHandoverReport({
       combined_score: review.combinedScore,
       main_driver: review.mainDriver,
       multi_sensor_correlation: review.concordance,
-      suggested_action: queueState?.recommendedAction || "Monitor"
+      suggested_action: queueState?.recommendedAction || "Monitor",
     },
     queue_state: {
       owner: queueState?.owner || "Unassigned",
       status: queueState?.status || "Queued",
       next_handoff: queueState?.nextHandoff || "Shift review",
-      response_sla: queueState?.responseSla || "Before next shift handover"
+      response_sla: queueState?.responseSla || "Before next shift handover",
     },
     decision_result: {
       economically_justified: decision.economicallyJustified,
       expected_cost_act: decision.expectedCostAct,
       expected_cost_not_act: decision.expectedCostNoAct,
-      expected_gap: decision.expectedGap
+      expected_gap: decision.expectedGap,
     },
     reviewer_mark: reviewerMark || "unmarked",
     reviewer_notes: reviewerNotes || "",
     audit_trail: Array.isArray(auditTrail) ? auditTrail : [],
     limitation_statement:
       "Synthetic calibration demo only. Not operational advice, not a forecasting system, and not a replacement for inspection, maintenance procedures, or safety controls.",
-    export_timestamp: exportTimestamp
+    export_timestamp: exportTimestamp,
   };
 }

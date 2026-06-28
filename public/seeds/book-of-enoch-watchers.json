@@ -12,8 +12,19 @@
   "whyWild": "It is a ready-made source for forbidden knowledge stories, cosmic dread, and the cost of crossing a boundary that should not have been crossed.",
   "stakes": "Order, purity, and whether knowledge itself can become a curse.",
   "hinge": "Whether revelation is salvation or contamination.",
-  "storyDNA": ["forbidden knowledge", "cosmic authority", "corruption", "boundary crossing", "judgment"],
-  "charactersForces": ["the Watchers", "the human witness", "the fallen world", "the judging power"],
+  "storyDNA": [
+    "forbidden knowledge",
+    "cosmic authority",
+    "corruption",
+    "boundary crossing",
+    "judgment"
+  ],
+  "charactersForces": [
+    "the Watchers",
+    "the human witness",
+    "the fallen world",
+    "the judging power"
+  ],
   "tags": ["mysticism", "forbidden knowledge", "cosmic horror", "ancient world"],
   "genreRemixes": [
     {

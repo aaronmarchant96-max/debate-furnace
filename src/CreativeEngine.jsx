@@ -9,10 +9,11 @@ const SEEDS = [
     sourceType: "myth",
     sourceTrail: [
       { label: "Britannica", url: "https://www.britannica.com/topic/Trojan-Horse" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Trojan_Horse" }
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Trojan_Horse" },
     ],
     summary: "A hidden deception inside a gift becomes the strategy that ends a war.",
-    whyWild: "It is a perfect story engine for betrayal, infiltration, and the cost of trusting the wrong symbol.",
+    whyWild:
+      "It is a perfect story engine for betrayal, infiltration, and the cost of trusting the wrong symbol.",
     stakes: "Victory, trust, and whether intelligence beats force.",
     hinge: "Whether deception is a legitimate weapon or a moral fracture.",
     storyDNA: ["deception", "infiltration", "symbolic trust", "war pressure", "hidden agenda"],
@@ -22,19 +23,19 @@ const SEEDS = [
       {
         genre: "Thriller",
         angle: "The gift is a data package that hides a breach.",
-        prompt: "Turn the hidden entry into a modern infiltration thriller."
+        prompt: "Turn the hidden entry into a modern infiltration thriller.",
       },
       {
         genre: "Fantasy",
         angle: "The horse becomes a relic carrying a sealed war spirit.",
-        prompt: "Make the deception symbolic and mythic rather than literal."
-      }
+        prompt: "Make the deception symbolic and mythic rather than literal.",
+      },
     ],
     whatIfDivergences: [
       "What if the city inspected the gift before accepting it?",
       "What if the infiltrators were trapped inside their own plan?",
-      "What if the real weapon was the story people told about the gift?"
-    ]
+      "What if the real weapon was the story people told about the gift?",
+    ],
   },
   {
     id: "donner-party",
@@ -44,32 +45,46 @@ const SEEDS = [
     sourceType: "history",
     sourceTrail: [
       { label: "Britannica", url: "https://www.britannica.com/event/Donner-Party" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Donner_Party" }
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Donner_Party" },
     ],
-    summary: "A wagon train was trapped by winter, and survival pressure pushed the group toward starvation, breakdown, and rescue failure.",
-    whyWild: "The event becomes a brutal test of leadership, trust, and what people will sacrifice when the trip stops being a journey and becomes a trap.",
-    stakes: "Life, moral compromise, and whether desperation can erase the line between necessity and collapse.",
+    summary:
+      "A wagon train was trapped by winter, and survival pressure pushed the group toward starvation, breakdown, and rescue failure.",
+    whyWild:
+      "The event becomes a brutal test of leadership, trust, and what people will sacrifice when the trip stops being a journey and becomes a trap.",
+    stakes:
+      "Life, moral compromise, and whether desperation can erase the line between necessity and collapse.",
     hinge: "Whether survival justifies moral compromise.",
-    storyDNA: ["isolation", "leadership failure", "winter pressure", "resource collapse", "survival guilt"],
-    charactersForces: ["the exhausted leader", "the family unit", "the storm", "the dwindling supply"],
+    storyDNA: [
+      "isolation",
+      "leadership failure",
+      "winter pressure",
+      "resource collapse",
+      "survival guilt",
+    ],
+    charactersForces: [
+      "the exhausted leader",
+      "the family unit",
+      "the storm",
+      "the dwindling supply",
+    ],
     tags: ["survival", "frontier", "winter", "moral collapse", "tragedy"],
     genreRemixes: [
       {
         genre: "Horror",
         angle: "The snowbound camp is surrounded by something that feeds on desperation.",
-        prompt: "Turn the survival pressure into escalating horror."
+        prompt: "Turn the survival pressure into escalating horror.",
       },
       {
         genre: "Drama",
         angle: "The wagon train becomes a study of leadership under collapse.",
-        prompt: "Focus on family fracture, blame, and impossible choices."
-      }
+        prompt: "Focus on family fracture, blame, and impossible choices.",
+      },
     ],
     whatIfDivergences: [
       "What if the winter hit two weeks later?",
       "What if a rescue party reached them sooner?",
-      "What if the group had better leadership and less friction?"
-    ]
+      "What if the group had better leadership and less friction?",
+    ],
   },
   {
     id: "art-of-war-deception-principle",
@@ -79,32 +94,45 @@ const SEEDS = [
     sourceType: "strategy text",
     sourceTrail: [
       { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/The_Art_of_War" },
-      { label: "Britannica", url: "https://www.britannica.com/topic/The-Art-of-War" }
+      { label: "Britannica", url: "https://www.britannica.com/topic/The-Art-of-War" },
     ],
-    summary: "A strategy principle argues that war is shaped by misdirection, disguise, timing, and the enemy's assumptions.",
-    whyWild: "This is a compact engine for espionage, statecraft, and any story where the side that controls perception controls the battlefield.",
+    summary:
+      "A strategy principle argues that war is shaped by misdirection, disguise, timing, and the enemy's assumptions.",
+    whyWild:
+      "This is a compact engine for espionage, statecraft, and any story where the side that controls perception controls the battlefield.",
     stakes: "Victory, survival, and whether honesty is a luxury the powerful can afford.",
     hinge: "Whether deception is a tactic, a moral failure, or both.",
-    storyDNA: ["misdirection", "perception control", "asymmetric advantage", "planned ambiguity", "psychological pressure"],
-    charactersForces: ["the strategist", "the decoy force", "the observing enemy", "the vulnerable flank"],
+    storyDNA: [
+      "misdirection",
+      "perception control",
+      "asymmetric advantage",
+      "planned ambiguity",
+      "psychological pressure",
+    ],
+    charactersForces: [
+      "the strategist",
+      "the decoy force",
+      "the observing enemy",
+      "the vulnerable flank",
+    ],
     tags: ["war", "espionage", "strategy", "betrayal", "ancient world"],
     genreRemixes: [
       {
         genre: "Spy Thriller",
         angle: "Every briefing becomes a false front for a deeper operation.",
-        prompt: "Turn the principle into a modern intelligence game."
+        prompt: "Turn the principle into a modern intelligence game.",
       },
       {
         genre: "Political Thriller",
         angle: "The deception principle becomes a campaign strategy inside a fractured state.",
-        prompt: "Show how perception management bends public reality."
-      }
+        prompt: "Show how perception management bends public reality.",
+      },
     ],
     whatIfDivergences: [
       "What if the enemy learns the deception principle better than you do?",
       "What if a strategist wins tactically but loses legitimacy?",
-      "What if the same tactic protects a city instead of attacking one?"
-    ]
+      "What if the same tactic protects a city instead of attacking one?",
+    ],
   },
   {
     id: "book-of-enoch-watchers",
@@ -114,32 +142,45 @@ const SEEDS = [
     sourceType: "religious text",
     sourceTrail: [
       { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Book_of_Enoch" },
-      { label: "Britannica", url: "https://www.britannica.com/topic/Book-of-Enoch" }
+      { label: "Britannica", url: "https://www.britannica.com/topic/Book-of-Enoch" },
     ],
-    summary: "The Watchers are supernatural beings whose descent and actions create corruption, forbidden knowledge, and cosmic judgment.",
-    whyWild: "It is a ready-made source for forbidden knowledge stories, cosmic dread, and the cost of crossing a boundary that should not have been crossed.",
+    summary:
+      "The Watchers are supernatural beings whose descent and actions create corruption, forbidden knowledge, and cosmic judgment.",
+    whyWild:
+      "It is a ready-made source for forbidden knowledge stories, cosmic dread, and the cost of crossing a boundary that should not have been crossed.",
     stakes: "Order, purity, and whether knowledge itself can become a curse.",
     hinge: "Whether revelation is salvation or contamination.",
-    storyDNA: ["forbidden knowledge", "cosmic authority", "corruption", "boundary crossing", "judgment"],
-    charactersForces: ["the Watchers", "the human witness", "the fallen world", "the judging power"],
+    storyDNA: [
+      "forbidden knowledge",
+      "cosmic authority",
+      "corruption",
+      "boundary crossing",
+      "judgment",
+    ],
+    charactersForces: [
+      "the Watchers",
+      "the human witness",
+      "the fallen world",
+      "the judging power",
+    ],
     tags: ["mysticism", "forbidden knowledge", "cosmic horror", "ancient world"],
     genreRemixes: [
       {
         genre: "Cosmic Horror",
         angle: "The Watchers are reframed as observers whose attention changes reality.",
-        prompt: "Turn revelation into existential dread."
+        prompt: "Turn revelation into existential dread.",
       },
       {
         genre: "Fantasy",
         angle: "The Watchers become forbidden mentors whose gifts corrupt the world.",
-        prompt: "Build a mythic world around the cost of heavenly knowledge."
-      }
+        prompt: "Build a mythic world around the cost of heavenly knowledge.",
+      },
     ],
     whatIfDivergences: [
       "What if the human world refused the knowledge entirely?",
       "What if the Watchers were not evil but catastrophic in effect?",
-      "What if the judgment came too late to matter?"
-    ]
+      "What if the judgment came too late to matter?",
+    ],
   },
   {
     id: "franklin-expedition",
@@ -149,32 +190,40 @@ const SEEDS = [
     sourceType: "history",
     sourceTrail: [
       { label: "Britannica", url: "https://www.britannica.com/topic/Franklin-expedition" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Franklin%27s_lost_expedition" }
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Franklin%27s_lost_expedition" },
     ],
-    summary: "Two ships vanished while trying to chart the Northwest Passage, turning exploration into tragedy.",
-    whyWild: "It is a lost expedition story with enough historical weight to support horror, survival, or imperial collapse narratives.",
+    summary:
+      "Two ships vanished while trying to chart the Northwest Passage, turning exploration into tragedy.",
+    whyWild:
+      "It is a lost expedition story with enough historical weight to support horror, survival, or imperial collapse narratives.",
     stakes: "Discovery, empire, and the cost of trying to map the impossible.",
     hinge: "Whether ambition can outrun environment.",
-    storyDNA: ["arctic isolation", "imperial ambition", "slow collapse", "failed rescue", "unknown fate"],
+    storyDNA: [
+      "arctic isolation",
+      "imperial ambition",
+      "slow collapse",
+      "failed rescue",
+      "unknown fate",
+    ],
     charactersForces: ["the expedition leader", "the crew", "the ice", "the imperial mission"],
     tags: ["lost expedition", "survival", "frontier", "political collapse", "tragedy"],
     genreRemixes: [
       {
         genre: "Survival Thriller",
         angle: "The Arctic becomes a locked-room puzzle with no exit.",
-        prompt: "Focus on dwindling morale, hunger, and the pressure of impossible terrain."
+        prompt: "Focus on dwindling morale, hunger, and the pressure of impossible terrain.",
       },
       {
         genre: "Horror",
         angle: "The ice hides something that follows the ships.",
-        prompt: "Turn the expedition into a slow-burn polar horror story."
-      }
+        prompt: "Turn the expedition into a slow-burn polar horror story.",
+      },
     ],
     whatIfDivergences: [
       "What if the crew found a passage that should not exist?",
       "What if the expedition had a better rescue window?",
-      "What if the real danger was internal betrayal instead of the ice?"
-    ]
+      "What if the real danger was internal betrayal instead of the ice?",
+    ],
   },
   {
     id: "roanoke-colony",
@@ -184,33 +233,53 @@ const SEEDS = [
     sourceType: "colonial disappearance / archive gap",
     sourceTrail: [
       { label: "Britannica", url: "https://www.britannica.com/place/Roanoke-Island" },
-      { label: "Encyclopedia of Virginia", url: "https://encyclopediavirginia.org/entries/roanoke-colony/" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Roanoke_Colony" }
+      {
+        label: "Encyclopedia of Virginia",
+        url: "https://encyclopediavirginia.org/entries/roanoke-colony/",
+      },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Roanoke_Colony" },
     ],
-    summary: "An English colony disappears into a gap of missing records, leaving behind one carved clue and a century of argument about what survival really looked like.",
-    whyWild: "It combines colonial pressure, disappearance, uncertain testimony, and the possibility that survival meant becoming unrecognizable to the people who claimed ownership.",
-    stakes: "Survival, identity, memory, and who gets written into the official version of a disappearance.",
+    summary:
+      "An English colony disappears into a gap of missing records, leaving behind one carved clue and a century of argument about what survival really looked like.",
+    whyWild:
+      "It combines colonial pressure, disappearance, uncertain testimony, and the possibility that survival meant becoming unrecognizable to the people who claimed ownership.",
+    stakes:
+      "Survival, identity, memory, and who gets written into the official version of a disappearance.",
     hinge: "What if survival depends on becoming unrecognizable to the people who sent you?",
-    storyDNA: ["missing record", "colonial pressure", "reinvention", "competing explanations", "fragile survival"],
-    charactersForces: ["the child colonist", "the returning captain", "the interpreter", "the local witness", "the carved message"],
+    storyDNA: [
+      "missing record",
+      "colonial pressure",
+      "reinvention",
+      "competing explanations",
+      "fragile survival",
+    ],
+    charactersForces: [
+      "the child colonist",
+      "the returning captain",
+      "the interpreter",
+      "the local witness",
+      "the carved message",
+    ],
     tags: ["mystery", "frontier", "disappearance", "archive gap", "survival"],
     genreRemixes: [
       {
         genre: "Frontier Mystery",
-        angle: "The real disappearance is not death but a reinvention no one back home wants to believe.",
-        prompt: "Keep the archive gap visible while turning the colony into a survival mystery."
+        angle:
+          "The real disappearance is not death but a reinvention no one back home wants to believe.",
+        prompt: "Keep the archive gap visible while turning the colony into a survival mystery.",
       },
       {
         genre: "Folk Horror",
-        angle: "The returning search party finds a community built on uneasy new rules and refuses to understand what it sees.",
-        prompt: "Make the fear come from colonial misreading rather than a supernatural answer."
-      }
+        angle:
+          "The returning search party finds a community built on uneasy new rules and refuses to understand what it sees.",
+        prompt: "Make the fear come from colonial misreading rather than a supernatural answer.",
+      },
     ],
     whatIfDivergences: [
       "What if the colony chose to disappear rather than be rescued?",
       "What if the carved clue was meant to mislead the people returning for them?",
-      "What if the surviving children remember a completely different story than the officials who search for them?"
-    ]
+      "What if the surviving children remember a completely different story than the officials who search for them?",
+    ],
   },
   {
     id: "lost-battalion",
@@ -221,32 +290,51 @@ const SEEDS = [
     sourceTrail: [
       { label: "Britannica", url: "https://www.britannica.com/topic/Lost-Battalion" },
       { label: "U.S. Army", url: "https://www.army.mil/article/251788/the_lost_battalion" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Lost_Battalion_(World_War_I)" }
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Lost_Battalion_(World_War_I)" },
     ],
-    summary: "An isolated American battalion is pinned down, cut off, and forced to survive while command confusion and friendly fire turn endurance into its own battlefield.",
-    whyWild: "It traps loyalty, command failure, and survival in a single box where the people holding the line no longer know whether anyone above them understands the cost.",
-    stakes: "Survival, duty, trust in command, and whether holding the position still means anything.",
-    hinge: "What does loyalty mean when command keeps asking trapped people to hold a position that may already be lost?",
-    storyDNA: ["encirclement", "command failure", "survival under fire", "friendly-fire risk", "holding pressure"],
-    charactersForces: ["the trapped infantryman", "the exhausted officer", "the runner", "the medic", "the distant command"],
+    summary:
+      "An isolated American battalion is pinned down, cut off, and forced to survive while command confusion and friendly fire turn endurance into its own battlefield.",
+    whyWild:
+      "It traps loyalty, command failure, and survival in a single box where the people holding the line no longer know whether anyone above them understands the cost.",
+    stakes:
+      "Survival, duty, trust in command, and whether holding the position still means anything.",
+    hinge:
+      "What does loyalty mean when command keeps asking trapped people to hold a position that may already be lost?",
+    storyDNA: [
+      "encirclement",
+      "command failure",
+      "survival under fire",
+      "friendly-fire risk",
+      "holding pressure",
+    ],
+    charactersForces: [
+      "the trapped infantryman",
+      "the exhausted officer",
+      "the runner",
+      "the medic",
+      "the distant command",
+    ],
     tags: ["war", "survival", "ww1", "command failure", "pressure"],
     genreRemixes: [
       {
         genre: "Military Thriller",
-        angle: "The fight becomes a pressure chamber where every message from command may be wrong, late, or fatal.",
-        prompt: "Keep the isolation and command confusion visible while tightening the survival pressure."
+        angle:
+          "The fight becomes a pressure chamber where every message from command may be wrong, late, or fatal.",
+        prompt:
+          "Keep the isolation and command confusion visible while tightening the survival pressure.",
       },
       {
         genre: "Anti-War Drama",
-        angle: "The real collapse is not the line but the belief that sacrifice is being seen clearly by anyone above it.",
-        prompt: "Focus on the emotional cost of obedience under failing command."
-      }
+        angle:
+          "The real collapse is not the line but the belief that sacrifice is being seen clearly by anyone above it.",
+        prompt: "Focus on the emotional cost of obedience under failing command.",
+      },
     ],
     whatIfDivergences: [
       "What if the trapped unit receives one honest message too late to matter?",
       "What if a runner realizes the people holding the line have already been written off?",
-      "What if the battalion survives but no one agrees what it was actually ordered to do?"
-    ]
+      "What if the battalion survives but no one agrees what it was actually ordered to do?",
+    ],
   },
   {
     id: "cher-ami",
@@ -255,34 +343,56 @@ const SEEDS = [
     region: "Meuse-Argonne, France",
     sourceType: "wartime animal service / survival under fire",
     sourceTrail: [
-      { label: "Smithsonian Magazine", url: "https://www.smithsonianmag.com/history/cher-ami-pigeon-saved-lost-battalion-180960851/" },
-      { label: "National Museum of American History", url: "https://americanhistory.si.edu/collections/search/object/nmah_439382" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Cher_Ami" }
+      {
+        label: "Smithsonian Magazine",
+        url: "https://www.smithsonianmag.com/history/cher-ami-pigeon-saved-lost-battalion-180960851/",
+      },
+      {
+        label: "National Museum of American History",
+        url: "https://americanhistory.si.edu/collections/search/object/nmah_439382",
+      },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Cher_Ami" },
     ],
-    summary: "A final message sent by pigeon becomes the narrow thread between a trapped unit and survival under artillery, confusion, and time pressure.",
-    whyWild: "It compresses a whole battlefield into one impossible delivery, where human survival depends on an animal carrying meaning through chaos.",
-    stakes: "Rescue, timing, trust, and whether the last message arrives before the trapped force disappears.",
-    hinge: "What does it mean when the last chance for human survival depends on a creature that does not understand the war?",
-    storyDNA: ["last chance", "message under fire", "timing pressure", "human dependence", "fragile rescue"],
-    charactersForces: ["the signalman", "the trapped soldier", "the pigeon handler", "the artillery line", "the wounded messenger"],
+    summary:
+      "A final message sent by pigeon becomes the narrow thread between a trapped unit and survival under artillery, confusion, and time pressure.",
+    whyWild:
+      "It compresses a whole battlefield into one impossible delivery, where human survival depends on an animal carrying meaning through chaos.",
+    stakes:
+      "Rescue, timing, trust, and whether the last message arrives before the trapped force disappears.",
+    hinge:
+      "What does it mean when the last chance for human survival depends on a creature that does not understand the war?",
+    storyDNA: [
+      "last chance",
+      "message under fire",
+      "timing pressure",
+      "human dependence",
+      "fragile rescue",
+    ],
+    charactersForces: [
+      "the signalman",
+      "the trapped soldier",
+      "the pigeon handler",
+      "the artillery line",
+      "the wounded messenger",
+    ],
     tags: ["war", "animal loyalty", "message", "survival", "ww1"],
     genreRemixes: [
       {
         genre: "War Drama",
         angle: "The whole battle narrows into whether one message can cross a sky full of failure.",
-        prompt: "Treat the delivery as the emotional and strategic center of the story."
+        prompt: "Treat the delivery as the emotional and strategic center of the story.",
       },
       {
         genre: "Short Thriller",
         angle: "Every second after release becomes a countdown between rescue and erasure.",
-        prompt: "Build the pressure around timing, signal failure, and the cost of delay."
-      }
+        prompt: "Build the pressure around timing, signal failure, and the cost of delay.",
+      },
     ],
     whatIfDivergences: [
       "What if the last message reaches command but is not believed in time?",
       "What if the trapped unit sends two different messages that demand two different rescues?",
-      "What if the surviving story focuses on the animal because the human command chain cannot defend itself?"
-    ]
+      "What if the surviving story focuses on the animal because the human command chain cannot defend itself?",
+    ],
   },
   {
     id: "storytellers-gambit",
@@ -293,32 +403,49 @@ const SEEDS = [
     sourceTrail: [
       { label: "Britannica", url: "https://www.britannica.com/topic/The-Thousand-and-One-Nights" },
       { label: "Britannica: Shahrazad", url: "https://www.britannica.com/topic/Shahrazad" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/One_Thousand_and_One_Nights" }
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/One_Thousand_and_One_Nights" },
     ],
-    summary: "A storyteller uses narrative itself as a survival tool, turning delay, curiosity, and emotional leverage into protection against power.",
-    whyWild: "It makes story structure the weapon, where every ending postponed becomes another day alive and every tale told changes the balance of power.",
-    stakes: "Survival, narrative control, emotional leverage, and whether a ruler can be changed by the stories meant to outlast him.",
+    summary:
+      "A storyteller uses narrative itself as a survival tool, turning delay, curiosity, and emotional leverage into protection against power.",
+    whyWild:
+      "It makes story structure the weapon, where every ending postponed becomes another day alive and every tale told changes the balance of power.",
+    stakes:
+      "Survival, narrative control, emotional leverage, and whether a ruler can be changed by the stories meant to outlast him.",
     hinge: "Can control of the story become a form of material survival?",
-    storyDNA: ["narrative leverage", "delay as strategy", "captivity", "curiosity weaponized", "power through framing"],
-    charactersForces: ["the storyteller", "the ruler", "the scribe", "the listener who understands the trap", "the captive audience"],
+    storyDNA: [
+      "narrative leverage",
+      "delay as strategy",
+      "captivity",
+      "curiosity weaponized",
+      "power through framing",
+    ],
+    charactersForces: [
+      "the storyteller",
+      "the ruler",
+      "the scribe",
+      "the listener who understands the trap",
+      "the captive audience",
+    ],
     tags: ["storytelling", "strategy", "survival", "court intrigue", "mythic"],
     genreRemixes: [
       {
         genre: "Court Intrigue",
-        angle: "Each tale becomes a move in a private political negotiation disguised as entertainment.",
-        prompt: "Treat the frame story as a survival strategy inside a dangerous court."
+        angle:
+          "Each tale becomes a move in a private political negotiation disguised as entertainment.",
+        prompt: "Treat the frame story as a survival strategy inside a dangerous court.",
       },
       {
         genre: "Literary Thriller",
-        angle: "The real heist is control over what version of reality the powerful choose to keep hearing.",
-        prompt: "Turn storytelling itself into the engine of suspense and survival."
-      }
+        angle:
+          "The real heist is control over what version of reality the powerful choose to keep hearing.",
+        prompt: "Turn storytelling itself into the engine of suspense and survival.",
+      },
     ],
     whatIfDivergences: [
       "What if the ruler realizes the story is a trap but cannot stop listening?",
       "What if the storyteller's stories begin changing the court faster than anyone expected?",
-      "What if the final tale is the one that risks ending the protection the stories created?"
-    ]
+      "What if the final tale is the one that risks ending the protection the stories created?",
+    ],
   },
   {
     id: "binding-of-fenrir",
@@ -329,32 +456,50 @@ const SEEDS = [
     sourceTrail: [
       { label: "Britannica", url: "https://www.britannica.com/topic/Fenrir" },
       { label: "World History Encyclopedia", url: "https://www.worldhistory.org/Fenrir/" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Fenrir" }
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Fenrir" },
     ],
-    summary: "The gods bind a force they fear through trickery, turning preemptive control into the first betrayal in a larger doomed future.",
-    whyWild: "It is a pure engine for fear, broken trust, and the question of whether trying to prevent catastrophe is what finally creates it.",
-    stakes: "Order, prophecy, legitimacy, and whether betrayal can ever be justified by fear of what comes next.",
+    summary:
+      "The gods bind a force they fear through trickery, turning preemptive control into the first betrayal in a larger doomed future.",
+    whyWild:
+      "It is a pure engine for fear, broken trust, and the question of whether trying to prevent catastrophe is what finally creates it.",
+    stakes:
+      "Order, prophecy, legitimacy, and whether betrayal can ever be justified by fear of what comes next.",
     hinge: "Does preventing a feared future justify betrayal in the present?",
-    storyDNA: ["preemptive betrayal", "fear of prophecy", "broken oath", "containment", "catastrophe created by control"],
-    charactersForces: ["the bound force", "the oath-keeper", "the fearful ruler", "the willing sacrificer", "the witness who sees the cost"],
+    storyDNA: [
+      "preemptive betrayal",
+      "fear of prophecy",
+      "broken oath",
+      "containment",
+      "catastrophe created by control",
+    ],
+    charactersForces: [
+      "the bound force",
+      "the oath-keeper",
+      "the fearful ruler",
+      "the willing sacrificer",
+      "the witness who sees the cost",
+    ],
     tags: ["myth", "betrayal", "prophecy", "power", "tragedy"],
     genreRemixes: [
       {
         genre: "Epic Fantasy",
-        angle: "The prison built to prevent disaster becomes the first crime that makes disaster inevitable.",
-        prompt: "Make the binding a political and moral turning point, not just a mythic set piece."
+        angle:
+          "The prison built to prevent disaster becomes the first crime that makes disaster inevitable.",
+        prompt:
+          "Make the binding a political and moral turning point, not just a mythic set piece.",
       },
       {
         genre: "Political Allegory",
-        angle: "A state breaks its own oath to contain a threat, then has to live inside the distrust it created.",
-        prompt: "Turn prophecy into a modern story about fear, containment, and state violence."
-      }
+        angle:
+          "A state breaks its own oath to contain a threat, then has to live inside the distrust it created.",
+        prompt: "Turn prophecy into a modern story about fear, containment, and state violence.",
+      },
     ],
     whatIfDivergences: [
       "What if one god refuses the plan and becomes the only witness no one trusts later?",
       "What if the bound force would have chosen restraint if it had not been betrayed first?",
-      "What if the real catastrophe is the culture of fear created by the binding, not the bound thing itself?"
-    ]
+      "What if the real catastrophe is the culture of fear created by the binding, not the bound thing itself?",
+    ],
   },
   {
     id: "flower-woman",
@@ -364,33 +509,53 @@ const SEEDS = [
     sourceType: "myth / taboo breaking",
     sourceTrail: [
       { label: "Britannica: Blodeuwedd", url: "https://www.britannica.com/topic/Blodeuwedd" },
-      { label: "Encyclopedia.com: Blodeuwedd", url: "https://www.encyclopedia.com/environment/encyclopedias-almanacs-transcripts-and-maps/blodeuwedd" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Blodeuwedd" }
+      {
+        label: "Encyclopedia.com: Blodeuwedd",
+        url: "https://www.encyclopedia.com/environment/encyclopedias-almanacs-transcripts-and-maps/blodeuwedd",
+      },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Blodeuwedd" },
     ],
-    summary: "A woman created from flowers for a role she did not choose becomes the center of betrayal, punishment, and the cost of refusing a life built for someone else's order.",
-    whyWild: "It combines beauty, artificial creation, desire, and punishment into a story about what happens when a person made for symbolism insists on being a person.",
-    stakes: "Freedom, identity, desire, punishment, and whether a created life owes obedience to its design.",
+    summary:
+      "A woman created from flowers for a role she did not choose becomes the center of betrayal, punishment, and the cost of refusing a life built for someone else's order.",
+    whyWild:
+      "It combines beauty, artificial creation, desire, and punishment into a story about what happens when a person made for symbolism insists on being a person.",
+    stakes:
+      "Freedom, identity, desire, punishment, and whether a created life owes obedience to its design.",
     hinge: "What happens when a person created for a role decides the role is a cage?",
-    storyDNA: ["constructed identity", "forbidden desire", "betrayal", "punishment", "refusal of assigned purpose"],
-    charactersForces: ["the created woman", "the reluctant husband", "the secret lover", "the maker", "the witness to the punishment"],
+    storyDNA: [
+      "constructed identity",
+      "forbidden desire",
+      "betrayal",
+      "punishment",
+      "refusal of assigned purpose",
+    ],
+    charactersForces: [
+      "the created woman",
+      "the reluctant husband",
+      "the secret lover",
+      "the maker",
+      "the witness to the punishment",
+    ],
     tags: ["myth", "identity", "betrayal", "transformation", "taboo"],
     genreRemixes: [
       {
         genre: "Dark Fairy Tale",
-        angle: "The flower-made woman becomes the one person who sees that the whole order around her is also artificial.",
-        prompt: "Keep the myth visible while focusing on desire, creation, and punishment."
+        angle:
+          "The flower-made woman becomes the one person who sees that the whole order around her is also artificial.",
+        prompt: "Keep the myth visible while focusing on desire, creation, and punishment.",
       },
       {
         genre: "Gothic Fantasy",
-        angle: "A court built on ritual beauty cracks when its most symbolic figure refuses to stay symbolic.",
-        prompt: "Turn the story into a gothic struggle over identity and imposed purpose."
-      }
+        angle:
+          "A court built on ritual beauty cracks when its most symbolic figure refuses to stay symbolic.",
+        prompt: "Turn the story into a gothic struggle over identity and imposed purpose.",
+      },
     ],
     whatIfDivergences: [
       "What if the woman and the maker are both trapped by the same design?",
       "What if the punishment transforms the wrong person first?",
-      "What if the role she refuses is necessary to keep a larger political order intact?"
-    ]
+      "What if the role she refuses is necessary to keep a larger political order intact?",
+    ],
   },
   {
     id: "price-of-immortality",
@@ -399,34 +564,52 @@ const SEEDS = [
     region: "Greek myth",
     sourceType: "myth / death bargain",
     sourceTrail: [
-      { label: "Britannica: Tithonus", url: "https://www.britannica.com/topic/Tithonus-Greek-mythology" },
+      {
+        label: "Britannica: Tithonus",
+        url: "https://www.britannica.com/topic/Tithonus-Greek-mythology",
+      },
       { label: "Theoi", url: "https://www.theoi.com/Titan/Eos.html#Tithonos" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Tithonus" }
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Tithonus" },
     ],
-    summary: "A wish to escape death becomes its own curse when immortality arrives without the rest of what makes life livable.",
-    whyWild: "It turns one of humanity's oldest desires into a clean pressure pattern about time, regret, and the cost of getting exactly what was asked for.",
+    summary:
+      "A wish to escape death becomes its own curse when immortality arrives without the rest of what makes life livable.",
+    whyWild:
+      "It turns one of humanity's oldest desires into a clean pressure pattern about time, regret, and the cost of getting exactly what was asked for.",
     stakes: "Love, time, identity, and whether life without ending is still recognizably human.",
     hinge: "What does endless life destroy in the person who wanted it most?",
-    storyDNA: ["wish turned curse", "time distortion", "erosion of self", "love against duration", "unintended bargain"],
-    charactersForces: ["the immortal seeker", "the lover who asked", "the witness to the long decline", "the power that granted the wish"],
+    storyDNA: [
+      "wish turned curse",
+      "time distortion",
+      "erosion of self",
+      "love against duration",
+      "unintended bargain",
+    ],
+    charactersForces: [
+      "the immortal seeker",
+      "the lover who asked",
+      "the witness to the long decline",
+      "the power that granted the wish",
+    ],
     tags: ["myth", "mortality", "curse", "time", "tragedy"],
     genreRemixes: [
       {
         genre: "Tragic Fantasy",
-        angle: "The immortality bargain becomes a private apocalypse measured in centuries instead of fire.",
-        prompt: "Focus on how time itself becomes the punishing force."
+        angle:
+          "The immortality bargain becomes a private apocalypse measured in centuries instead of fire.",
+        prompt: "Focus on how time itself becomes the punishing force.",
       },
       {
         genre: "Philosophical Science Fiction",
-        angle: "A longevity breakthrough gives someone endless duration but strips away the conditions that made the life meaningful.",
-        prompt: "Turn the myth into a modern story about immortality as slow loss."
-      }
+        angle:
+          "A longevity breakthrough gives someone endless duration but strips away the conditions that made the life meaningful.",
+        prompt: "Turn the myth into a modern story about immortality as slow loss.",
+      },
     ],
     whatIfDivergences: [
       "What if the person asking for immortality realizes the mistake immediately but cannot undo it?",
       "What if the immortal outlives not just loved ones but the moral world that made the wish matter?",
-      "What if the real curse is forcing other people to carry the burden of an endless life?"
-    ]
+      "What if the real curse is forcing other people to carry the burden of an endless life?",
+    ],
   },
   {
     id: "skookum-jims-discovery",
@@ -435,34 +618,58 @@ const SEEDS = [
     region: "Klondike, Yukon",
     sourceType: "gold-rush origin / frontier history",
     sourceTrail: [
-      { label: "The Canadian Encyclopedia", url: "https://www.thecanadianencyclopedia.ca/en/article/skookum-jim-mason" },
-      { label: "Historica Canada", url: "https://www.historicacanada.ca/content/heritage-minutes/klondike-gold-rush" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Skookum_Jim" }
+      {
+        label: "The Canadian Encyclopedia",
+        url: "https://www.thecanadianencyclopedia.ca/en/article/skookum-jim-mason",
+      },
+      {
+        label: "Historica Canada",
+        url: "https://www.historicacanada.ca/content/heritage-minutes/klondike-gold-rush",
+      },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Skookum_Jim" },
     ],
-    summary: "A discovery that helps trigger the Klondike Gold Rush becomes a struggle over who gets remembered, who gets erased, and who profits from the story after the strike.",
-    whyWild: "It turns a gold-rush origin story into a pressure pattern about credit, extraction, colonial memory, and the difference between making history and owning its telling.",
-    stakes: "Credit, land, extraction, wealth, and whether discovery can survive the machinery built to rename it.",
-    hinge: "Who gets written into history when a discovery becomes too profitable for the truth to stay intact?",
-    storyDNA: ["disputed credit", "extraction pressure", "frontier reinvention", "erasure through profit", "origin myth rewritten"],
-    charactersForces: ["the discoverer", "the trading partner", "the recorder", "the land rush", "the investor who arrives too late"],
+    summary:
+      "A discovery that helps trigger the Klondike Gold Rush becomes a struggle over who gets remembered, who gets erased, and who profits from the story after the strike.",
+    whyWild:
+      "It turns a gold-rush origin story into a pressure pattern about credit, extraction, colonial memory, and the difference between making history and owning its telling.",
+    stakes:
+      "Credit, land, extraction, wealth, and whether discovery can survive the machinery built to rename it.",
+    hinge:
+      "Who gets written into history when a discovery becomes too profitable for the truth to stay intact?",
+    storyDNA: [
+      "disputed credit",
+      "extraction pressure",
+      "frontier reinvention",
+      "erasure through profit",
+      "origin myth rewritten",
+    ],
+    charactersForces: [
+      "the discoverer",
+      "the trading partner",
+      "the recorder",
+      "the land rush",
+      "the investor who arrives too late",
+    ],
     tags: ["frontier", "canada", "gold rush", "memory", "extraction"],
     genreRemixes: [
       {
         genre: "Frontier Drama",
-        angle: "The strike matters less than the fight over whose name the new world gets built around.",
-        prompt: "Keep the pressure on credit, land, and the rewriting of origin."
+        angle:
+          "The strike matters less than the fight over whose name the new world gets built around.",
+        prompt: "Keep the pressure on credit, land, and the rewriting of origin.",
       },
       {
         genre: "Historical Thriller",
-        angle: "Every new arrival brings money, rumor, and a stronger incentive to bury the truth under a cleaner legend.",
-        prompt: "Turn the discovery into a race between memory and profit."
-      }
+        angle:
+          "Every new arrival brings money, rumor, and a stronger incentive to bury the truth under a cleaner legend.",
+        prompt: "Turn the discovery into a race between memory and profit.",
+      },
     ],
     whatIfDivergences: [
       "What if the people who made the discovery refuse the version of the story investors need?",
       "What if one witness keeps a record that could undo the gold-rush myth later?",
-      "What if the real point of no return is not the strike itself but the first shipment of news leaving the region?"
-    ]
+      "What if the real point of no return is not the strike itself but the first shipment of news leaving the region?",
+    ],
   },
   {
     id: "battle-of-grunwald",
@@ -472,36 +679,63 @@ const SEEDS = [
     sourceType: "medieval battle / military history",
     sourceTrail: [
       { label: "Britannica", url: "https://www.britannica.com/event/Battle-of-Tannenberg-1410" },
-      { label: "Encyclopaedia.com", url: "https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/grunwald-battle" },
-      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Battle_of_Grunwald" }
+      {
+        label: "Encyclopaedia.com",
+        url: "https://www.encyclopedia.com/history/encyclopedias-almanacs-transcripts-and-maps/grunwald-battle",
+      },
+      { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Battle_of_Grunwald" },
     ],
-    summary: "A massive Polish-Lithuanian coalition confronts the Teutonic Knights, a powerful crusading military order, in one of medieval Europe's defining battles.",
-    whyWild: "A feared religious military order meets a multi-ethnic coalition that turns discipline, patience, and battlefield pressure against it.",
-    stakes: "Political survival, religious legitimacy, regional power, national myth, and the collapse of invincibility.",
-    hinge: "Can an elite order built on faith, discipline, and fear survive when its enemies stop being divided?",
-    storyDNA: ["coalition under pressure", "religious militarism", "false confidence", "battlefield deception", "fragile alliances", "elite collapse", "myth after victory"],
-    charactersForces: ["the Teutonic Grand Master", "the Polish king", "the Lithuanian grand duke", "the knightly order", "the coalition army", "the scouts and messengers", "the camp followers", "the chroniclers"],
+    summary:
+      "A massive Polish-Lithuanian coalition confronts the Teutonic Knights, a powerful crusading military order, in one of medieval Europe's defining battles.",
+    whyWild:
+      "A feared religious military order meets a multi-ethnic coalition that turns discipline, patience, and battlefield pressure against it.",
+    stakes:
+      "Political survival, religious legitimacy, regional power, national myth, and the collapse of invincibility.",
+    hinge:
+      "Can an elite order built on faith, discipline, and fear survive when its enemies stop being divided?",
+    storyDNA: [
+      "coalition under pressure",
+      "religious militarism",
+      "false confidence",
+      "battlefield deception",
+      "fragile alliances",
+      "elite collapse",
+      "myth after victory",
+    ],
+    charactersForces: [
+      "the Teutonic Grand Master",
+      "the Polish king",
+      "the Lithuanian grand duke",
+      "the knightly order",
+      "the coalition army",
+      "the scouts and messengers",
+      "the camp followers",
+      "the chroniclers",
+    ],
     tags: ["war", "medieval", "coalition", "political collapse", "strategy"],
     genreRemixes: [
       {
         genre: "Political War Epic",
-        angle: "The battlefield victory matters less than holding the alliance together long enough to reshape the region.",
-        prompt: "Focus on coalition strain, elite overconfidence, and the power vacuum after the battle."
+        angle:
+          "The battlefield victory matters less than holding the alliance together long enough to reshape the region.",
+        prompt:
+          "Focus on coalition strain, elite overconfidence, and the power vacuum after the battle.",
       },
       {
         genre: "Dark Fantasy",
-        angle: "A sacred military order discovers its rituals and symbols no longer guarantee fear or obedience.",
-        prompt: "Turn the collapsing aura of holy invincibility into a mythic military downfall."
-      }
+        angle:
+          "A sacred military order discovers its rituals and symbols no longer guarantee fear or obedience.",
+        prompt: "Turn the collapsing aura of holy invincibility into a mythic military downfall.",
+      },
     ],
     whatIfDivergences: [
       "What if the coalition fractures before the battle?",
       "What if the Teutonic Knights win and become the dominant eastern power?",
       "What if a messenger changes the timing of the attack?",
       "What if the battle is remembered completely differently by each side?",
-      "What if the real victory happens after the battlefield, in the story told afterward?"
-    ]
-  }
+      "What if the real victory happens after the battlefield, in the story told afterward?",
+    ],
+  },
 ];
 
 const GENRE_MUTATION = ["Realistic", "Grounded Fiction", "Speculative", "Fantasy", "Cosmic"];
@@ -510,127 +744,139 @@ const MUTATION_DESCRIPTIONS = [
   "Plausible changes, same pressure.",
   "One what-if changes the outcome.",
   "Mythic symbols carry the conflict.",
-  "Human conflict meets an unknowable system."
+  "Human conflict meets an unknowable system.",
 ];
 const GENRE_PROFILES = {
   "Sci-fi": {
     tone: "clinical, speculative, and system-driven",
     conflict: "a human team trying to survive inside a rule set they did not design",
-    turn: "the most technical solution exposes the human cost"
+    turn: "the most technical solution exposes the human cost",
   },
-  "Horror": {
+  Horror: {
     tone: "dreadful, claustrophobic, and escalating",
     conflict: "an unseen threat closing in while the characters lose control",
-    turn: "survival requires naming the threat plainly"
+    turn: "survival requires naming the threat plainly",
   },
-  "Fantasy": {
+  Fantasy: {
     tone: "mythic, symbolic, and vivid",
     conflict: "ritual, destiny, and meaning turning pressure into lore",
-    turn: "a symbolic act changes the outcome"
+    turn: "a symbolic act changes the outcome",
   },
-  "Western": {
+  Western: {
     tone: "austere, moral, and frontier-hardened",
     conflict: "hard choices in a lawless or half-built system",
-    turn: "the cost of trust lands on the public"
+    turn: "the cost of trust lands on the public",
   },
   "Political thriller": {
     tone: "tense, strategic, and distrustful",
     conflict: "power brokers shaping the story before the truth can settle",
-    turn: "the exposed narrative changes who can act"
+    turn: "the exposed narrative changes who can act",
   },
   "War drama": {
     tone: "pressure-heavy, disciplined, and human",
     conflict: "obedience, fatigue, and command under collapse",
-    turn: "the line between duty and denial breaks"
+    turn: "the line between duty and denial breaks",
   },
   "Dark comedy": {
     tone: "dry, absurd, and socially sharp",
-    conflict: "bad incentives, bad leadership, and people making worse choices for understandable reasons",
-    turn: "the only workable move is also the most ridiculous one"
+    conflict:
+      "bad incentives, bad leadership, and people making worse choices for understandable reasons",
+    turn: "the only workable move is also the most ridiculous one",
   },
   "Game quest": {
     tone: "goal-driven, reactive, and tactical",
     conflict: "the player navigating a pressure system that keeps changing the rules",
-    turn: "the quest objective is revealed to be misleading"
+    turn: "the quest objective is revealed to be misleading",
   },
   "Anime arc": {
     tone: "big, emotionally direct, and escalation-friendly",
     conflict: "the cast’s loyalty and powers getting stressed by a larger force",
-    turn: "the arc pivots on a dramatic reveal"
+    turn: "the arc pivots on a dramatic reveal",
   },
   "Fanfic setup": {
     tone: "character-forward, intimate, and remix-friendly",
     conflict: "relationships and loyalties being rewritten by the source pressure",
-    turn: "the familiar setup becomes emotionally different"
-  }
+    turn: "the familiar setup becomes emotionally different",
+  },
 };
 const FORMAT_PROFILES = {
   Novel: {
-    shape: "A novel should carry the premise across multiple turns, with a clear arc, pressure build, and earned ending.",
+    shape:
+      "A novel should carry the premise across multiple turns, with a clear arc, pressure build, and earned ending.",
     protagonist: "the lead",
     setting: "a sustained pressure cooker rather than a single scene",
-    turn: "the long-form payoff"
+    turn: "the long-form payoff",
   },
   "Short story": {
-    shape: "A short story should move fast, compress the pressure, and end on a sharp change or image.",
+    shape:
+      "A short story should move fast, compress the pressure, and end on a sharp change or image.",
     protagonist: "the lead",
     setting: "one tight situation with little room to hide",
-    turn: "the final image or reversal"
+    turn: "the final image or reversal",
   },
   Movie: {
-    shape: "A movie should read as a three-act visual sequence with a setup, escalation, and payoff.",
+    shape:
+      "A movie should read as a three-act visual sequence with a setup, escalation, and payoff.",
     protagonist: "the lead",
     setting: "a cinematic pressure-cooker location",
-    turn: "the third-act reversal"
+    turn: "the third-act reversal",
   },
   "TV episode": {
-    shape: "An episode should open hard, complicate the problem midstream, and end with a question or cliffhanger.",
+    shape:
+      "An episode should open hard, complicate the problem midstream, and end with a question or cliffhanger.",
     protagonist: "the episode lead",
     setting: "a recurring world with one active pressure point",
-    turn: "the cliffhanger"
+    turn: "the cliffhanger",
   },
   "YouTube video": {
-    shape: "A YouTube video should hook quickly, explain the pattern clearly, and leave one memorable takeaway.",
+    shape:
+      "A YouTube video should hook quickly, explain the pattern clearly, and leave one memorable takeaway.",
     protagonist: "the host or narrator",
     setting: "a fast, explorable topic frame",
-    turn: "the closing takeaway"
+    turn: "the closing takeaway",
   },
   "Game quest": {
-    shape: "A quest should present an objective, twist the objective, then pay off with a meaningful choice.",
+    shape:
+      "A quest should present an objective, twist the objective, then pay off with a meaningful choice.",
     protagonist: "the player character",
     setting: "an interactive problem space",
-    turn: "the quest twist"
+    turn: "the quest twist",
   },
   "D&D one-shot": {
-    shape: "A one-shot should give the party a clear objective, a rising complication, and a final confrontation.",
+    shape:
+      "A one-shot should give the party a clear objective, a rising complication, and a final confrontation.",
     protagonist: "the party",
     setting: "a compact adventure location",
-    turn: "the final encounter"
+    turn: "the final encounter",
   },
   "Comic issue": {
-    shape: "A comic issue should make every beat visual, with a strong page-turn reveal and a sharp final panel.",
+    shape:
+      "A comic issue should make every beat visual, with a strong page-turn reveal and a sharp final panel.",
     protagonist: "the central figure",
     setting: "a sequence of strong visual beats",
-    turn: "the page-turn reveal"
+    turn: "the page-turn reveal",
   },
   "Podcast episode": {
-    shape: "A podcast episode should frame the topic, unpack the pressure, and close on a clear interpretation.",
+    shape:
+      "A podcast episode should frame the topic, unpack the pressure, and close on a clear interpretation.",
     protagonist: "the host or guest lens",
     setting: "a story told through voice and evidence",
-    turn: "the interpretive close"
+    turn: "the interpretive close",
   },
   "Documentary outline": {
-    shape: "A documentary outline should balance evidence, tension, and interpretation without collapsing into retelling.",
+    shape:
+      "A documentary outline should balance evidence, tension, and interpretation without collapsing into retelling.",
     protagonist: "the subject or witness",
     setting: "an evidence-driven frame",
-    turn: "the final argument"
+    turn: "the final argument",
   },
   "Fanfic setup": {
-    shape: "A fanfic setup should keep one familiar anchor while moving the emotional center somewhere new.",
+    shape:
+      "A fanfic setup should keep one familiar anchor while moving the emotional center somewhere new.",
     protagonist: "the familiar cast lens",
     setting: "a recognizable world with a shifted premise",
-    turn: "the relationship pivot"
-  }
+    turn: "the relationship pivot",
+  },
 };
 const BLUEPRINTS = [
   "Novel",
@@ -643,17 +889,21 @@ const BLUEPRINTS = [
   "Comic issue",
   "Podcast episode",
   "Documentary outline",
-  "Fanfic setup"
+  "Fanfic setup",
 ];
 const FORGE_FLOW = [
   { id: "seed-hunter", label: "Seed Hunter", helper: "Choose the source pattern." },
   { id: "blueprint", label: "Blueprint", helper: "Shape it into structure." },
   { id: "remix", label: "Remix", helper: "Shift genre and mutation." },
-  { id: "source", label: "Source Trail", helper: "Check the grounding." }
+  { id: "source", label: "Source Trail", helper: "Check the grounding." },
 ];
 
 function listToChips(list) {
-  return (list || []).map((item) => <span key={item} className="chip">{item}</span>);
+  return (list || []).map((item) => (
+    <span key={item} className="chip">
+      {item}
+    </span>
+  ));
 }
 
 function trimTerminalPunctuation(text) {
@@ -671,7 +921,9 @@ function pickDifferentRandomSeed(seeds, currentSeedId) {
 }
 
 function cleanCustomAdditions(value) {
-  return String(value || "").trim().replace(/\s+/g, " ");
+  return String(value || "")
+    .trim()
+    .replace(/\s+/g, " ");
 }
 
 function buildFuel(seed, genre) {
@@ -681,7 +933,7 @@ function buildFuel(seed, genre) {
     `Logline: A ${genre.toLowerCase()} story built around ${hinge}.`,
     `Story DNA: Pull on ${focus} until the event becomes a usable narrative engine.`,
     `Character pressure: Force the lead to choose between survival, truth, and belonging.`,
-    `Source rule: keep the real event visible so the fiction feels grounded instead of generic.`
+    `Source rule: keep the real event visible so the fiction feels grounded instead of generic.`,
   ];
 }
 
@@ -692,17 +944,23 @@ function buildStoryFuel(seed) {
     `Start with the hinge: ${seed.hinge}`,
     `Keep the pressure on these forces: ${(seed.charactersForces || []).slice(0, 3).join(", ")}`,
     `Lean on the reusable pattern: ${(seed.storyDNA || []).slice(0, 4).join(", ")}`,
-    firstDivergence ? `First divergence: ${firstDivergence}` : "First divergence: shift one pressure point and see what changes.",
-    secondDivergence ? `Second divergence: ${secondDivergence}` : "Second divergence: keep the source recognizable but transformed."
+    firstDivergence
+      ? `First divergence: ${firstDivergence}`
+      : "First divergence: shift one pressure point and see what changes.",
+    secondDivergence
+      ? `Second divergence: ${secondDivergence}`
+      : "Second divergence: keep the source recognizable but transformed.",
   ];
 }
 
 function getGenreProfile(genre) {
-  return GENRE_PROFILES[genre] || {
-    tone: "clear, genre-aware, and specific to the selected setting",
-    conflict: "the selected pressure being shaped into a new story form",
-    turn: "the premise changes in a visible way"
-  };
+  return (
+    GENRE_PROFILES[genre] || {
+      tone: "clear, genre-aware, and specific to the selected setting",
+      conflict: "the selected pressure being shaped into a new story form",
+      turn: "the premise changes in a visible way",
+    }
+  );
 }
 
 function getMutationProfile(mutation) {
@@ -715,8 +973,8 @@ function getMutationProfile(mutation) {
         "Tighten the original pressure without changing the rules of the world.",
         "Introduce one altered rule so the outcome changes in a visible way.",
         "Translate the pressure into symbolic or mythic logic.",
-        "Shift the system into an impersonal cosmic force that changes the survival math."
-      ][mutation] || "Keep the source pressure grounded in observable cause and effect."
+        "Shift the system into an impersonal cosmic force that changes the survival math.",
+      ][mutation] || "Keep the source pressure grounded in observable cause and effect.",
   };
 }
 
@@ -733,7 +991,7 @@ function buildSelectedAngle(seed, genre, mutation) {
     `Selected genre tone: ${genreProfile.tone}.`,
     `Mutation shift: ${mutationProfile.logic}`,
     `Reference frame: keep the ${sourceTag} pattern visible while the tone, conflict, and causal system change.`,
-    `Angle: ${genreProfile.conflict}.`
+    `Angle: ${genreProfile.conflict}.`,
   ].join(" ");
 }
 
@@ -762,7 +1020,7 @@ function makeSeedPacket(seed, customAdditions = "") {
     seed.storyDNA.map((item) => `- ${item}`).join("\n"),
     ``,
     `## Source Trail`,
-    seed.sourceTrail.map((source) => `- ${source.label}: ${source.url}`).join("\n")
+    seed.sourceTrail.map((source) => `- ${source.label}: ${source.url}`).join("\n"),
   ];
 
   if (custom) {
@@ -777,74 +1035,74 @@ function makeBlueprintLines(seed, format, customAdditions = "") {
   const stakes = lowerClean(seed.stakes);
   const custom = cleanCustomAdditions(customAdditions);
   const baseLines = {
-    "Novel": [
+    Novel: [
       `Premise: ${seed.hinge}`,
       `Character arc: the lead starts inside ${seed.storyDNA[0]} and ends somewhere changed.`,
       `Act turns: pressure builds through ${seed.storyDNA.slice(1, 4).join(", ")}.`,
-      `Final consequence: the choice lands with a cost that feels earned.`
+      `Final consequence: the choice lands with a cost that feels earned.`,
     ],
     "Short story": [
       `Opening image: ${seed.summary}`,
       `Pressure turn: the hidden truth surfaces.`,
       `Choice: someone has to pick between ${stakes}.`,
-      `Closing image: the hinge is still visible.`
+      `Closing image: the hinge is still visible.`,
     ],
-    "Movie": [
+    Movie: [
       `Logline: A ${seed.sourceType} pattern built around ${hinge}.`,
       `Act 1 setup: establish ${seed.charactersForces.slice(0, 2).join(" and ")}.`,
       `Act 2 escalation: push ${seed.storyDNA.slice(0, 3).join(", ")} into conflict.`,
       `Act 3 payoff: the central choice changes what survives.`,
-      `Ending options: keep the source visible, but the fiction distinct.`
+      `Ending options: keep the source visible, but the fiction distinct.`,
     ],
     "TV episode": [
       `Cold open: the audience sees the pressure before the explanation.`,
       `Inciting incident: the seed's hidden problem becomes active.`,
       `Midpoint twist: the apparent truth is incomplete.`,
-      `Cliffhanger: the real hinge is not solved yet.`
+      `Cliffhanger: the real hinge is not solved yet.`,
     ],
     "YouTube video": [
       `Title ideas: ${seed.title} as a curiosity hook.`,
       `Opening hook: why this story is stranger than it first looks.`,
       `Main beats: what happened, why it matters, what it could inspire.`,
-      `Outro question: what does this pattern remind you of?`
+      `Outro question: what does this pattern remind you of?`,
     ],
     "Game quest": [
       `Quest title: build from ${seed.title}.`,
       `Objective: force the player to navigate ${hinge}.`,
       `Hidden twist: the real enemy is not obvious at first.`,
       `Reward: a choice, not just loot.`,
-      `Failure consequence: the world changes around the player.`
+      `Failure consequence: the world changes around the player.`,
     ],
     "D&D one-shot": [
       `Quest frame: the party enters a situation shaped by ${seed.sourceType}.`,
       `Key locations: use the source trail as map anchors.`,
       `NPC pressure: let the characters represent competing interpretations.`,
-      `Boss reveal: the final conflict is the hinge made physical.`
+      `Boss reveal: the final conflict is the hinge made physical.`,
     ],
     "Comic issue": [
       `Cover hook: a visual version of ${hinge}.`,
       `Scene beats: compress the pressure into clean page turns.`,
       `Page turn: the hidden force is revealed.`,
-      `Final panel: leave a question, not a lecture.`
+      `Final panel: leave a question, not a lecture.`,
     ],
     "Podcast episode": [
       `Cold open: start with the weirdest true detail.`,
       `Question framing: why this source still matters.`,
       `Interview beats: trace fact, interpretation, and inspiration separately.`,
-      `Wrap-up: the story engine, not just the event.`
+      `Wrap-up: the story engine, not just the event.`,
     ],
     "Documentary outline": [
       `Thesis: ${seed.hinge}`,
       `Evidence blocks: follow the source trail first.`,
       `Counterpoint: separate proven fact from artistic inference.`,
-      `Closing takeaway: the pattern is the real value.`
+      `Closing takeaway: the pattern is the real value.`,
     ],
     "Fanfic setup": [
       `Canon anchor: keep one recognizable element from ${seed.title}.`,
       `What changes: move the conflict into a new emotional frame.`,
       `Relationship tension: let the hinge reshape who trusts whom.`,
-      `Pivot scene: the source becomes fiction with a clear boundary.`
-    ]
+      `Pivot scene: the source becomes fiction with a clear boundary.`,
+    ],
   };
 
   const lines = baseLines[format] || baseLines.Movie;
@@ -858,74 +1116,74 @@ function makeBlueprintPacket(seed, format, customAdditions = "") {
   const formatLabel = format;
 
   const sections = {
-    "Novel": [
+    Novel: [
       { label: "Premise", body: headline },
       { label: "Character arc", body: rest[0] },
       { label: "Act turns", body: rest[1] },
-      { label: "Final consequence", body: rest[2] }
+      { label: "Final consequence", body: rest[2] },
     ],
     "Short story": [
       { label: "Opening image", body: headline },
       { label: "Pressure turn", body: rest[0] },
       { label: "Choice", body: rest[1] },
-      { label: "Closing image", body: rest[2] }
+      { label: "Closing image", body: rest[2] },
     ],
-    "Movie": [
+    Movie: [
       { label: "Logline", body: headline },
       { label: "Act 1 setup", body: rest[0] },
       { label: "Act 2 escalation", body: rest[1] },
       { label: "Act 3 payoff", body: rest[2] },
-      { label: "Ending options", body: rest[3] }
+      { label: "Ending options", body: rest[3] },
     ],
     "TV episode": [
       { label: "Cold open", body: headline },
       { label: "Inciting incident", body: rest[0] },
       { label: "Midpoint twist", body: rest[1] },
-      { label: "Cliffhanger", body: rest[2] }
+      { label: "Cliffhanger", body: rest[2] },
     ],
     "YouTube video": [
       { label: "Title ideas", body: headline },
       { label: "Opening hook", body: rest[0] },
       { label: "Main beats", body: rest[1] },
-      { label: "Outro question", body: rest[2] }
+      { label: "Outro question", body: rest[2] },
     ],
     "Game quest": [
       { label: "Quest title", body: headline },
       { label: "Objective", body: rest[0] },
       { label: "Hidden twist", body: rest[1] },
       { label: "Reward", body: rest[2] },
-      { label: "Failure consequence", body: rest[3] }
+      { label: "Failure consequence", body: rest[3] },
     ],
     "D&D one-shot": [
       { label: "Quest frame", body: headline },
       { label: "Key locations", body: rest[0] },
       { label: "NPC pressure", body: rest[1] },
-      { label: "Boss reveal", body: rest[2] }
+      { label: "Boss reveal", body: rest[2] },
     ],
     "Comic issue": [
       { label: "Cover hook", body: headline },
       { label: "Scene beats", body: rest[0] },
       { label: "Page turn", body: rest[1] },
-      { label: "Final panel", body: rest[2] }
+      { label: "Final panel", body: rest[2] },
     ],
     "Podcast episode": [
       { label: "Cold open", body: headline },
       { label: "Question framing", body: rest[0] },
       { label: "Interview beats", body: rest[1] },
-      { label: "Wrap-up", body: rest[2] }
+      { label: "Wrap-up", body: rest[2] },
     ],
     "Documentary outline": [
       { label: "Thesis", body: headline },
       { label: "Evidence blocks", body: rest[0] },
       { label: "Counterpoint", body: rest[1] },
-      { label: "Closing takeaway", body: rest[2] }
+      { label: "Closing takeaway", body: rest[2] },
     ],
     "Fanfic setup": [
       { label: "Canon anchor", body: headline },
       { label: "What changes", body: rest[0] },
       { label: "Relationship tension", body: rest[1] },
-      { label: "Pivot scene", body: rest[2] }
-    ]
+      { label: "Pivot scene", body: rest[2] },
+    ],
   };
 
   const sectionsForFormat = sections[formatLabel] || sections.Movie;
@@ -936,7 +1194,9 @@ function makeBlueprintPacket(seed, format, customAdditions = "") {
     summary: `${formatLabel} blueprint built from ${seed.title} with the hinge kept visible.`,
     meta: [seed.sourceType, seed.era, seed.region],
     anchor: seed.hinge,
-    sections: custom ? [...sectionsForFormat, { label: "Custom additions", body: custom }] : sectionsForFormat
+    sections: custom
+      ? [...sectionsForFormat, { label: "Custom additions", body: custom }]
+      : sectionsForFormat,
   };
 }
 
@@ -945,13 +1205,15 @@ function makeRemixPacket(seed, genre, mutation, customAdditions = "") {
   const genreProfile = getGenreProfile(genre);
   const mutationProfile = getMutationProfile(mutation);
   const formatProfile = getFormatProfile("Movie");
-  const variation = [
-    `Keep the real event visible, but shape it through ${genreProfile.tone}.`,
-    `Change the setting and cast, but preserve the pressure pattern and let the ${mutationProfile.label.toLowerCase()} layer do the work.`,
-    `Let one key assumption fail and see how the selected genre changes the conflict.`,
-    `Translate the pressure into a more symbolic version of ${genreProfile.conflict}.`,
-    `Push the human problem into ${mutationProfile.logic.toLowerCase()}`
-  ][mutation] || `Keep the pressure visible while the selected genre and mutation both reshape the result.`;
+  const variation =
+    [
+      `Keep the real event visible, but shape it through ${genreProfile.tone}.`,
+      `Change the setting and cast, but preserve the pressure pattern and let the ${mutationProfile.label.toLowerCase()} layer do the work.`,
+      `Let one key assumption fail and see how the selected genre changes the conflict.`,
+      `Translate the pressure into a more symbolic version of ${genreProfile.conflict}.`,
+      `Push the human problem into ${mutationProfile.logic.toLowerCase()}`,
+    ][mutation] ||
+    `Keep the pressure visible while the selected genre and mutation both reshape the result.`;
 
   return {
     title: `${seed.title} / ${genre}`,
@@ -971,8 +1233,8 @@ function makeRemixPacket(seed, genre, mutation, customAdditions = "") {
       { label: "Story turn", body: genreProfile.turn },
       { label: "Remix direction", body: variation },
       { label: "Selected angle", body: buildSelectedAngle(seed, genre, mutation) },
-      ...(custom ? [{ label: "Custom additions", body: custom }] : [])
-    ]
+      ...(custom ? [{ label: "Custom additions", body: custom }] : []),
+    ],
   };
 }
 
@@ -994,43 +1256,43 @@ function makeStoryIdeaPacket(seed, format, genre, mutation, customAdditions = ""
     sections: [
       {
         label: "Core idea",
-        body: `${trimTerminalPunctuation(seed.summary)}. The central tension is ${hinge}, carried through ${seed.storyDNA.slice(0, 3).join(", ")}.`
+        body: `${trimTerminalPunctuation(seed.summary)}. The central tension is ${hinge}, carried through ${seed.storyDNA.slice(0, 3).join(", ")}.`,
       },
       {
         label: "Format",
-        body: formatProfile.shape
+        body: formatProfile.shape,
       },
       {
         label: "Blueprint shape",
-        body: blueprint.join(" ")
+        body: blueprint.join(" "),
       },
       {
         label: "Genre tone",
-        body: `The tone should be ${genreProfile.tone}, with the conflict built around ${genreProfile.conflict}.`
+        body: `The tone should be ${genreProfile.tone}, with the conflict built around ${genreProfile.conflict}.`,
       },
       {
         label: "Mutation logic",
-        body: mutationProfile.logic
+        body: mutationProfile.logic,
       },
       {
         label: "Protagonist",
-        body: `${formatProfile.protagonist} is forced to navigate the pressure without losing the human core of the story.`
+        body: `${formatProfile.protagonist} is forced to navigate the pressure without losing the human core of the story.`,
       },
       {
         label: "Setting",
-        body: `${seed.region} during ${seed.era}, framed as ${formatProfile.setting}.`
+        body: `${seed.region} during ${seed.era}, framed as ${formatProfile.setting}.`,
       },
       {
         label: "Central conflict",
-        body: `The lead has to choose between ${stakes}, while the setting pushes back through ${seed.charactersForces.slice(0, 3).join(", ")} and the selected genre keeps the pressure readable as ${genreProfile.tone}.`
+        body: `The lead has to choose between ${stakes}, while the setting pushes back through ${seed.charactersForces.slice(0, 3).join(", ")} and the selected genre keeps the pressure readable as ${genreProfile.tone}.`,
       },
       {
         label: "Story turn",
-        body: `${formatProfile.turn} comes when the group realizes ${genreProfile.turn.toLowerCase()}.`
+        body: `${formatProfile.turn} comes when the group realizes ${genreProfile.turn.toLowerCase()}.`,
       },
       {
         label: "Remix layer",
-        body: `${remix.summary} ${buildSelectedAngle(seed, genre, mutation)}`.trim()
+        body: `${remix.summary} ${buildSelectedAngle(seed, genre, mutation)}`.trim(),
       },
       {
         label: "Story fuel",
@@ -1040,18 +1302,22 @@ function makeStoryIdeaPacket(seed, format, genre, mutation, customAdditions = ""
           `Mutation: ${GENRE_MUTATION[mutation]}`,
           `Hinge: ${seed.hinge}`,
           `Story DNA: ${seed.storyDNA.slice(0, 4).join(", ")}`,
-          ...(custom ? [`Custom additions: ${custom}`] : [])
-        ].join(" · ")
+          ...(custom ? [`Custom additions: ${custom}`] : []),
+        ].join(" · "),
       },
-      ...(custom ? [{
-        label: "Custom additions",
-        body: `Use this as the transformation layer: ${custom}. Keep the seed's hinge underneath it.`
-      }] : []),
+      ...(custom
+        ? [
+            {
+              label: "Custom additions",
+              body: `Use this as the transformation layer: ${custom}. Keep the seed's hinge underneath it.`,
+            },
+          ]
+        : []),
       {
         label: "Source boundary",
-        body: "Inspired by the source pattern, not a retelling. Keep the real source visible, but mark the final story as fiction."
-      }
-    ]
+        body: "Inspired by the source pattern, not a retelling. Keep the real source visible, but mark the final story as fiction.",
+      },
+    ],
   };
 }
 
@@ -1059,7 +1325,9 @@ function renderMetaChips(items) {
   return (
     <div className="chip-row">
       {items.filter(Boolean).map((item) => (
-        <span key={item} className="chip">{item}</span>
+        <span key={item} className="chip">
+          {item}
+        </span>
       ))}
     </div>
   );
@@ -1075,7 +1343,9 @@ function InspirationPanel({ seed, onSeedChange, filteredSeeds, selectedTag, onTa
             <div className="eyebrow">Historical seed</div>
             <h2>{seed.title}</h2>
           </div>
-          <div className="meta">{seed.sourceType} · {seed.era}</div>
+          <div className="meta">
+            {seed.sourceType} · {seed.era}
+          </div>
         </div>
 
         <p className="lede">{seed.summary}</p>
@@ -1083,8 +1353,27 @@ function InspirationPanel({ seed, onSeedChange, filteredSeeds, selectedTag, onTa
         <div className="control-group">
           <div className="control-label">Tags</div>
           <div className="button-row">
-            {["All", "survival", "betrayal", "war", "frontier", "ancient world", "mysticism", "espionage", "lost expedition", "cosmic horror", "political collapse", "UAP", "forbidden knowledge"].map((tag) => (
-              <button key={tag} type="button" className={selectedTag === tag ? "pill is-active" : "pill"} onClick={() => onTagChange(tag)}>
+            {[
+              "All",
+              "survival",
+              "betrayal",
+              "war",
+              "frontier",
+              "ancient world",
+              "mysticism",
+              "espionage",
+              "lost expedition",
+              "cosmic horror",
+              "political collapse",
+              "UAP",
+              "forbidden knowledge",
+            ].map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                className={selectedTag === tag ? "pill is-active" : "pill"}
+                onClick={() => onTagChange(tag)}
+              >
                 {tag}
               </button>
             ))}
@@ -1095,7 +1384,12 @@ function InspirationPanel({ seed, onSeedChange, filteredSeeds, selectedTag, onTa
           <div className="control-label">Seed picker</div>
           <div className="button-row">
             {filteredSeeds.map((item) => (
-              <button key={item.id} type="button" className={seed.id === item.id ? "pill is-active" : "pill"} onClick={() => onSeedChange(item.id)}>
+              <button
+                key={item.id}
+                type="button"
+                className={seed.id === item.id ? "pill is-active" : "pill"}
+                onClick={() => onSeedChange(item.id)}
+              >
                 {item.title}
               </button>
             ))}
@@ -1126,13 +1420,17 @@ function InspirationPanel({ seed, onSeedChange, filteredSeeds, selectedTag, onTa
           <div className="mini-card">
             <div className="card-label">What if divergences</div>
             <div className="stacked-list">
-              {(seed.whatIfDivergences || []).map((item) => <div key={item}>{item}</div>)}
+              {(seed.whatIfDivergences || []).map((item) => (
+                <div key={item}>{item}</div>
+              ))}
             </div>
           </div>
           <div className="mini-card mini-card--wide">
             <div className="card-label">Story Fuel</div>
             <div className="stacked-list">
-              {storyFuel.map((item) => <div key={item}>{item}</div>)}
+              {storyFuel.map((item) => (
+                <div key={item}>{item}</div>
+              ))}
             </div>
           </div>
           <div className="mini-card mini-card--wide">
@@ -1152,7 +1450,10 @@ function InspirationPanel({ seed, onSeedChange, filteredSeeds, selectedTag, onTa
 }
 
 function BlueprintPanel({ seed, format, onFormatChange, customAdditions }) {
-  const outline = useMemo(() => makeBlueprintLines(seed, format, customAdditions), [seed, format, customAdditions]);
+  const outline = useMemo(
+    () => makeBlueprintLines(seed, format, customAdditions),
+    [seed, format, customAdditions]
+  );
   const [packet, setPacket] = useState(() => makeBlueprintPacket(seed, format, customAdditions));
   const [copyState, setCopyState] = useState("");
 
@@ -1173,11 +1474,7 @@ function BlueprintPanel({ seed, format, onFormatChange, customAdditions }) {
         "",
         content.summary,
         "",
-        ...content.sections.flatMap((section) => [
-          `## ${section.label}`,
-          section.body,
-          ""
-        ])
+        ...content.sections.flatMap((section) => [`## ${section.label}`, section.body, ""]),
       ].join("\n");
       await navigator.clipboard.writeText(text);
       setCopyState("Copied outline");
@@ -1199,8 +1496,12 @@ function BlueprintPanel({ seed, format, onFormatChange, customAdditions }) {
       </div>
 
       <div className="primary-actions">
-        <button type="button" className="pill pill--primary pill--large" onClick={generateOutline}>Generate outline</button>
-        <button type="button" className="pill" onClick={copyOutline}>{copyState || (packet ? "Copy generated outline" : "Copy outline")}</button>
+        <button type="button" className="pill pill--primary pill--large" onClick={generateOutline}>
+          Generate outline
+        </button>
+        <button type="button" className="pill" onClick={copyOutline}>
+          {copyState || (packet ? "Copy generated outline" : "Copy outline")}
+        </button>
       </div>
 
       {packet ? (
@@ -1243,7 +1544,12 @@ function BlueprintPanel({ seed, format, onFormatChange, customAdditions }) {
         <div className="control-label">Format</div>
         <div className="button-row">
           {BLUEPRINTS.map((item) => (
-            <button key={item} type="button" className={format === item ? "pill is-active" : "pill"} onClick={() => onFormatChange(item)}>
+            <button
+              key={item}
+              type="button"
+              className={format === item ? "pill is-active" : "pill"}
+              onClick={() => onFormatChange(item)}
+            >
               {item}
             </button>
           ))}
@@ -1263,7 +1569,7 @@ function RemixPanel({ seed, genre, onGenreChange, mutation, onMutationChange, cu
     `Core pressure: ${seed.hinge}`,
     `Mutation logic: ${MUTATION_DESCRIPTIONS[mutation]}`,
     ...buildFuel(seed, genre),
-    ...(custom ? [`Custom additions: ${custom}`] : [])
+    ...(custom ? [`Custom additions: ${custom}`] : []),
   ];
 
   useEffect(() => {
@@ -1283,11 +1589,7 @@ function RemixPanel({ seed, genre, onGenreChange, mutation, onMutationChange, cu
         "",
         content.summary,
         "",
-        ...content.sections.flatMap((section) => [
-          `## ${section.label}`,
-          section.body,
-          ""
-        ])
+        ...content.sections.flatMap((section) => [`## ${section.label}`, section.body, ""]),
       ].join("\n");
       await navigator.clipboard.writeText(text);
       setCopyState("Copied remix");
@@ -1311,8 +1613,24 @@ function RemixPanel({ seed, genre, onGenreChange, mutation, onMutationChange, cu
       <div className="control-group">
         <div className="control-label">Genre</div>
         <div className="button-row">
-          {["Sci-fi", "Horror", "Fantasy", "Western", "Political thriller", "War drama", "Dark comedy", "Game quest", "Anime arc", "Fanfic setup"].map((item) => (
-            <button key={item} type="button" className={genre === item ? "pill is-active" : "pill"} onClick={() => onGenreChange(item)}>
+          {[
+            "Sci-fi",
+            "Horror",
+            "Fantasy",
+            "Western",
+            "Political thriller",
+            "War drama",
+            "Dark comedy",
+            "Game quest",
+            "Anime arc",
+            "Fanfic setup",
+          ].map((item) => (
+            <button
+              key={item}
+              type="button"
+              className={genre === item ? "pill is-active" : "pill"}
+              onClick={() => onGenreChange(item)}
+            >
               {item}
             </button>
           ))}
@@ -1321,21 +1639,35 @@ function RemixPanel({ seed, genre, onGenreChange, mutation, onMutationChange, cu
 
       <div className="control-group">
         <div className="control-label">Mutation slider</div>
-        <input className="slider" type="range" min="0" max="4" step="1" value={mutation} onChange={(e) => onMutationChange(Number(e.target.value))} />
+        <input
+          className="slider"
+          type="range"
+          min="0"
+          max="4"
+          step="1"
+          value={mutation}
+          onChange={(e) => onMutationChange(Number(e.target.value))}
+        />
         <div className="mutation-note">
           <strong>{GENRE_MUTATION[mutation]}</strong>
           <span>{MUTATION_DESCRIPTIONS[mutation]}</span>
         </div>
         <div className="mutation-scale" aria-label="Mutation level scale">
           {GENRE_MUTATION.map((item, index) => (
-            <span key={item} className={mutation === index ? "is-active" : ""}>{item}</span>
+            <span key={item} className={mutation === index ? "is-active" : ""}>
+              {item}
+            </span>
           ))}
         </div>
       </div>
 
       <div className="button-row">
-        <button type="button" className="pill" onClick={generateRemix}>Generate remix</button>
-        <button type="button" className="pill" onClick={copyRemix}>{copyState || (packet ? "Copy generated remix" : "Copy remix")}</button>
+        <button type="button" className="pill" onClick={generateRemix}>
+          Generate remix
+        </button>
+        <button type="button" className="pill" onClick={copyRemix}>
+          {copyState || (packet ? "Copy generated remix" : "Copy remix")}
+        </button>
       </div>
 
       {packet ? (
@@ -1386,7 +1718,7 @@ function StoryIdeaPanel({
   onGenerate,
   packet,
   copyState,
-  onCopy
+  onCopy,
 }) {
   const snapshot = useMemo(
     () => makeStoryIdeaPacket(seed, format, genre, mutation, customAdditions),
@@ -1400,22 +1732,32 @@ function StoryIdeaPanel({
         <div className="story-idea__header-copy">
           <div className="eyebrow">Build final story packet</div>
           <h2>Full story idea</h2>
-          <div className="story-idea__summary">Combine the current seed, format, and remix settings into one usable story packet.</div>
+          <div className="story-idea__summary">
+            Combine the current seed, format, and remix settings into one usable story packet.
+          </div>
         </div>
         <div className="story-idea__header-meta">
           <div className="story-idea__chips">
             {renderMetaChips([seed.sourceType, format, genre, GENRE_MUTATION[mutation]])}
           </div>
           <div className="button-row">
-            <button type="button" className="pill pill--primary pill--large" onClick={onGenerate}>Generate full story idea</button>
-            <button type="button" className="pill" onClick={() => onCopy(activePacket)}>{copyState || (packet ? "Copy story packet" : "Copy preview")}</button>
+            <button type="button" className="pill pill--primary pill--large" onClick={onGenerate}>
+              Generate full story idea
+            </button>
+            <button type="button" className="pill" onClick={() => onCopy(activePacket)}>
+              {copyState || (packet ? "Copy story packet" : "Copy preview")}
+            </button>
           </div>
         </div>
       </div>
 
       <div className="custom-additions">
-        <label className="control-label" htmlFor="custom-additions">Custom additions</label>
-        <div className="custom-additions__hint">Optional. Add your own character, setting shift, twist, tone, or ending direction.</div>
+        <label className="control-label" htmlFor="custom-additions">
+          Custom additions
+        </label>
+        <div className="custom-additions__hint">
+          Optional. Add your own character, setting shift, twist, tone, or ending direction.
+        </div>
         <textarea
           id="custom-additions"
           className="custom-additions__input"
@@ -1433,7 +1775,9 @@ function StoryIdeaPanel({
               <div className="card-label">Story packet</div>
               <h3 className="output-title">{activePacket.title}</h3>
             </div>
-            <div className="meta">{format} · {genre}</div>
+            <div className="meta">
+              {format} · {genre}
+            </div>
           </div>
           <p className="output-summary">{activePacket.summary}</p>
           <div className="output-anchor output-anchor--story">
@@ -1491,7 +1835,9 @@ function SourceTrailPanel({ seed }) {
         </div>
         <div className="mini-card">
           <div className="card-label">What it does not prove</div>
-          <div>It does not prove a fictional interpretation, only the underlying event or text.</div>
+          <div>
+            It does not prove a fictional interpretation, only the underlying event or text.
+          </div>
         </div>
         <div className="mini-card">
           <div className="card-label">Why it is interesting</div>
@@ -1499,7 +1845,10 @@ function SourceTrailPanel({ seed }) {
         </div>
         <div className="mini-card">
           <div className="card-label">Fictional transformation</div>
-          <div>Inspired by the source pattern, not a retelling. Keep the real source visible, but mark the final story as fiction.</div>
+          <div>
+            Inspired by the source pattern, not a retelling. Keep the real source visible, but mark
+            the final story as fiction.
+          </div>
         </div>
         <div className="mini-card mini-card--wide">
           <div className="card-label">Source links</div>
@@ -1581,22 +1930,28 @@ export default function CreativeEngine() {
   }
 
   function generateStoryIdea() {
-    setStoryPacket(makeStoryIdeaPacket(activeSeed, blueprintFormat, remixGenre, remixMutation, customAdditions));
+    setStoryPacket(
+      makeStoryIdeaPacket(activeSeed, blueprintFormat, remixGenre, remixMutation, customAdditions)
+    );
   }
 
   async function copyStoryIdea(packet) {
     try {
-      const content = packet || makeStoryIdeaPacket(activeSeed, blueprintFormat, remixGenre, remixMutation, customAdditions);
+      const content =
+        packet ||
+        makeStoryIdeaPacket(
+          activeSeed,
+          blueprintFormat,
+          remixGenre,
+          remixMutation,
+          customAdditions
+        );
       const text = [
         `# ${content.title}`,
         "",
         content.summary,
         "",
-        ...content.sections.flatMap((section) => [
-          `## ${section.label}`,
-          section.body,
-          ""
-        ])
+        ...content.sections.flatMap((section) => [`## ${section.label}`, section.body, ""]),
       ].join("\n");
       await navigator.clipboard.writeText(text);
       setStoryCopyState("Copied story packet");
@@ -1613,10 +1968,21 @@ export default function CreativeEngine() {
         <div className="forge-hero__copy">
           <div className="eyebrow">Creative engine</div>
           <h1>Find the real pattern. Forge a new story.</h1>
-          <p className="lead">Turn a curated seed library of real events, old texts, and strange source material into usable story blueprints without losing the source trail.</p>
+          <p className="lead">
+            Turn a curated seed library of real events, old texts, and strange source material into
+            usable story blueprints without losing the source trail.
+          </p>
           <div className="button-row forge-hero__actions">
-            <button type="button" className="pill pill--primary pill--large" onClick={pickRandomSeed}>Random seed</button>
-            <button type="button" className="pill" onClick={copySeedPacket}>{copyState || "Copy seed packet"}</button>
+            <button
+              type="button"
+              className="pill pill--primary pill--large"
+              onClick={pickRandomSeed}
+            >
+              Random seed
+            </button>
+            <button type="button" className="pill" onClick={copySeedPacket}>
+              {copyState || "Copy seed packet"}
+            </button>
           </div>
         </div>
         <div className="forge-hero__seed">
@@ -1649,14 +2015,20 @@ export default function CreativeEngine() {
             <div className="forge-guide__index">1</div>
             <div>
               <div className="card-label">Pick a seed</div>
-              <div>Start with a curated seed built from a real event, myth, archive mystery, or strange source.</div>
+              <div>
+                Start with a curated seed built from a real event, myth, archive mystery, or strange
+                source.
+              </div>
             </div>
           </div>
           <div className="forge-guide__step">
             <div className="forge-guide__index">2</div>
             <div>
               <div className="card-label">Shape the blueprint</div>
-              <div>Turn the source pressure into a movie, novel, game quest, documentary outline, or other format.</div>
+              <div>
+                Turn the source pressure into a movie, novel, game quest, documentary outline, or
+                other format.
+              </div>
             </div>
           </div>
           <div className="forge-guide__step">
@@ -1670,7 +2042,10 @@ export default function CreativeEngine() {
             <div className="forge-guide__index">4</div>
             <div>
               <div className="card-label">Add your twist</div>
-              <div>Use custom additions to inject your own setting, character, tone, or ending direction.</div>
+              <div>
+                Use custom additions to inject your own setting, character, tone, or ending
+                direction.
+              </div>
             </div>
           </div>
           <div className="forge-guide__step forge-guide__step--wide">
@@ -1681,7 +2056,10 @@ export default function CreativeEngine() {
             </div>
           </div>
         </div>
-        <div className="forge-guide__note">Recommended first flow: Pick a seed, choose Movie, choose Fantasy or Horror, generate Blueprint, then generate Full story idea.</div>
+        <div className="forge-guide__note">
+          Recommended first flow: Pick a seed, choose Movie, choose Fantasy or Horror, generate
+          Blueprint, then generate Full story idea.
+        </div>
       </section>
 
       <section className="forge-workspace">
@@ -1705,7 +2083,10 @@ export default function CreativeEngine() {
                 </button>
               ))}
             </div>
-            <div className="forge-overview__note">Start with the seed, turn it into structure, mutate it, then check the source boundary.</div>
+            <div className="forge-overview__note">
+              Start with the seed, turn it into structure, mutate it, then check the source
+              boundary.
+            </div>
           </div>
 
           <div className="forge-rail__section">
@@ -1797,5 +2178,5 @@ export {
   makeBlueprintLines,
   makeBlueprintPacket,
   makeRemixPacket,
-  makeStoryIdeaPacket
+  makeStoryIdeaPacket,
 };

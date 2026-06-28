@@ -5,7 +5,7 @@ import {
   calculateCardoGuardReview,
   formatMoney,
   getScenarioById,
-  CARDO_GUARD_SCENARIOS
+  CARDO_GUARD_SCENARIOS,
 } from "./lib/cardoGuard.js";
 
 function getInitialDraft() {
@@ -14,7 +14,7 @@ function getInitialDraft() {
     scenarioId: scenario.id,
     confidence: scenario.defaultConfidence,
     costToAct: scenario.defaultCostToAct,
-    costToMiss: scenario.defaultCostToMiss
+    costToMiss: scenario.defaultCostToMiss,
   };
 }
 
@@ -45,13 +45,13 @@ export default function CardoGuard() {
       ...current,
       confidence: scenario.defaultConfidence,
       costToAct: scenario.defaultCostToAct,
-      costToMiss: scenario.defaultCostToMiss
+      costToMiss: scenario.defaultCostToMiss,
     }));
     setSubmitted({
       scenarioId: scenario.id,
       confidence: scenario.defaultConfidence,
       costToAct: scenario.defaultCostToAct,
-      costToMiss: scenario.defaultCostToMiss
+      costToMiss: scenario.defaultCostToMiss,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [draft.scenarioId]);
@@ -61,7 +61,9 @@ export default function CardoGuard() {
   const whyThisVerdict = useMemo(() => buildCardoGuardWhyThisVerdict(review), [review]);
 
   const confidenceBandLabel =
-    review.confidenceBand === "low" ? "cautious synthetic band" : `${review.confidenceBand} calibration band`;
+    review.confidenceBand === "low"
+      ? "cautious synthetic band"
+      : `${review.confidenceBand} calibration band`;
 
   function updateDraft(field, value) {
     setDraft((current) => ({ ...current, [field]: value }));
@@ -72,7 +74,7 @@ export default function CardoGuard() {
       scenarioId: draft.scenarioId,
       confidence: toNumber(draft.confidence),
       costToAct: toNumber(draft.costToAct),
-      costToMiss: toNumber(draft.costToMiss)
+      costToMiss: toNumber(draft.costToMiss),
     });
   }
 
@@ -82,7 +84,7 @@ export default function CardoGuard() {
       scenarioId: scenario.id,
       confidence: scenario.defaultConfidence,
       costToAct: scenario.defaultCostToAct,
-      costToMiss: scenario.defaultCostToMiss
+      costToMiss: scenario.defaultCostToMiss,
     };
     setDraft(nextDraft);
     setSubmitted(nextDraft);
@@ -110,26 +112,32 @@ export default function CardoGuard() {
   return (
     <section className="cardo-guard panel-stack">
       <section className="panel cardo-guard__hero">
-          <div className="panel__head">
-            <div>
-              <div className="card-label">PromptHound Labs</div>
-              <div className="muted" style={{ fontSize: "0.85em", marginBottom: 4 }}>Structured outputs for messy input.</div>
-              <div className="cardo-guard__tool-name">CARDO GUARD</div>
-              <h2>Should we act on this AI risk score?</h2>
-              <p className="lede">
-                A synthetic decision checker that weighs the cost of acting against the cost of ignoring a risk score.
-              </p>
+        <div className="panel__head">
+          <div>
+            <div className="card-label">PromptHound Labs</div>
+            <div className="muted" style={{ fontSize: "0.85em", marginBottom: 4 }}>
+              Structured outputs for messy input.
             </div>
-            <div className="cardo-guard__status">
-              <span className="status-badge status-badge--cyan">Synthetic demo only</span>
-              <span className="status-badge status-badge--muted">Not operational advice</span>
-            </div>
+            <div className="cardo-guard__tool-name">CARDO GUARD</div>
+            <h2>Should we act on this AI risk score?</h2>
+            <p className="lede">
+              A synthetic decision checker that weighs the cost of acting against the cost of
+              ignoring a risk score.
+            </p>
           </div>
+          <div className="cardo-guard__status">
+            <span className="status-badge status-badge--cyan">Synthetic demo only</span>
+            <span className="status-badge status-badge--muted">Not operational advice</span>
+          </div>
+        </div>
 
-          <div className="cardo-guard__intro mini-card">
-            <p><strong>AI confidence is not the decision.</strong> Cost-weighted consequence is the decision gate.</p>
-          </div>
-        </section>
+        <div className="cardo-guard__intro mini-card">
+          <p>
+            <strong>AI confidence is not the decision.</strong> Cost-weighted consequence is the
+            decision gate.
+          </p>
+        </div>
+      </section>
 
       <div className="cardo-guard__layout">
         <section className="panel">
@@ -153,7 +161,8 @@ export default function CardoGuard() {
                 <strong>Add the cost to act.</strong> Example: acting costs $17,000.
               </li>
               <li>
-                <strong>Add the cost of missing it.</strong> Example: missing it could cost $1,465,000.
+                <strong>Add the cost of missing it.</strong> Example: missing it could cost
+                $1,465,000.
               </li>
             </ol>
           </div>
@@ -193,8 +202,8 @@ export default function CardoGuard() {
               <div className="cardo-guard__range-value">{Number(draft.confidence)}%</div>
             </div>
             <div className="muted">
-              Synthetic calibration band for this demo. In a real deployment, this would come from model evaluation
-              logs.
+              Synthetic calibration band for this demo. In a real deployment, this would come from
+              model evaluation logs.
             </div>
           </div>
 
@@ -248,7 +257,9 @@ export default function CardoGuard() {
 
           <div className="cardo-guard__rules mini-card">
             <div className="card-label">Guardrails</div>
-            <div className="muted">Synthetic demo. Costs and hinge stay visible. Not operational advice.</div>
+            <div className="muted">
+              Synthetic demo. Costs and hinge stay visible. Not operational advice.
+            </div>
           </div>
         </section>
 
@@ -266,7 +277,7 @@ export default function CardoGuard() {
 
           <div className="output-anchor cardo-guard__decision">
             <div className="card-label">Recommendation</div>
-            <div className={`cardo-guard__decision-line ${review.shouldAct ? 'act' : 'dont-act'}`}>
+            <div className={`cardo-guard__decision-line ${review.shouldAct ? "act" : "dont-act"}`}>
               {review.recommendation}
             </div>
             <div className="muted">{review.explanation}</div>
@@ -311,7 +322,9 @@ export default function CardoGuard() {
             <div className="stacked-list cardo-guard__plain-check">
               <span>If the model is wrong: acting may waste money.</span>
               <span>If the risk is real: ignoring it may cost more.</span>
-              <span>CARDO GUARD compares those two numbers before turning a score into a decision.</span>
+              <span>
+                CARDO GUARD compares those two numbers before turning a score into a decision.
+              </span>
             </div>
             <div className="cardo-guard__math">
               <div>Action waste = cost to act × false alarm rate</div>
@@ -364,7 +377,8 @@ export default function CardoGuard() {
                 </li>
               )}
               <li>
-                If the false alarm rate for this confidence band was {review.shouldAct ? "higher" : "lower"} than assumed, the decision could reverse.
+                If the false alarm rate for this confidence band was{" "}
+                {review.shouldAct ? "higher" : "lower"} than assumed, the decision could reverse.
               </li>
 
               {comparison.map((item) => (
@@ -375,7 +389,9 @@ export default function CardoGuard() {
 
           <div className="mini-card">
             <div className="card-label">What this is not</div>
-            <div className="muted">Not a prediction model or expert replacement. Synthetic demo only.</div>
+            <div className="muted">
+              Not a prediction model or expert replacement. Synthetic demo only.
+            </div>
           </div>
         </section>
       </div>

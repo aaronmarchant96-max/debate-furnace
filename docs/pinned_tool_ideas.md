@@ -14,8 +14,9 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 ## 📌 Active Pins
 
 ### 1. Linguistic Time-Travel Tool
+
 - **Concept:** Program that finds phonetic/semantic similarities between ancient language words (Sumerian, Akkadian, Hittite) and modern languages
-- **Example:** Sumerian *dur* (pivot) → English *door* (5,000+ year connection)
+- **Example:** Sumerian _dur_ (pivot) → English _door_ (5,000+ year connection)
 - **Tech Stack:** Python + etymological databases + semantic embeddings
 - **Complexity:** Medium-High
 - **Why:** Pure curiosity project; could be fascinating for language nerds
@@ -28,6 +29,7 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 
 ```markdown
 ### X. [Tool Name]
+
 - **Concept:** [One-line description]
 - **Example:** [Concrete example if applicable]
 - **Tech Stack:** [Languages/libraries]
@@ -41,8 +43,8 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 
 ## 🗑️ Discarded / Completed
 
-*(Move here when abandoned or shipped)*
+_(Move here when abandoned or shipped)_
 
 ---
 
-*Last updated: [Date]*
+_Last updated: [Date]_

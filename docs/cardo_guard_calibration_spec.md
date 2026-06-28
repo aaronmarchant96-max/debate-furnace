@@ -204,4 +204,3 @@ It becomes:
 - backed by real calibration
 - honest about uncertainty
 - still understandable in seconds
-

@@ -14,6 +14,7 @@ Indigenous, religious, and living cultural traditions need extra care. Use them 
 ## Empire, War, and Battlefield Shock
 
 ### Battle of Grunwald
+
 Historical or mythic anchor: 1410 battle between the Polish-Lithuanian alliance and the Teutonic Knights  
 Category: Empire, War, and Battlefield Shock  
 Source type: medieval battle / military history  
@@ -25,6 +26,7 @@ Sensitivity note: Keep religious and national framing grounded; avoid turning re
 Story Forge rating: High
 
 ### Battle of Teutoburg Forest
+
 Historical or mythic anchor: Roman legions destroyed in an ambush in Germania  
 Category: Empire, War, and Battlefield Shock  
 Source type: ancient battle / imperial collapse  
@@ -36,6 +38,7 @@ Sensitivity note: Avoid treating tribal resistance as crude spectacle; keep the 
 Story Forge rating: High
 
 ### Bronze Age Collapse
+
 Historical or mythic anchor: the multi-civilization breakdown around the late Bronze Age Mediterranean  
 Category: Empire, War, and Battlefield Shock  
 Source type: civilizational collapse / archive gap  
@@ -47,6 +50,7 @@ Sensitivity note: Treat uncertainty honestly; some causes remain debated.
 Story Forge rating: High
 
 ### Taiping Rebellion
+
 Historical or mythic anchor: the massive 19th-century civil war in Qing China  
 Category: Empire, War, and Battlefield Shock  
 Source type: civil war / ideological conflict  
@@ -60,6 +64,7 @@ Story Forge rating: High
 ## Siege, Collapse, and Lost Cities
 
 ### Library of Alexandria
+
 Historical or mythic anchor: the remembered destruction and loss associated with the Library of Alexandria  
 Category: Siege, Collapse, and Lost Cities  
 Source type: knowledge loss / cultural memory  
@@ -71,6 +76,7 @@ Sensitivity note: Keep uncertainty visible; do not present disputed details as s
 Story Forge rating: High
 
 ### Roanoke Colony
+
 Historical or mythic anchor: the vanished English colony on Roanoke Island  
 Category: Siege, Collapse, and Lost Cities  
 Source type: colonial disappearance / archive gap  
@@ -82,6 +88,7 @@ Sensitivity note: Treat Indigenous histories and colonial violence carefully; do
 Story Forge rating: High
 
 ### Oak Island Money Pit
+
 Historical or mythic anchor: the long-running Nova Scotia treasure mystery  
 Category: Siege, Collapse, and Lost Cities  
 Source type: treasure legend / excavation obsession  
@@ -95,6 +102,7 @@ Story Forge rating: Medium-High
 ## Indigenous History and Cultural Survival
 
 ### The Inuit Search and Survival Knowledge Around Franklin
+
 Historical or mythic anchor: Inuit knowledge and testimony connected to the Franklin Expedition aftermath  
 Category: Indigenous History and Cultural Survival  
 Source type: exploration history / survival knowledge  
@@ -106,6 +114,7 @@ Sensitivity note: Treat Inuit knowledge as knowledge, not folklore garnish. Avoi
 Story Forge rating: High
 
 ### Métis Resistance and Red River Memory
+
 Historical or mythic anchor: Red River and the political struggle around Métis rights and identity  
 Category: Indigenous History and Cultural Survival  
 Source type: political conflict / nationhood struggle  
@@ -119,6 +128,7 @@ Story Forge rating: High
 ## Forgotten Figures and Human Resilience
 
 ### The Franklin Expedition
+
 Historical or mythic anchor: the vanished Northwest Passage expedition of 1845-1848  
 Category: Forgotten Figures and Human Resilience  
 Source type: disaster / exploration history  
@@ -130,6 +140,7 @@ Sensitivity note: Keep source boundaries clear and avoid flattening the human su
 Story Forge rating: High
 
 ### Mary Celeste
+
 Historical or mythic anchor: the merchant brig found abandoned at sea  
 Category: Forgotten Figures and Human Resilience  
 Source type: maritime mystery / disappearance  
@@ -141,6 +152,7 @@ Sensitivity note: Keep the unknown intact instead of pretending certainty.
 Story Forge rating: High
 
 ### Dyatlov Pass Incident
+
 Historical or mythic anchor: the 1959 deaths of hikers in the northern Urals  
 Category: Forgotten Figures and Human Resilience  
 Source type: wilderness disaster / unresolved event  
@@ -152,6 +164,7 @@ Sensitivity note: Treat the dead as people, not creepypasta material.
 Story Forge rating: High
 
 ### The Dancing Plague of 1518
+
 Historical or mythic anchor: the Strasbourg dancing outbreak  
 Category: Forgotten Figures and Human Resilience  
 Source type: social crisis / mass behavior event  
@@ -165,6 +178,7 @@ Story Forge rating: High
 ## Mystery, Disappearance, and Archive Gaps
 
 ### Voynich Manuscript
+
 Historical or mythic anchor: the unread manuscript with unknown language or system  
 Category: Mystery, Disappearance, and Archive Gaps  
 Source type: manuscript mystery / archive puzzle  
@@ -176,6 +190,7 @@ Sensitivity note: Preserve uncertainty; the mystery is part of the source pressu
 Story Forge rating: High
 
 ### Antikythera Mechanism
+
 Historical or mythic anchor: the ancient geared device recovered from a shipwreck  
 Category: Mystery, Disappearance, and Archive Gaps  
 Source type: artifact mystery / scientific history  
@@ -187,6 +202,7 @@ Sensitivity note: Keep the real historical achievement visible instead of turnin
 Story Forge rating: High
 
 ### Tunguska Event
+
 Historical or mythic anchor: the 1908 explosion over Siberia  
 Category: Mystery, Disappearance, and Archive Gaps  
 Source type: unexplained natural event / scientific mystery  
@@ -200,6 +216,7 @@ Story Forge rating: Medium-High
 ## Animal Loyalty and Battlefield Legends
 
 ### War Horse and Messenger Animal Legends
+
 Historical or mythic anchor: battlefield stories built around horses, dogs, pigeons, and other messenger or rescue animals  
 Category: Animal Loyalty and Battlefield Legends  
 Source type: composite legend pattern / war memory  
@@ -213,6 +230,7 @@ Story Forge rating: Medium
 ## Myth, Folklore, and Sacred Story
 
 ### The Trojan Horse
+
 Historical or mythic anchor: the deception story at the end of the Trojan War cycle  
 Category: Myth, Folklore, and Sacred Story  
 Source type: myth  
@@ -224,6 +242,7 @@ Sensitivity note: Keep it as source pattern, not prestige-IP retelling.
 Story Forge rating: High
 
 ### Pied Piper of Hamelin
+
 Historical or mythic anchor: the piper who removes children after the town breaks faith  
 Category: Myth, Folklore, and Sacred Story  
 Source type: folk legend  
@@ -235,6 +254,7 @@ Sensitivity note: Treat child loss and folklore with care; avoid flattening it i
 Story Forge rating: High
 
 ### Golem of Prague
+
 Historical or mythic anchor: the protective clay being created in Jewish folklore  
 Category: Myth, Folklore, and Sacred Story  
 Source type: religious folklore / protective myth  
@@ -248,6 +268,7 @@ Story Forge rating: High
 ## Mystics, Vision, and Inner Warfare
 
 ### Book of Enoch and the Watchers
+
 Historical or mythic anchor: the Watchers and forbidden knowledge in ancient Jewish apocalyptic literature  
 Category: Mystics, Vision, and Inner Warfare  
 Source type: religious text / visionary literature  
@@ -259,6 +280,7 @@ Sensitivity note: Treat religious material carefully and avoid collapsing living
 Story Forge rating: High
 
 ### The Art of War: Deception Principle
+
 Historical or mythic anchor: the strategic principle that war is shaped by misdirection and perception  
 Category: Mystics, Vision, and Inner Warfare  
 Source type: strategy text  
@@ -272,6 +294,7 @@ Story Forge rating: High
 ## Civil War, Ideology, and Memory
 
 ### Salem Witch Trials
+
 Historical or mythic anchor: the 1692 witchcraft prosecutions in colonial Massachusetts  
 Category: Civil War, Ideology, and Memory  
 Source type: moral panic / legal persecution  
@@ -283,6 +306,7 @@ Sensitivity note: Keep persecution central; do not romanticize false accusation 
 Story Forge rating: High
 
 ### Competing Memories After Civil War
+
 Historical or mythic anchor: postwar mythmaking after major civil conflicts  
 Category: Civil War, Ideology, and Memory  
 Source type: memory politics / historical narrative conflict  
@@ -296,6 +320,7 @@ Story Forge rating: Medium-High
 ## Canadian Frontier, Labour, and Wilderness
 
 ### Donner Party
+
 Historical or mythic anchor: the trapped emigrant wagon train in the Sierra Nevada  
 Category: Canadian Frontier, Labour, and Wilderness  
 Source type: frontier disaster / migration tragedy  
@@ -307,6 +332,7 @@ Sensitivity note: Keep the people human and avoid shock-value treatment.
 Story Forge rating: High
 
 ### Northwest Passage Labour and Extraction Pressure
+
 Historical or mythic anchor: Arctic exploration and the labour systems around northern ambition  
 Category: Canadian Frontier, Labour, and Wilderness  
 Source type: exploration system / labour history pattern  
@@ -320,6 +346,7 @@ Story Forge rating: Medium-High
 ## WW1 Human Pressure
 
 ### The Lost Battalion
+
 Historical or mythic anchor: the American unit isolated during the Meuse-Argonne offensive in 1918  
 Category: WW1 Human Pressure  
 Source type: battlefield isolation / survival under command failure  
@@ -331,6 +358,7 @@ Sensitivity note: Keep the human cost central; avoid turning entrapment into pur
 Story Forge rating: High
 
 ### The Christmas Truce
+
 Historical or mythic anchor: informal ceasefires between opposing soldiers on parts of the Western Front in 1914  
 Category: WW1 Human Pressure  
 Source type: battlefield pause / human contact under war systems  
@@ -342,6 +370,7 @@ Sensitivity note: Do not romanticize the war because of one humane interval; kee
 Story Forge rating: High
 
 ### The Harlem Hellfighters
+
 Historical or mythic anchor: the 369th Infantry Regiment and its combat record during World War I  
 Category: WW1 Human Pressure  
 Source type: military history / racial inequality under war  
@@ -355,6 +384,7 @@ Story Forge rating: High
 ## Spanish and Rif War Resilience
 
 ### The Last Bandage at Teruel
+
 Historical or mythic anchor: the attritional urban fighting and winter suffering associated with Teruel in the Spanish Civil War  
 Category: Spanish and Rif War Resilience  
 Source type: siege warfare / medical survival under ideological conflict  
@@ -366,6 +396,7 @@ Sensitivity note: Keep the civil-war context grounded and avoid flattening ideol
 Story Forge rating: High
 
 ### The Lion of the Rif
+
 Historical or mythic anchor: Abd el-Krim and anti-colonial resistance in the Rif War  
 Category: Spanish and Rif War Resilience  
 Source type: anti-colonial war / resistance history  
@@ -377,6 +408,7 @@ Sensitivity note: Keep anti-colonial context explicit and avoid romanticizing wa
 Story Forge rating: High
 
 ### The One-Eyed Ghost
+
 Historical or mythic anchor: source-note placeholder tied to Spanish or Rif War endurance and battlefield legend; exact archival anchor to confirm before app use  
 Category: Spanish and Rif War Resilience  
 Source type: war legend / survival memory  
@@ -390,6 +422,7 @@ Story Forge rating: Medium
 ## Animal Loyalty and Survival
 
 ### The Last Message of Cher Ami
+
 Historical or mythic anchor: the pigeon Cher Ami carrying a critical message during World War I  
 Category: Animal Loyalty and Survival  
 Source type: wartime animal service / survival under fire  
@@ -401,6 +434,7 @@ Sensitivity note: Keep the human stakes and the animal's treatment grounded rath
 Story Forge rating: High
 
 ### The Long Run of Togo
+
 Historical or mythic anchor: Togo and the long serum-run stage in Alaska  
 Category: Animal Loyalty and Survival  
 Source type: endurance rescue / transport history  
@@ -414,6 +448,7 @@ Story Forge rating: High
 ## Warhorses and Battlefield Legends
 
 ### The Mare Who Carried Fire
+
 Historical or mythic anchor: source-note placeholder for a battlefield horse legend tied to carrying warning, fire, or survival; exact archival anchor to confirm before app use  
 Category: Warhorses and Battlefield Legends  
 Source type: warhorse legend / battlefield memory  
@@ -427,6 +462,7 @@ Story Forge rating: Medium
 ## Ancient Myth and Mortality
 
 ### The Price of Immortality
+
 Historical or mythic anchor: ancient mortality myths built around the cost of escaping death  
 Category: Ancient Myth and Mortality  
 Source type: mythic pattern / death bargain  
@@ -440,6 +476,7 @@ Story Forge rating: High
 ## Stories, Trickery, and Survival
 
 ### The Storyteller's Gambit
+
 Historical or mythic anchor: survival patterns where story, wit, or narrative control prevents death or conquest  
 Category: Stories, Trickery, and Survival  
 Source type: folktale pattern / narrative survival engine  
@@ -453,6 +490,7 @@ Story Forge rating: High
 ## Welsh Myth and Broken Taboos
 
 ### The Flower Woman
+
 Historical or mythic anchor: Blodeuwedd and related Welsh mythic themes of creation, desire, betrayal, and transformation  
 Category: Welsh Myth and Broken Taboos  
 Source type: myth / taboo breaking  
@@ -464,6 +502,7 @@ Sensitivity note: Keep the mythic source visible and avoid flattening Welsh trad
 Story Forge rating: High
 
 ### The Cauldron of Inspiration
+
 Historical or mythic anchor: Ceridwen, Gwion Bach, and the cauldron of knowledge in Welsh tradition  
 Category: Welsh Myth and Broken Taboos  
 Source type: myth / transformative knowledge tale  
@@ -477,6 +516,7 @@ Story Forge rating: High
 ## Norse Myth and Broken Oaths
 
 ### The Binding of Fenrir
+
 Historical or mythic anchor: the Norse myth of binding Fenrir through trickery and doomed foresight  
 Category: Norse Myth and Broken Oaths  
 Source type: myth / oath-breaking power conflict  
@@ -490,6 +530,7 @@ Story Forge rating: High
 ## Mystics, Vision, and Inner Warfare
 
 ### The Desert Fire
+
 Historical or mythic anchor: ascetic and visionary traditions of desert struggle, temptation, and revelation; exact source anchor to confirm before app use  
 Category: Mystics, Vision, and Inner Warfare  
 Source type: religious vision / inner warfare pattern  
@@ -501,6 +542,7 @@ Sensitivity note: Religious material needs careful boundary language and should 
 Story Forge rating: Medium-High
 
 ### The Scribe of God
+
 Historical or mythic anchor: source-note placeholder for a visionary or scriptural witness figure; exact textual anchor to confirm before app use  
 Category: Mystics, Vision, and Inner Warfare  
 Source type: religious text / revelatory writing pattern  
@@ -514,6 +556,7 @@ Story Forge rating: Medium
 ## Living Traditions, Land, and Sacred Story
 
 ### Sedna Beneath the Sea
+
 Historical or mythic anchor: Sedna traditions in Inuit cosmology and sea relations  
 Category: Living Traditions, Land, and Sacred Story  
 Source type: sacred story / land-and-sea cosmology  
@@ -525,6 +568,7 @@ Sensitivity note: Use with extreme care. This is tied to living Indigenous tradi
 Story Forge rating: High
 
 ### Rangi and Papa
+
 Historical or mythic anchor: Maori creation traditions involving Rangi and Papa  
 Category: Living Traditions, Land, and Sacred Story  
 Source type: sacred story / creation relationship  
@@ -538,6 +582,7 @@ Story Forge rating: High
 ## Canadian Frontier, Labour, and Wilderness
 
 ### The Queen of the Klondike
+
 Historical or mythic anchor: source-note placeholder tied to a prominent woman figure in Klondike-era frontier memory; exact biographical anchor to confirm before app use  
 Category: Canadian Frontier, Labour, and Wilderness  
 Source type: frontier personality / gendered survival history  
@@ -549,6 +594,7 @@ Sensitivity note: Confirm the historical figure and avoid gold-rush glamour that
 Story Forge rating: Medium-High
 
 ### Skookum Jim's Discovery
+
 Historical or mythic anchor: Skookum Jim Mason and the discovery that triggered the Klondike Gold Rush  
 Category: Canadian Frontier, Labour, and Wilderness  
 Source type: gold-rush origin / Indigenous and frontier history  
@@ -560,6 +606,7 @@ Sensitivity note: Keep Indigenous history, credit, and colonial extraction centr
 Story Forge rating: High
 
 ### The Iron Road Builders
+
 Historical or mythic anchor: railway labour in Canada, especially workers exposed to danger, exclusion, and nation-building rhetoric  
 Category: Canadian Frontier, Labour, and Wilderness  
 Source type: labour history / industrial frontier  

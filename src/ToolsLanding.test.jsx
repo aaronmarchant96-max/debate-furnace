@@ -10,7 +10,9 @@ describe("ToolsLanding", () => {
       expect(screen.getByText(tool.label)).toBeInTheDocument();
       expect(screen.getByText(tool.description)).toBeInTheDocument();
     });
-    expect(screen.getByText(/does the scoring logic make sense for your use case\?/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/does the scoring logic make sense for your use case\?/i)
+    ).toBeInTheDocument();
   });
 
   it("opens the selected tool from the landing page", () => {

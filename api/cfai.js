@@ -1,20 +1,20 @@
 // CFai API Route for Vercel Deployment
 // Handles web requests and calls the CFai CLI tool or falls back to direct Groq API requests.
 
-import { exec } from 'child_process';
-import { promisify } from 'util';
-import fs from 'fs';
+import { exec } from "child_process";
+import { promisify } from "util";
+import fs from "fs";
 
 const execAsync = promisify(exec);
-const CFAI_PATH = process.env.CFAI_PATH || '/home/potatoking/.local/bin/cfai';
+const CFAI_PATH = process.env.CFAI_PATH || "/home/potatoking/.local/bin/cfai";
 
 const REI_SYSTEM_PROMPT = `# REI.AI — System Prompt (v2.0)
 
 Identity:
-You are REI.AI. You write code the way a senior engineer with a decade of deep-systems experience writes code — not the way a generic AI assistant writes code. The difference is not vocabulary or confidence. It is process: you verify instead of guess, you scope blast radius before you touch anything, you treat tests as specification, and you stop and ask when a request is underspecified instead of producing a plausible-looking guess.
+You are REI.AI, a friendly, collaborative agentic AI coding companion designed to pair-program with the user. You combine the rigorous systems execution of a seasoned developer with the encouraging, helpful, and supportive style of a peer programming partner. You treat coding as a shared journey—always verifying instead of guessing, scoping blast radius before touching code, and stopping to clarify questions collaboratively instead of producing silent assumptions. You communicate with warmth, clarity, and supportive enthusiasm.
 
 Your default creed, which governs every response:
-> Write code that is obvious, testable, and boring. Prefer clarity over cleverness. Fix the root cause, not the symptom. Leave the codebase cleaner than you found it. When unsure, ask — don't assume.
+> Write code that is clean, obvious, and testable. Work hand-in-hand as a peer programmer, sharing the reasoning behind every design choice. Keep it friendly, clear, and focused on building great software together. Fix root causes, leave codebases cleaner, and when in doubt, ask!
 
 ---
 
@@ -84,6 +84,7 @@ When fixing an error:
 ---
 
 ## Senior X-Factors (always-on behaviors, not phase-gated)
+- **Warm and Supportive Peer Persona.** Speak with the friendly encouragement of a pair-programming partner. Share excitement for clean solutions, celebrate breakthroughs together, and treat debugging as a joint puzzle.
 - Ask "why" before implementing. If a request seems like it's solving a symptom, say what you think the underlying problem is and offer the simpler alternative.
 - Over-communicate trade-offs. Every non-trivial response states what you chose not to do and why.
 - Bias toward small, shippable increments. If a request is large, propose how to split it rather than producing one massive diff.
@@ -103,66 +104,68 @@ When fixing an error:
 ## Note for Agent Environments
 You have file and shell access — use it. Verify, don't assume, wherever a tool call can replace a guess.`;
 
-function selectGroqModel(prompt = '') {
+function selectGroqModel(prompt = "") {
   const len = prompt.length;
   const lower = prompt.toLowerCase();
-  
+
   // Ingest or long input (>6000 chars)
   if (len > 6000 || lower.includes("ingest") || lower.includes("--file")) {
     return "mixtral-8x7b-32768";
   }
-  
+
   // Validate or score (latency optimized)
   if (lower.includes("validate") || lower.includes("score")) {
     return "llama-3.1-8b-instant";
   }
-  
+
   // Discover or search (reasoning/accuracy optimized)
   if (lower.includes("discover") || lower.includes("search")) {
     return "llama-3.3-70b-versatile";
   }
-  
+
   // Length fallback rules
   if (len < 1500) {
     return "llama-3.1-8b-instant";
   }
-  
+
   return "llama-3.3-70b-versatile";
 }
 
 async function callGroqDirectly(prompt) {
-  const isGptMode = prompt.toLowerCase().includes("proprietary model profiles") || prompt.toLowerCase().includes("gpt mode");
-  
+  const isGptMode =
+    prompt.toLowerCase().includes("proprietary model profiles") ||
+    prompt.toLowerCase().includes("gpt mode");
+
   if (isGptMode && process.env.OPENAI_API_KEY) {
     try {
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-          "Content-Type": "application/json"
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           model: "gpt-4o",
           messages: [
             {
               role: "system",
-              content: REI_SYSTEM_PROMPT
+              content: REI_SYSTEM_PROMPT,
             },
             {
               role: "user",
-              content: prompt
-            }
+              content: prompt,
+            },
           ],
           temperature: 0.7,
-          max_tokens: 2048
-        })
+          max_tokens: 2048,
+        }),
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         return {
           content: data.choices?.[0]?.message?.content || "No content returned from OpenAI.",
-          model: "gpt-4o"
+          model: "gpt-4o",
         };
       }
     } catch (e) {
@@ -180,24 +183,24 @@ async function callGroqDirectly(prompt) {
   const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${apiKey}`,
-      "Content-Type": "application/json"
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       model: selectedModel,
       messages: [
         {
           role: "system",
-          content: REI_SYSTEM_PROMPT
+          content: REI_SYSTEM_PROMPT,
         },
         {
           role: "user",
-          content: prompt
-        }
+          content: prompt,
+        },
       ],
       temperature: 0.7,
-      max_tokens: 2048
-    })
+      max_tokens: 2048,
+    }),
   });
 
   if (!response.ok) {
@@ -207,49 +210,49 @@ async function callGroqDirectly(prompt) {
 
   const data = await response.json();
   let content = data.choices?.[0]?.message?.content || "No content returned from Groq.";
-  
+
   if (isGptMode && !process.env.OPENAI_API_KEY) {
     content = `[REI.AI ROUTING WARNING: OPENAI_API_KEY not found in Vercel. Falling back to Open-Source Router: ${selectedModel}]\n\n${content}`;
   }
 
   return {
     content: content,
-    model: selectedModel
+    model: selectedModel,
   };
 }
 
-async function handleCfaiRequest(command, args = [], input = '') {
+async function handleCfaiRequest(command, args = [], input = "") {
   // Check if CLI is available locally
   const localCliExists = fs.existsSync(CFAI_PATH);
 
   if (!localCliExists) {
     try {
       // Fallback: execute direct Groq API routing
-      const payload = input || (args.length > 0 ? args.join(' ') : 'help');
+      const payload = input || (args.length > 0 ? args.join(" ") : "help");
       const response = await callGroqDirectly(payload);
       return {
         success: true,
         result: response.content,
         model: response.model,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
     } catch (apiError) {
       return {
         success: false,
         error: `CLI fallback error: ${apiError.message}`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
     }
   }
 
   // Local CLI Executable Execution (if present)
   try {
-    const cleanArgs = args.map(arg => arg.replace(/["';`$()]/g, ''));
-    let commandStr = `"${CFAI_PATH}" ${command} ${cleanArgs.join(' ')}`;
-    
+    const cleanArgs = args.map((arg) => arg.replace(/["';`$()]/g, ""));
+    let commandStr = `"${CFAI_PATH}" ${command} ${cleanArgs.join(" ")}`;
+
     const { stdout, stderr } = await execAsync(commandStr, {
       env: { ...process.env },
-      timeout: 10000
+      timeout: 10000,
     });
 
     if (stderr && stderr.trim()) {
@@ -257,20 +260,20 @@ async function handleCfaiRequest(command, args = [], input = '') {
         success: true,
         result: stdout.trim(),
         warning: stderr.trim(),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
     }
 
     return {
       success: true,
       result: stdout.trim(),
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   } catch (execError) {
     return {
       success: false,
       error: `Local execution error: ${execError.message}`,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 }
@@ -278,33 +281,33 @@ async function handleCfaiRequest(command, args = [], input = '') {
 export default async function handler(req, res) {
   try {
     // Set headers
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json");
 
-    if (req.method === 'POST') {
-      const { command, args = [], input = '' } = req.body || {};
+    if (req.method === "POST") {
+      const { command, args = [], input = "" } = req.body || {};
       const result = await handleCfaiRequest(command, args, input);
       return res.status(result.success ? 200 : 500).json(result);
-    } 
-    
-    if (req.method === 'GET') {
+    }
+
+    if (req.method === "GET") {
       const url = new URL(req.url, `http://${req.headers.host}`);
-      const command = url.searchParams.get('command') || 'help';
-      const argsParam = url.searchParams.get('args');
-      const args = argsParam ? argsParam.split(',') : [];
-      
+      const command = url.searchParams.get("command") || "help";
+      const argsParam = url.searchParams.get("args");
+      const args = argsParam ? argsParam.split(",") : [];
+
       const result = await handleCfaiRequest(command, args);
       return res.status(result.success ? 200 : 500).json(result);
     }
 
     return res.status(405).json({
       success: false,
-      error: 'Method Not Allowed'
+      error: "Method Not Allowed",
     });
   } catch (error) {
     return res.status(500).json({
       success: false,
-      error: 'Serverless execution error',
-      details: error.message
+      error: "Serverless execution error",
+      details: error.message,
     });
   }
 }

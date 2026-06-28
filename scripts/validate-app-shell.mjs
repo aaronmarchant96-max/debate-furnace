@@ -11,30 +11,30 @@ const expectedStrings = [
   "PromptHound Labs",
   "Structured outputs for messy input.",
   "Bring the hard question. We’ll find the hinge.",
-  "CARDO REI loop: build the slice, test what holds, keep the limits visible."
+  "CARDO REI loop: build the slice, test what holds, keep the limits visible.",
 ];
 
 const expectedTabs = [
   {
     id: "furnace",
     label: "Debate Furnace",
-    subtitle: "Arguments get pressure-tested here."
+    subtitle: "Arguments get pressure-tested here.",
   },
   {
     id: "story-forge",
     label: "Story Forge",
-    subtitle: "Old sources turn into story blueprints."
+    subtitle: "Old sources turn into story blueprints.",
   },
   {
     id: "storm-replay",
     label: "Storm Replay",
-    subtitle: "Storm imagery gets a careful read."
+    subtitle: "Storm imagery gets a careful read.",
   },
   {
     id: "cardo-guard",
     label: "CARDO GUARD",
-    subtitle: "AI scores get checked against cost."
-  }
+    subtitle: "AI scores get checked against cost.",
+  },
 ];
 
 function ensure(condition, message, errors) {
@@ -55,13 +55,29 @@ async function main() {
   if (topLevelMatch) {
     const topLevelBlock = topLevelMatch[1];
     for (const tab of expectedTabs) {
-      ensure(topLevelBlock.includes(`id: "${tab.id}"`), `Top-level tabs missing id ${tab.id}`, errors);
-      ensure(topLevelBlock.includes(`label: "${tab.label}"`), `Top-level tabs missing label ${tab.label}`, errors);
-      ensure(topLevelBlock.includes(`subtitle: "${tab.subtitle}"`), `Top-level tabs missing subtitle ${tab.subtitle}`, errors);
+      ensure(
+        topLevelBlock.includes(`id: "${tab.id}"`),
+        `Top-level tabs missing id ${tab.id}`,
+        errors
+      );
+      ensure(
+        topLevelBlock.includes(`label: "${tab.label}"`),
+        `Top-level tabs missing label ${tab.label}`,
+        errors
+      );
+      ensure(
+        topLevelBlock.includes(`subtitle: "${tab.subtitle}"`),
+        `Top-level tabs missing subtitle ${tab.subtitle}`,
+        errors
+      );
     }
 
     const idMatches = topLevelBlock.match(/id:\s*"/g) || [];
-    ensure(idMatches.length === expectedTabs.length, `Top-level tabs should contain exactly ${expectedTabs.length} ids`, errors);
+    ensure(
+      idMatches.length === expectedTabs.length,
+      `Top-level tabs should contain exactly ${expectedTabs.length} ids`,
+      errors
+    );
   }
 
   if (errors.length) {

@@ -8,7 +8,7 @@ import {
   getTracepointDecisionInputsFromScore,
   getTracepointDecisionReadout,
   getTracepointScenarioById,
-  getTracepointStatus
+  getTracepointStatus,
 } from "./tracepoint.js";
 
 describe("tracepoint", () => {
@@ -30,7 +30,9 @@ describe("tracepoint", () => {
     expect(rows).toHaveLength(168);
     expect(rows[0].asset_id).toBe("C-118");
     expect(rows[0].synthetic_truth_label).toBe("normal");
-    expect(rows.some((row) => row.synthetic_truth_label === "seal_wear_plus_pressure_ripple")).toBe(true);
+    expect(rows.some((row) => row.synthetic_truth_label === "seal_wear_plus_pressure_ripple")).toBe(
+      true
+    );
     expect(rows[167].operating_state).toBe("Running");
   });
 
@@ -99,7 +101,7 @@ describe("tracepoint", () => {
       calibratedProbability: 0.83,
       detectionRate: 0.934,
       followThroughRate: 0.937,
-      harmReduction: 0.49
+      harmReduction: 0.49,
     });
 
     expect(decision.expectedCostAct).toBeCloseTo(
@@ -122,7 +124,7 @@ describe("tracepoint", () => {
       inspectionCost: 9200,
       missCost: 180000,
       calibratedProbability: inputs.calibratedProbability,
-      harmReduction: inputs.harmReduction
+      harmReduction: inputs.harmReduction,
     });
     const packet = buildTracepointReviewPacket({
       scenario,
@@ -130,13 +132,15 @@ describe("tracepoint", () => {
       decision,
       reviewerMark: "valid concern",
       reviewerNotes: "Check bearing housing and confirm pressure transmitter calibration.",
-      exportTimestamp: "2026-06-22T00:00:00.000Z"
+      exportTimestamp: "2026-06-22T00:00:00.000Z",
     });
 
     expect(packet.scenario_metadata.asset_id).toBe("P-204");
     expect(packet.current_scores.status).toBe(review.status);
     expect(packet.reviewer_mark).toBe("valid concern");
-    expect(packet.cost_inputs.calibrated_probability_issue_is_real).toBe(inputs.calibratedProbability);
+    expect(packet.cost_inputs.calibrated_probability_issue_is_real).toBe(
+      inputs.calibratedProbability
+    );
     expect(packet.limitation_statement).toMatch(/synthetic calibration demo only/i);
     expect(packet.export_timestamp).toBe("2026-06-22T00:00:00.000Z");
   });
@@ -162,7 +166,7 @@ describe("tracepoint", () => {
       calibratedProbability: inputs.calibratedProbability,
       detectionRate: inputs.detectionRate,
       followThroughRate: inputs.followThroughRate,
-      harmReduction: inputs.harmReduction
+      harmReduction: inputs.harmReduction,
     });
 
     const report = buildTracepointHandoverReport({
@@ -176,13 +180,13 @@ describe("tracepoint", () => {
         status: "Queued",
         nextHandoff: "Shift lead review",
         responseSla: "Before next shift handover",
-        recommendedAction: "Validate sensors / targeted review before full inspection"
+        recommendedAction: "Validate sensors / targeted review before full inspection",
       },
       auditTrail: [
         { timestamp: "2026-06-22T00:00:00.000Z", message: "Tracepoint opened for review" },
-        { timestamp: "2026-06-22T00:05:00.000Z", message: "Reviewer marked needs more data" }
+        { timestamp: "2026-06-22T00:05:00.000Z", message: "Reviewer marked needs more data" },
       ],
-      exportTimestamp: "2026-06-22T00:10:00.000Z"
+      exportTimestamp: "2026-06-22T00:10:00.000Z",
     });
 
     expect(report.scenario_metadata.asset_id).toBe("P-204");
@@ -203,7 +207,7 @@ describe("tracepoint", () => {
       calibratedProbability: inputs.calibratedProbability,
       detectionRate: inputs.detectionRate,
       followThroughRate: inputs.followThroughRate,
-      harmReduction: inputs.harmReduction
+      harmReduction: inputs.harmReduction,
     });
 
     const readout = getTracepointDecisionReadout(review, decision);

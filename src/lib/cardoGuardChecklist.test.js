@@ -19,7 +19,7 @@ describe("CARDO GUARD checklist", () => {
       "output checks",
       "regression checks",
       "do not ship if",
-      "ship rule"
+      "ship rule",
     ].forEach((heading) => {
       expect(checklist).toContain(heading);
     });
@@ -34,7 +34,7 @@ describe("CARDO GUARD checklist", () => {
       "does not claim improved model accuracy",
       "does not claim to replace expert judgment",
       "reads like a decision review, not a dashboard",
-      "run the full flow once and verify the output before merging"
+      "run the full flow once and verify the output before merging",
     ].forEach((phrase) => {
       expect(checklist).toContain(phrase);
     });

@@ -8,7 +8,7 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 **Status:** Locked for implementation.  
 **Date:** 2026-04 (per user choice "1" — Lock in v1 Scope)  
 **Brand:** CARDO / PromptHound Labs  
-**Core Idea:** A scenario engine that makes the *hinge* visible for housing market decisions — especially relevant to flippers and investors who need to see what actually moves the outcome.
+**Core Idea:** A scenario engine that makes the _hinge_ visible for housing market decisions — especially relevant to flippers and investors who need to see what actually moves the outcome.
 
 > "This is a scenario exploration tool, not a forecast. Not investment advice. Not predictive. All outputs are illustrations built from public data snapshots and explicit assumptions. Markets can do whatever they want."
 
@@ -17,10 +17,12 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 ## v1 Metros (Locked: 2 deep)
 
 **Primary focus:**
+
 - **Atlanta-Sandy Springs-Alpharetta, GA** (high flip volume, strong investor activity, excellent public permit data, migration tailwinds)
 - **Charlotte-Concord-Gastonia, NC-SC** (more resilient pricing recently, corporate growth story, solid open data for permits and activity)
 
 **Rationale for narrowing to these two:**
+
 - Highest signal quality for v1 (flip-relevant metrics + fresh public permit feeds).
 - Contrasting but related Southeast growth stories: Atlanta = volume + investor heat; Charlotte = steadier corporate-driven demand with different supply response.
 - Both have high-quality free public building permit portals (ArcGIS + Socrata-style) for the "supply pressure" explanatory layer.
@@ -32,16 +34,17 @@ Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 
 ## Primary Data Strategy (Locked)
 
-| Source | Role in v1 | Access | Freshness | Notes for Flippers |
-|--------|------------|--------|-----------|--------------------|
-| **Zillow ZHVI** (Metro_zhvi_..._sm_sa_month.csv) | Core typical home value levels + historical momentum | Free CSV download (no key) | Monthly (~16th) | Middle-tier (33-67p) "typical" value. Use for ARV anchors. |
-| **Zillow ZHVF** (Metro_zhvf_growth_...csv) | 1-month / 3-month / 12-month growth forecasts | Free CSV | Monthly | Best free short-term anchor available. Explicitly 1yr scenarios draw from this. |
-| **Redfin Data Center** (metro downloads) | DOM, price cuts %, inventory, sales volume, investor purchase share | Free CSV | Weekly / monthly | Highest-signal flipper metrics. Long DOM + high price cuts = Cooling/ Avoid signals. |
-| **FHFA HPI** (purchase-only metro) | Clean, official YoY price index cross-check | Free CSV / FRED | Quarterly | Less model-dependent than ZHVI. Good sanity check. |
-| **City/County Open Permit Data** (Atlanta DCP ArcGIS, Mecklenburg ArcGIS, Austin Socrata) | "Satellite proxy" — new supply pressure via permit volume + valuation trends | Free CSV / REST API | Daily to weekly | YoY % change in issued permits (by type/value) is the strongest public leading indicator of future inventory pressure. |
-| **BLS / FRED** (employment, LAUS) | Demand pulse proxy (job growth) | Free | Monthly | Correlates with migration + buyer power. |
+| Source                                                                                    | Role in v1                                                                   | Access                     | Freshness        | Notes for Flippers                                                                                                     |
+| ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | -------------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **Zillow ZHVI** (Metro_zhvi_..._sm_sa_month.csv)                                          | Core typical home value levels + historical momentum                         | Free CSV download (no key) | Monthly (~16th)  | Middle-tier (33-67p) "typical" value. Use for ARV anchors.                                                             |
+| **Zillow ZHVF** (Metro_zhvf_growth_...csv)                                                | 1-month / 3-month / 12-month growth forecasts                                | Free CSV                   | Monthly          | Best free short-term anchor available. Explicitly 1yr scenarios draw from this.                                        |
+| **Redfin Data Center** (metro downloads)                                                  | DOM, price cuts %, inventory, sales volume, investor purchase share          | Free CSV                   | Weekly / monthly | Highest-signal flipper metrics. Long DOM + high price cuts = Cooling/ Avoid signals.                                   |
+| **FHFA HPI** (purchase-only metro)                                                        | Clean, official YoY price index cross-check                                  | Free CSV / FRED            | Quarterly        | Less model-dependent than ZHVI. Good sanity check.                                                                     |
+| **City/County Open Permit Data** (Atlanta DCP ArcGIS, Mecklenburg ArcGIS, Austin Socrata) | "Satellite proxy" — new supply pressure via permit volume + valuation trends | Free CSV / REST API        | Daily to weekly  | YoY % change in issued permits (by type/value) is the strongest public leading indicator of future inventory pressure. |
+| **BLS / FRED** (employment, LAUS)                                                         | Demand pulse proxy (job growth)                                              | Free                       | Monthly          | Correlates with migration + buyer power.                                                                               |
 
 **v1 Data Refresh Philosophy (synthetic-first, low-risk):**
+
 - Bundle 2-3 recent snapshots per metro (with clear "Data as of YYYY-MM-DD" stamps).
 - Prominent "How to refresh" section with direct links + simple instructions.
 - Optional later: drag-and-drop CSV upload for power users (parse the exact Zillow/Redfin column shapes).
@@ -56,6 +59,7 @@ Actual satellite imagery change detection (Sentinel-2, etc.) is **explicitly out
 ## Scenario Engine (Locked)
 
 **Four cases (always shown side-by-side):**
+
 - **Base** — anchored to latest ZHVF where credible + recent 3yr historical volatility.
 - **Upside** — favorable drivers (rate relief, migration acceleration, permit slowdown).
 - **Conservative** — mild headwinds (higher-for-longer rates, steady permits).
@@ -66,6 +70,7 @@ All % ranges are **explicitly driver-based and documented** in the UI. No black-
 **Time horizons:** 1yr (closest to ZHVF), 3yr, 5yr (wider bands, more sensitivity emphasis).
 
 **Output per scenario + metro:**
+
 - Expected ZHVI range (low / base / high)
 - Implied cumulative appreciation %
 - Composite "Heat" verdict (see below)
@@ -84,6 +89,7 @@ All % ranges are **explicitly driver-based and documented** in the UI. No black-
 - **Avoid** (strong amber/red) — High inventory, long DOM (>60-70), elevated price cuts (>25-30%), permit surge signaling future oversupply, weak job pulse.
 
 The meter is a **composite** of:
+
 1. Recent price momentum (ZHVI YoY + ZHVF direction)
 2. Supply pressure (permit YoY + active inventory growth)
 3. Transaction health (DOM, price cut share, investor purchase %)
@@ -97,6 +103,7 @@ The meter is a **composite** of:
 Simple, transparent "What a disciplined flip might look like under each scenario."
 
 Inputs (user-adjustable, with good defaults per metro):
+
 - Target purchase discount vs. current ZHVI (or ARV estimate)
 - Reno / holding cost % of purchase
 - Expected hold period (days)
@@ -104,6 +111,7 @@ Inputs (user-adjustable, with good defaults per metro):
 - Minimum acceptable profit / ROI target
 
 Outputs (per scenario):
+
 - Implied max purchase price to hit target
 - Break-even appreciation required
 - Estimated profit band
@@ -120,6 +128,7 @@ This makes the **cost-weighted hinge** visceral: "Under Downside scenario you ne
 For each metro, surface 2-3 quantified sensitivities with real public data backing:
 
 Example (illustrative):
+
 - "If single-family building permits remain +25% YoY for the next 24 months, the 3yr Base case shifts from +5% to -1% (higher future inventory pressure)."
 - "A sustained 100bp mortgage rate drop vs current levels historically correlates with +3-5pp faster 2yr appreciation in these metros (all else equal)."
 - "If investor purchase share drops below 15% while inventory keeps rising, the heat meter moves one full step toward Cooling."
@@ -145,7 +154,8 @@ This is the **CARDO REI** moment — the actual variables that can flip the reco
 
 **Option A (preferred for purity):** Fully synthetic / rule-driven in v1. The hinge explanations and narratives come from the explicit driver logic we code. No Gemini calls.
 
-**Option B (if we want to demo the expansion path early):** One optional "Explain the current hinge in plain language" button that sends the *current numbers + top 3 signals* to a tightly prompt-engineered Gemini Flash call, with:
+**Option B (if we want to demo the expansion path early):** One optional "Explain the current hinge in plain language" button that sends the _current numbers + top 3 signals_ to a tightly prompt-engineered Gemini Flash call, with:
+
 - Forced "This is a scenario illustration only..." framing in every sentence.
 - Strict JSON schema.
 - Origin + rate limiting if we ever host it.
@@ -210,6 +220,6 @@ This is the **CARDO REI** moment — the actual variables that can flip the reco
 
 ---
 
-*Built under the CARDO REI discipline: find the hinge, show the cost-weighted tradeoff, keep the assumptions visible, protect the user from overclaim.*
+_Built under the CARDO REI discipline: find the hinge, show the cost-weighted tradeoff, keep the assumptions visible, protect the user from overclaim._
 
 **Locked by user selection "1". Ready for implementation planning.**

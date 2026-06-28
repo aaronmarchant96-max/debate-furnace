@@ -2,7 +2,7 @@ module.exports = {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.cjs"],
   transform: {
-    "^.+\\.[jt]sx?$": "babel-jest"
+    "^.+\\.[jt]sx?$": "babel-jest",
   },
   moduleFileExtensions: ["js", "jsx", "json"],
   testMatch: ["<rootDir>/src/**/*.test.[jt]s?(x)"],
@@ -15,13 +15,13 @@ module.exports = {
       branches: 90,
       functions: 90,
       lines: 90,
-      statements: 90
+      statements: 90,
     },
     "./src/lib/cardoGuard.js": {
       branches: 90,
       functions: 90,
       lines: 90,
-      statements: 90
-    }
-  }
+      statements: 90,
+    },
+  },
 };

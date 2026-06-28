@@ -6,7 +6,7 @@ export const CARDO_GUARD_SCENARIOS = [
       "A route disruption threatens a fuel delivery. Rerouting is expensive, but missing the closure could stall work on site.",
     defaultConfidence: 89,
     defaultCostToAct: 17000,
-    defaultCostToMiss: 1465000
+    defaultCostToMiss: 1465000,
   },
   {
     id: "compressor-anomaly",
@@ -15,7 +15,7 @@ export const CARDO_GUARD_SCENARIOS = [
       "A vibration spike suggests a compressor may need a planned shutdown. Acting early is cheaper than an unplanned failure.",
     defaultConfidence: 91,
     defaultCostToAct: 42000,
-    defaultCostToMiss: 850000
+    defaultCostToMiss: 850000,
   },
   {
     id: "routine-inspection-nudge",
@@ -24,8 +24,8 @@ export const CARDO_GUARD_SCENARIOS = [
       "A lower-stakes reminder suggests an inspection, but the real-world consequence of missing it is limited.",
     defaultConfidence: 78,
     defaultCostToAct: 80000,
-    defaultCostToMiss: 90000
-  }
+    defaultCostToMiss: 90000,
+  },
 ];
 
 export function getScenarioById(id) {
@@ -61,7 +61,7 @@ export function formatMoney(value) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-    maximumFractionDigits: 0
+    maximumFractionDigits: 0,
   }).format(toMoneyNumber(value));
 }
 
@@ -82,12 +82,7 @@ export function calculateBreakevenMissCost(costToAct, falseAlarmRate) {
   return (numericCost * rate) / (1 - rate);
 }
 
-export function calculateCardoGuardReview({
-  scenarioId,
-  confidence,
-  costToAct,
-  costToMiss
-}) {
+export function calculateCardoGuardReview({ scenarioId, confidence, costToAct, costToMiss }) {
   const scenario = getScenarioById(scenarioId);
   const numericConfidence = Math.max(0, Math.min(100, Number(confidence) || 0));
   const numericCostToAct = toMoneyNumber(costToAct);
@@ -101,11 +96,13 @@ export function calculateCardoGuardReview({
   const margin = Math.abs(expectedMissLoss - expectedActionWaste);
 
   // New: How many times stronger is the winning side compared to the losing side?
-  const decisionMarginRatio = (expectedActionWaste === 0 && expectedMissLoss === 0)
-    ? 1
-    : (expectedActionWaste === 0)
-      ? Infinity
-      : Math.max(expectedMissLoss, expectedActionWaste) / Math.min(expectedMissLoss, expectedActionWaste);
+  const decisionMarginRatio =
+    expectedActionWaste === 0 && expectedMissLoss === 0
+      ? 1
+      : expectedActionWaste === 0
+        ? Infinity
+        : Math.max(expectedMissLoss, expectedActionWaste) /
+          Math.min(expectedMissLoss, expectedActionWaste);
 
   // Decision strength label
   let decisionStrength = "Very Close";
@@ -115,10 +112,7 @@ export function calculateCardoGuardReview({
   else if (decisionMarginRatio >= 1.1) decisionStrength = "Weak";
 
   // New: What would the cost of missing need to be for the recommendation to flip?
-  const breakevenMissCost = calculateBreakevenMissCost(
-    numericCostToAct,
-    falseAlarmRate
-  );
+  const breakevenMissCost = calculateBreakevenMissCost(numericCostToAct, falseAlarmRate);
 
   const shouldAct = recommendation === "ACT";
 
@@ -140,7 +134,7 @@ export function calculateCardoGuardReview({
     shouldAct,
     explanation: shouldAct
       ? `Acting clears the gate because the risk-adjusted cost of missing it is higher than the expected waste of acting.`
-      : `Do not act because the expected waste of acting is higher than the risk-adjusted cost of missing it.`
+      : `Do not act because the expected waste of acting is higher than the risk-adjusted cost of missing it.`,
   };
 }
 
@@ -150,7 +144,7 @@ export function buildCardoGuardComparison(review) {
       "Make acting more expensive.",
       "Show this score band is wrong more often than assumed.",
       "Prove the miss cost is smaller than assumed.",
-      "Show that the disruption impact is smaller or less likely than assumed."
+      "Show that the disruption impact is smaller or less likely than assumed.",
     ];
   }
 
@@ -158,21 +152,22 @@ export function buildCardoGuardComparison(review) {
     "Make acting cheaper.",
     "Show this score band is wrong less often than assumed.",
     "Prove the miss cost is larger than assumed.",
-    "Narrow the action so the response costs less."
+    "Narrow the action so the response costs less.",
   ];
 }
 
 export function buildCardoGuardWhyThisVerdict(review) {
   const lines = [
     `Action waste = ${formatMoney(review.costToAct)} × ${Math.round(review.falseAlarmRate * 100)}% = ${formatMoney(review.expectedActionWaste)}`,
-    `Miss loss = ${formatMoney(review.costToMiss)} × ${Math.round(review.calibratedEventLikelihood * 100)}% = ${formatMoney(review.expectedMissLoss)}`
+    `Miss loss = ${formatMoney(review.costToMiss)} × ${Math.round(review.calibratedEventLikelihood * 100)}% = ${formatMoney(review.expectedMissLoss)}`,
   ];
 
   // Add breakeven insight when useful
   if (review.breakevenMissCost > 0) {
-    lines.push(`Breakeven miss cost = ${formatMoney(review.breakevenMissCost)}. At this point, miss loss and action waste are equal.`);
+    lines.push(
+      `Breakeven miss cost = ${formatMoney(review.breakevenMissCost)}. At this point, miss loss and action waste are equal.`
+    );
   }
 
   return lines;
 }
-

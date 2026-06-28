@@ -3,23 +3,27 @@
 ## 📦 Installed Plugins & Connectors
 
 ### **Core Functionality**
+
 - `react-markdown` - Markdown rendering for REI.ai responses
-- `remark-gfm` - GitHub Flavored Markdown support  
+- `remark-gfm` - GitHub Flavored Markdown support
 - `rehype-highlight` - Syntax highlighting for code blocks
 - `localforage` - Offline storage for message history
 - `react-dropzone` - File upload for document ingestion
 
 ### **API & Data Handling**
+
 - `axios` - HTTP client for API requests
 - `lodash` - Utility library for data manipulation
 - `date-fns` - Date formatting utilities
 - `dotenv` - Environment variable management
 
 ### **Vercel Integration**
+
 - `@vercel/analytics` - Vercel analytics
 - `@vercel/speed-insights` - Performance monitoring
 
 ### **Development & Testing**
+
 - `jest` - Testing framework
 - `supertest` - HTTP assertions for API testing
 - `@testing-library/react` - React testing utilities
@@ -33,12 +37,14 @@
 ## 🛠 Configuration Files Created
 
 ### 1. **ESLint Configuration** (`/.eslintrc.json`)
+
 - React recommended rules
 - React Hooks linting
 - Custom formatting rules (2-space indent, double quotes, semicolons)
 - Jest environment support
 
 ### 2. **Prettier Configuration** (`/.prettierrc`)
+
 - 2-space indentation
 - Double quotes
 - Semicolons
@@ -46,6 +52,7 @@
 - Consistent bracket spacing
 
 ### 3. **Jest Configuration** (`/jest.config.js`)
+
 - JSDOM test environment
 - React component testing setup
 - CSS module mocking
@@ -54,15 +61,18 @@
 - Next.js path aliases support
 
 ### 4. **Jest Setup** (`/jest.setup.js`)
+
 - localStorage mocking
 - matchMedia mocking for CSS tests
 - Testing library DOM extensions
 
 ### 5. **Babel Configuration** (`/.babelrc`)
+
 - Next.js Babel preset
 - Ready for custom plugins
 
 ### 6. **Environment Example** (`/.env.example`)
+
 - GROQ_API_KEY placeholder
 - Hinge AI CLI path
 - API configuration defaults
@@ -72,6 +82,7 @@
 ## 🚀 Usage Guide
 
 ### **Code Formatting**
+
 ```bash
 # Format all files
 npm run format
@@ -84,6 +95,7 @@ npm run lint:fix
 ```
 
 ### **Testing**
+
 ```bash
 # Run all tests
 npm test
@@ -99,6 +111,7 @@ npm test src/REI.test.jsx
 ```
 
 ### **Environment Setup**
+
 ```bash
 # Copy example env file
 cp .env.example .env.local
@@ -110,21 +123,20 @@ echo "GROQ_API_KEY=your_key_here" >> .env.local
 ## 🎯 Integration with Existing Code
 
 ### **Markdown Rendering in REI.jsx**
+
 ```jsx
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 
 // In your message rendering:
-<ReactMarkdown 
-  remarkPlugins={[remarkGfm]} 
-  rehypePlugins={[rehypeHighlight]}
->
+<ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
   {message.text}
-</ReactMarkdown>
+</ReactMarkdown>;
 ```
 
 ### **Local Storage for Message History**
+
 ```jsx
 import localforage from "localforage";
 
@@ -135,11 +147,12 @@ const saveMessages = async (messages) => {
 
 // Load messages
 const loadMessages = async () => {
-  return await localforage.getItem("reiMessages") || [];
+  return (await localforage.getItem("reiMessages")) || [];
 };
 ```
 
 ### **File Upload with Dropzone**
+
 ```jsx
 import { useDropzone } from "react-dropzone";
 
@@ -147,16 +160,17 @@ const { getRootProps, getInputProps } = useDropzone({
   accept: {
     "text/plain": [".txt"],
     "application/pdf": [".pdf"],
-    "image/*": [".png", ".jpg", ".jpeg"]
+    "image/*": [".png", ".jpg", ".jpeg"],
   },
   maxFiles: 1,
   onDrop: (acceptedFiles) => {
     // Handle file upload to /api/cfai with ingest command
-  }
+  },
 });
 ```
 
 ### **API Requests with Axios**
+
 ```jsx
 import axios from "axios";
 
@@ -165,7 +179,7 @@ const callHingeAI = async (prompt, domain) => {
     const response = await axios.post("/api/cfai", {
       prompt,
       domain,
-      command: "score"
+      command: "score",
     });
     return response.data;
   } catch (error) {
@@ -193,6 +207,7 @@ const callHingeAI = async (prompt, domain) => {
 ## 🔧 Development Workflow
 
 ### **1. Before Committing**
+
 ```bash
 # Format code
 npm run format
@@ -205,6 +220,7 @@ npm test
 ```
 
 ### **2. Adding New Features**
+
 ```bash
 # Create new component
  touch src/components/NewFeature.jsx
@@ -218,6 +234,7 @@ npm test
 ```
 
 ### **3. Debugging**
+
 ```bash
 # Run specific test
 npm test -- src/components/REI.test.jsx
@@ -232,6 +249,7 @@ node --inspect-brk -r @babel/register node_modules/jest/bin/jest.js --runInBand 
 ## 📊 Code Quality Standards
 
 ### **ESLint Rules**
+
 - ✅ React best practices
 - ✅ React Hooks rules
 - ✅ 2-space indentation
@@ -241,6 +259,7 @@ node --inspect-brk -r @babel/register node_modules/jest/bin/jest.js --runInBand 
 - ✅ No console.log (warn)
 
 ### **Testing Standards**
+
 - ✅ 80% minimum coverage
 - ✅ Component tests
 - ✅ Integration tests
@@ -248,6 +267,7 @@ node --inspect-brk -r @babel/register node_modules/jest/bin/jest.js --runInBand 
 - ✅ Mock external dependencies
 
 ### **Formatting Standards**
+
 - ✅ Consistent indentation
 - ✅ Line length: 100 characters
 - ✅ Bracket spacing
@@ -256,6 +276,7 @@ node --inspect-brk -r @babel/register node_modules/jest/bin/jest.js --runInBand 
 ## 🎯 Next Steps
 
 ### **Immediate Integration**
+
 1. **Add markdown rendering** to REI.jsx messages
 2. **Implement message history** with localforage
 3. **Add file upload** for document ingestion
@@ -263,6 +284,7 @@ node --inspect-brk -r @babel/register node_modules/jest/bin/jest.js --runInBand 
 5. **Add Vercel analytics** to layout
 
 ### **Testing Setup**
+
 1. **Create test files** for major components
 2. **Add API endpoint tests**
 3. **Implement integration tests**

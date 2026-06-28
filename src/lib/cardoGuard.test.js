@@ -4,7 +4,7 @@ import {
   getSyntheticFalseAlarmRate,
   getConfidenceBand,
   formatMoney,
-  calculateBreakevenMissCost
+  calculateBreakevenMissCost,
 } from "./cardoGuard.js";
 
 describe("cardoGuard", () => {
@@ -13,7 +13,7 @@ describe("cardoGuard", () => {
       scenarioId: "routine-inspection-nudge",
       confidence: 78,
       costToAct: 80000,
-      costToMiss: 90000
+      costToMiss: 90000,
     });
 
     expect(getSyntheticFalseAlarmRate(78)).toBe(0.44);
@@ -23,7 +23,7 @@ describe("cardoGuard", () => {
     expect(review.expectedActionWaste).toBeCloseTo(35200);
     expect(review.expectedMissLoss).toBeCloseTo(50400);
     expect(review.decisionMarginRatio).toBeCloseTo(50400 / 35200); // ~1.43x
-    expect(review.breakevenMissCost).toBeCloseTo(80000 * 0.44 / 0.56); // ~62,857
+    expect(review.breakevenMissCost).toBeCloseTo((80000 * 0.44) / 0.56); // ~62,857
     expect(review.decisionStrength).toBe("Weak"); // 1.43x margin
     expect(review.explanation).toContain("Acting clears the gate");
   });
@@ -33,14 +33,14 @@ describe("cardoGuard", () => {
       scenarioId: "road-closure-reroute",
       confidence: 82,
       costToAct: 180000,
-      costToMiss: 1200000
+      costToMiss: 1200000,
     });
 
     expect(buildCardoGuardComparison(review)).toEqual([
       "Make acting more expensive.",
       "Show this score band is wrong more often than assumed.",
       "Prove the miss cost is smaller than assumed.",
-      "Show that the disruption impact is smaller or less likely than assumed."
+      "Show that the disruption impact is smaller or less likely than assumed.",
     ]);
   });
 
@@ -49,7 +49,7 @@ describe("cardoGuard", () => {
       scenarioId: "missing-scenario",
       confidence: "abc",
       costToAct: -100,
-      costToMiss: -200
+      costToMiss: -200,
     });
 
     expect(review.scenario.id).toBe("road-closure-reroute");
@@ -65,7 +65,7 @@ describe("cardoGuard", () => {
       scenarioId: "road-closure-reroute",
       confidence: 89,
       costToAct: 200000,
-      costToMiss: 30000
+      costToMiss: 30000,
     });
 
     expect(review.recommendation).toBe("DO NOT ACT");
@@ -74,7 +74,7 @@ describe("cardoGuard", () => {
       "Make acting cheaper.",
       "Show this score band is wrong less often than assumed.",
       "Prove the miss cost is larger than assumed.",
-      "Narrow the action so the response costs less."
+      "Narrow the action so the response costs less.",
     ]);
   });
 
@@ -84,7 +84,7 @@ describe("cardoGuard", () => {
       scenarioId: "road-closure-reroute",
       confidence: 95,
       costToAct: 10000,
-      costToMiss: 2000000
+      costToMiss: 2000000,
     });
     expect(strong.decisionStrength).toBe("Very Strong");
     expect(strong.decisionMarginRatio).toBeGreaterThanOrEqual(5);
@@ -94,7 +94,7 @@ describe("cardoGuard", () => {
       scenarioId: "routine-inspection-nudge",
       confidence: 78,
       costToAct: 50000,
-      costToMiss: 38286
+      costToMiss: 38286,
     });
     expect(close.decisionStrength).toBe("Very Close");
     expect(close.decisionMarginRatio).toBeLessThan(1.1);
@@ -104,7 +104,7 @@ describe("cardoGuard", () => {
       scenarioId: "road-closure-reroute",
       confidence: 89,
       costToAct: 0,
-      costToMiss: 0
+      costToMiss: 0,
     });
     expect(zeros.decisionMarginRatio).toBe(1);
     expect(zeros.decisionStrength).toBe("Very Close");
@@ -114,7 +114,7 @@ describe("cardoGuard", () => {
       scenarioId: "road-closure-reroute",
       confidence: 89,
       costToAct: 0,
-      costToMiss: 500000
+      costToMiss: 500000,
     });
     expect(infinityCase.decisionMarginRatio).toBe(Infinity);
     expect(infinityCase.decisionStrength).toBe("Very Strong");
@@ -126,7 +126,7 @@ describe("cardoGuard", () => {
       scenarioId: "routine-inspection-nudge",
       confidence: 78,
       costToAct: 50000,
-      costToMiss: 65000
+      costToMiss: 65000,
     });
     expect(moderate.decisionStrength).toBe("Moderate");
     expect(moderate.decisionMarginRatio).toBeGreaterThanOrEqual(1.5);
@@ -136,7 +136,7 @@ describe("cardoGuard", () => {
       scenarioId: "routine-inspection-nudge",
       confidence: 78,
       costToAct: 50000,
-      costToMiss: 110000
+      costToMiss: 110000,
     });
     expect(strongBand.decisionStrength).toBe("Strong");
     expect(strongBand.decisionMarginRatio).toBeGreaterThanOrEqual(2.5);

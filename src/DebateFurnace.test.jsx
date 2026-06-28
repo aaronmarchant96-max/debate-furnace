@@ -10,8 +10,8 @@ describe("DebateFurnace", () => {
     Object.defineProperty(navigator, "clipboard", {
       configurable: true,
       value: {
-        writeText: jest.fn().mockResolvedValue(undefined)
-      }
+        writeText: jest.fn().mockResolvedValue(undefined),
+      },
     });
   });
 
@@ -68,8 +68,8 @@ describe("DebateFurnace", () => {
         payload: expect.objectContaining({
           question: "Does gun control reduce harm?",
           intensity: "balanced",
-          debate: expect.any(Object)
-        })
+          debate: expect.any(Object),
+        }),
       })
     );
 

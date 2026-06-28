@@ -8,7 +8,13 @@
     "whyWild": "The event becomes a brutal test of leadership, trust, and what people will sacrifice when the trip stops being a journey and becomes a trap.",
     "stakes": "Life, moral compromise, and whether desperation can erase the line between necessity and collapse.",
     "hinge": "Whether survival justifies moral compromise.",
-    "storyDNA": ["isolation", "leadership failure", "winter pressure", "resource collapse", "survival guilt"],
+    "storyDNA": [
+      "isolation",
+      "leadership failure",
+      "winter pressure",
+      "resource collapse",
+      "survival guilt"
+    ],
     "tags": ["survival", "frontier", "winter", "moral collapse", "tragedy"],
     "sources": [
       { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Donner_Party" },
@@ -24,7 +30,13 @@
     "whyWild": "The story is a precision-engineering disaster where calm teamwork is the only thing keeping everyone alive.",
     "stakes": "Survival, technical competence, and whether discipline can beat catastrophe.",
     "hinge": "Whether improvisation can defeat a system failure.",
-    "storyDNA": ["catastrophic failure", "team coordination", "improvisation", "time pressure", "measured calm"],
+    "storyDNA": [
+      "catastrophic failure",
+      "team coordination",
+      "improvisation",
+      "time pressure",
+      "measured calm"
+    ],
     "tags": ["survival", "engineering", "space", "crisis", "teamwork"],
     "sources": [
       { "label": "NASA", "url": "https://www.nasa.gov/history/apollo-13-mission-overview/" },
@@ -56,7 +68,13 @@
     "whyWild": "It reads like satire, but it is real enough to become a brilliant source for ironic war stories and doomed bureaucracy.",
     "stakes": "Authority, pride, and the gap between official power and actual control.",
     "hinge": "Whether competence exists on paper or in the field.",
-    "storyDNA": ["bureaucratic pride", "asymmetric conflict", "comedy under failure", "public embarrassment", "nature wins"],
+    "storyDNA": [
+      "bureaucratic pride",
+      "asymmetric conflict",
+      "comedy under failure",
+      "public embarrassment",
+      "nature wins"
+    ],
     "tags": ["war", "political collapse", "absurdity", "nature", "satire"],
     "sources": [
       { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Emu_War" },
@@ -88,7 +106,13 @@
     "whyWild": "The event sits right on the edge between survival story, mystery, and cosmic dread.",
     "stakes": "Human survival, hidden causes, and the fear that the real explanation may be worse than the rumor.",
     "hinge": "Whether the truth is mundane or horrifying.",
-    "storyDNA": ["winter exposure", "panic", "uncertain cause", "forensic mystery", "fear of the unknown"],
+    "storyDNA": [
+      "winter exposure",
+      "panic",
+      "uncertain cause",
+      "forensic mystery",
+      "fear of the unknown"
+    ],
     "tags": ["mystery", "winter", "lost expedition", "cosmic horror", "forbidden knowledge"],
     "sources": [
       { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Dyatlov_Pass_incident" },
@@ -104,7 +128,13 @@
     "whyWild": "It is a lost expedition story with enough historical weight to support horror, survival, or imperial collapse narratives.",
     "stakes": "Discovery, empire, and the cost of trying to map the impossible.",
     "hinge": "Whether ambition can outrun environment.",
-    "storyDNA": ["arctic isolation", "imperial ambition", "slow collapse", "failed rescue", "unknown fate"],
+    "storyDNA": [
+      "arctic isolation",
+      "imperial ambition",
+      "slow collapse",
+      "failed rescue",
+      "unknown fate"
+    ],
     "tags": ["lost expedition", "survival", "frontier", "political collapse", "tragedy"],
     "sources": [
       { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Franklin%27s_lost_expedition" },
@@ -120,7 +150,13 @@
     "whyWild": "It has the scale of catastrophe without the clean explanation, which makes it perfect for cosmic or speculative remixing.",
     "stakes": "Safety, knowledge, and what happens when a world-changing event has no clear witness story.",
     "hinge": "Whether the unknown is a scientific problem or a narrative one.",
-    "storyDNA": ["massive shock", "scientific uncertainty", "remote wilderness", "evidence trail", "cosmic fear"],
+    "storyDNA": [
+      "massive shock",
+      "scientific uncertainty",
+      "remote wilderness",
+      "evidence trail",
+      "cosmic fear"
+    ],
     "tags": ["cosmic horror", "mystery", "science", "forbidden knowledge", "UAP"],
     "sources": [
       { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Tunguska_event" },
@@ -136,7 +172,13 @@
     "whyWild": "It is a ready-made seed for secrecy, mistrust, and stories about how institutions handle the unexplained.",
     "stakes": "Truth, authority, and the line between evidence and mythology.",
     "hinge": "Whether secrecy protects reality or creates legend.",
-    "storyDNA": ["secrecy", "institutional mistrust", "rumor growth", "evidence conflict", "public obsession"],
+    "storyDNA": [
+      "secrecy",
+      "institutional mistrust",
+      "rumor growth",
+      "evidence conflict",
+      "public obsession"
+    ],
     "tags": ["UAP", "espionage", "mysticism", "forbidden knowledge", "political collapse"],
     "sources": [
       { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Roswell_incident" },
@@ -152,8 +194,20 @@
     "whyWild": "It sits at the border of social panic, mass psychosis, and historical weirdness, which makes it a strong engine for horror or allegory.",
     "stakes": "Body, mind, crowd behavior, and whether a community can absorb a pressure it cannot name.",
     "hinge": "Whether a strange event is supernatural, social, or both.",
-    "storyDNA": ["mass behavior", "uncertain cause", "public panic", "ritual pressure", "community stress"],
-    "tags": ["mysticism", "political collapse", "forbidden knowledge", "cosmic horror", "ancient world"],
+    "storyDNA": [
+      "mass behavior",
+      "uncertain cause",
+      "public panic",
+      "ritual pressure",
+      "community stress"
+    ],
+    "tags": [
+      "mysticism",
+      "political collapse",
+      "forbidden knowledge",
+      "cosmic horror",
+      "ancient world"
+    ],
     "sources": [
       { "label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Dancing_plague_of_1518" },
       { "label": "Britannica", "url": "https://www.britannica.com/event/dancing-plague" }

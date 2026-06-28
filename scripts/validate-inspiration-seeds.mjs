@@ -24,7 +24,7 @@ const requiredSeedKeys = [
   "charactersForces",
   "tags",
   "genreRemixes",
-  "whatIfDivergences"
+  "whatIfDivergences",
 ];
 
 const requiredSourceTrailKeys = ["label", "url"];
@@ -39,15 +39,27 @@ function ensure(condition, message, errors) {
 }
 
 function validateStringField(seed, key, errors) {
-  ensure(typeof seed[key] === "string" && seed[key].trim().length > 0, `seed ${seed.id ?? "<unknown>"}: ${key} must be a non-empty string`, errors);
+  ensure(
+    typeof seed[key] === "string" && seed[key].trim().length > 0,
+    `seed ${seed.id ?? "<unknown>"}: ${key} must be a non-empty string`,
+    errors
+  );
 }
 
 function validateStringArray(seed, key, errors) {
   const value = seed[key];
-  ensure(Array.isArray(value) && value.length > 0, `seed ${seed.id ?? "<unknown>"}: ${key} must be a non-empty array`, errors);
+  ensure(
+    Array.isArray(value) && value.length > 0,
+    `seed ${seed.id ?? "<unknown>"}: ${key} must be a non-empty array`,
+    errors
+  );
   if (!Array.isArray(value)) return;
   value.forEach((item, index) => {
-    ensure(typeof item === "string" && item.trim().length > 0, `seed ${seed.id ?? "<unknown>"}: ${key}[${index}] must be a non-empty string`, errors);
+    ensure(
+      typeof item === "string" && item.trim().length > 0,
+      `seed ${seed.id ?? "<unknown>"}: ${key}[${index}] must be a non-empty string`,
+      errors
+    );
   });
 }
 
@@ -66,28 +78,56 @@ function validateExactKeys(object, keys, label, errors) {
 
 function validateSourceTrail(seed, errors) {
   const value = seed.sourceTrail;
-  ensure(Array.isArray(value) && value.length > 0, `seed ${seed.id ?? "<unknown>"}: sourceTrail must be a non-empty array`, errors);
+  ensure(
+    Array.isArray(value) && value.length > 0,
+    `seed ${seed.id ?? "<unknown>"}: sourceTrail must be a non-empty array`,
+    errors
+  );
   if (!Array.isArray(value)) return;
   value.forEach((entry, index) => {
     const label = `seed ${seed.id ?? "<unknown>"}: sourceTrail[${index}]`;
     validateExactKeys(entry, requiredSourceTrailKeys, label, errors);
     if (!isPlainObject(entry)) return;
-    ensure(typeof entry.label === "string" && entry.label.trim().length > 0, `${label}.label must be a non-empty string`, errors);
-    ensure(typeof entry.url === "string" && entry.url.trim().length > 0, `${label}.url must be a non-empty string`, errors);
+    ensure(
+      typeof entry.label === "string" && entry.label.trim().length > 0,
+      `${label}.label must be a non-empty string`,
+      errors
+    );
+    ensure(
+      typeof entry.url === "string" && entry.url.trim().length > 0,
+      `${label}.url must be a non-empty string`,
+      errors
+    );
   });
 }
 
 function validateGenreRemixes(seed, errors) {
   const value = seed.genreRemixes;
-  ensure(Array.isArray(value) && value.length > 0, `seed ${seed.id ?? "<unknown>"}: genreRemixes must be a non-empty array`, errors);
+  ensure(
+    Array.isArray(value) && value.length > 0,
+    `seed ${seed.id ?? "<unknown>"}: genreRemixes must be a non-empty array`,
+    errors
+  );
   if (!Array.isArray(value)) return;
   value.forEach((entry, index) => {
     const label = `seed ${seed.id ?? "<unknown>"}: genreRemixes[${index}]`;
     validateExactKeys(entry, requiredGenreRemixKeys, label, errors);
     if (!isPlainObject(entry)) return;
-    ensure(typeof entry.genre === "string" && entry.genre.trim().length > 0, `${label}.genre must be a non-empty string`, errors);
-    ensure(typeof entry.angle === "string" && entry.angle.trim().length > 0, `${label}.angle must be a non-empty string`, errors);
-    ensure(typeof entry.prompt === "string" && entry.prompt.trim().length > 0, `${label}.prompt must be a non-empty string`, errors);
+    ensure(
+      typeof entry.genre === "string" && entry.genre.trim().length > 0,
+      `${label}.genre must be a non-empty string`,
+      errors
+    );
+    ensure(
+      typeof entry.angle === "string" && entry.angle.trim().length > 0,
+      `${label}.angle must be a non-empty string`,
+      errors
+    );
+    ensure(
+      typeof entry.prompt === "string" && entry.prompt.trim().length > 0,
+      `${label}.prompt must be a non-empty string`,
+      errors
+    );
   });
 }
 
@@ -99,7 +139,17 @@ function validateSeed(seed, errors) {
 
   validateExactKeys(seed, requiredSeedKeys, `seed ${seed.id ?? "<unknown>"}`, errors);
   requiredSeedKeys.forEach((key) => {
-    if (["sourceTrail", "storyDNA", "charactersForces", "tags", "genreRemixes", "whatIfDivergences"].includes(key)) return;
+    if (
+      [
+        "sourceTrail",
+        "storyDNA",
+        "charactersForces",
+        "tags",
+        "genreRemixes",
+        "whatIfDivergences",
+      ].includes(key)
+    )
+      return;
     validateStringField(seed, key, errors);
   });
   validateSourceTrail(seed, errors);

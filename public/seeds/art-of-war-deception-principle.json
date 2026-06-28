@@ -12,8 +12,19 @@
   "whyWild": "This is a compact engine for espionage, statecraft, and any story where the side that controls perception controls the battlefield.",
   "stakes": "Victory, survival, and whether honesty is a luxury the powerful can afford.",
   "hinge": "Whether deception is a tactic, a moral failure, or both.",
-  "storyDNA": ["misdirection", "perception control", "asymmetric advantage", "planned ambiguity", "psychological pressure"],
-  "charactersForces": ["the strategist", "the decoy force", "the observing enemy", "the vulnerable flank"],
+  "storyDNA": [
+    "misdirection",
+    "perception control",
+    "asymmetric advantage",
+    "planned ambiguity",
+    "psychological pressure"
+  ],
+  "charactersForces": [
+    "the strategist",
+    "the decoy force",
+    "the observing enemy",
+    "the vulnerable flank"
+  ],
   "tags": ["war", "espionage", "strategy", "betrayal", "ancient world"],
   "genreRemixes": [
     {
