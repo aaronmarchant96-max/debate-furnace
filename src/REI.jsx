@@ -68,26 +68,55 @@ export default function REI() {
   }, []);
 
   const [selectedDomain, setSelectedDomain] = useState("assistant");
+
+  // Clear legacy chat history key on first load (pre‑v2 storage)
+  useEffect(() => {
+    if (typeof window !== "undefined" && localStorage.getItem("rei_chat_history_v2")) {
+      console.info("Removing legacy chat history key 'rei_chat_history_v2' to reset chat");
+      localStorage.removeItem("rei_chat_history_v2");
+    }
+  }, []);
+
+  // Clear any existing domain‑specific chat history entries on first load to ensure a fresh start
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("rei_chat_history_")) {
+          console.info(`Removing stale chat history key '${key}'`);
+          localStorage.removeItem(key);
+        }
+      });
+    }
+  }, []);
+
+
+  // Clear legacy chat history key on first load (pre‑v2 storage)
+  useEffect(() => {
+    if (typeof window !== "undefined" && localStorage.getItem("rei_chat_history_v2")) {
+      console.info("Removing legacy chat history key 'rei_chat_history_v2' to reset chat");
+      localStorage.removeItem("rei_chat_history_v2");
+    }
+  }, []);
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("rei_chat_history_v2");
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch (e) {
-          console.error("Failed to parse saved chat history:", e);
-        }
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem(`rei_chat_history_${selectedDomain}`);
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error("Failed to parse saved chat history:", e);
       }
     }
-    return [
-      {
-        sender: "rei",
-        text: "System initialized. Welcome to REI.AI. Select a helper profile from the header, and let's work on something together today!",
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      }
-    ];
-  });
+  }
+  return [
+    {
+      sender: "rei",
+      text: `System initialized. Welcome to REI.AI ${selectedDomain}.`,
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    }
+  ];
+});
   const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef(null);
 
@@ -174,7 +203,6 @@ export default function REI() {
         },
         body: JSON.stringify({
           command: 'score',
-          domain: selectedDomain,
           input: `${systemContext}\n\nDomain: ${currentDomain.label}\nRules: ${currentDomain.rules.join(", ")}\n\nUser Query: ${userMsg.text}`,
           history: historyPayload
         })
