@@ -147,37 +147,36 @@ async function handleCfaiRequest(command, args = [], input = '') {
   }
 }
 
-export async function GET(request) {
-  const { searchParams } = new URL(request.url);
-  const command = searchParams.get('command') || 'help';
-  const args = searchParams.get('args') ? searchParams.get('args').split(',') : [];
-  
-  const result = await handleCfaiRequest(command, args);
-  
-  return new Response(JSON.stringify(result), {
-    headers: { 'Content-Type': 'application/json' },
-    status: result.success ? 200 : 500
-  });
-}
-
-export async function POST(request) {
+export default async function handler(req, res) {
   try {
-    const { command, args = [], input = '' } = await request.json();
+    // Set headers
+    res.setHeader('Content-Type', 'application/json');
+
+    if (req.method === 'POST') {
+      const { command, args = [], input = '' } = req.body || {};
+      const result = await handleCfaiRequest(command, args, input);
+      return res.status(result.success ? 200 : 500).json(result);
+    } 
     
-    const result = await handleCfaiRequest(command, args, input);
-    
-    return new Response(JSON.stringify(result), {
-      headers: { 'Content-Type': 'application/json' },
-      status: result.success ? 200 : 500
+    if (req.method === 'GET') {
+      const url = new URL(req.url, `http://${req.headers.host}`);
+      const command = url.searchParams.get('command') || 'help';
+      const argsParam = url.searchParams.get('args');
+      const args = argsParam ? argsParam.split(',') : [];
+      
+      const result = await handleCfaiRequest(command, args);
+      return res.status(result.success ? 200 : 500).json(result);
+    }
+
+    return res.status(405).json({
+      success: false,
+      error: 'Method Not Allowed'
     });
   } catch (error) {
-    return new Response(JSON.stringify({
+    return res.status(500).json({
       success: false,
-      error: 'Invalid request format',
+      error: 'Serverless execution error',
       details: error.message
-    }), {
-      headers: { 'Content-Type': 'application/json' },
-      status: 400
     });
   }
 }
