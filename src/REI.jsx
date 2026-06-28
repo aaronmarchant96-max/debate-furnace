@@ -403,7 +403,7 @@ export default function REI() {
         {
           sender: "rei",
           text: data.result,
-          timestamp: new Date().toLocaleTimeString([], { hour: 'digit', minute: '2-digit' }),
+          timestamp: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
           rawJson: {
             engine: "REI-Hinge-Core v0.3",
             domain: selectedDomain,
