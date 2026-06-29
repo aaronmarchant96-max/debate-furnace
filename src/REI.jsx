@@ -778,14 +778,21 @@ Limitations:
   }
 
   return (
-    <section className="rei-dashboard-wrapper" style={{ color: "#E2E8F0", fontFamily: "Inter, sans-serif", minHeight: "100vh", padding: "30px", display: "flex", justifyContent: "center" }}>
+    <section className="rei-dashboard-wrapper" style={{ 
+      color: "#E2E8F0", 
+      fontFamily: "Inter, sans-serif", 
+      minHeight: "100vh", 
+      padding: mobile ? "12px" : "30px", 
+      display: "flex", 
+      justifyContent: "center" 
+    }}>
       <div className="rei-custom-container" style={{ 
         width: "100%", 
         maxWidth: mobile ? "100%" : "min(960px, 100vw - 32px)", 
-        padding: mobile ? "16px" : "28px", 
+        padding: mobile ? "12px" : "28px", 
         display: "flex", 
         flexDirection: "column", 
-        gap: "18px"
+        gap: mobile ? "12px" : "18px"
       }}>
         
         {/* Header */}
