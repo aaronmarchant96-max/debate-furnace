@@ -10,6 +10,7 @@ import fs from "fs";
 const execAsync = promisify(exec);
 const CFAI_PATH = process.env.CFAI_PATH; // No default – if undefined we fall back to Groq
 
+const MAX_INPUT_CHARS = 14000; // record cap (12000) + room for the surrounding prompt scaffolding
 const REI_SYSTEM_PROMPT = `# REI.AI — System Prompt (v2.0)
 
 Identity:
@@ -320,6 +321,15 @@ export default async function handler(req, res) {
 
     if (req.method === "POST") {
       const { command, args = [], input = "", systemPrompt = "", history = [] } = req.body || {};
+      
+      // Backend length guard - never trust client-side validation alone
+      if (typeof input === "string" && input.length > MAX_INPUT_CHARS) {
+        return res.status(400).json({
+          success: false,
+          error: `Input too long (${input.length} chars, max ${MAX_INPUT_CHARS}). If you pasted a large record, trim it to the relevant section.`,
+        });
+      }
+      
       const result = await handleCfaiRequest(command, args, input, systemPrompt, history);
       res.status(result.success ? 200 : 500).json(result);
       return;
