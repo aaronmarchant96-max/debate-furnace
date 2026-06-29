@@ -5,9 +5,9 @@ const DOMAIN_PROFILES = [
     id: "assistant",
     label: "The Generalist",
     badge: "Active",
-    description: "Everyday reasoning using natural dialogue. Help the user clarify evidence, distinguish assumptions, and locate decision hinges.",
-    rules: ["Clear and friendly replies", "Constructive, natural dialogue", "Brevity by default"],
-    exemplar: "Conversing naturally on various everyday subjects."
+    description: "A sharp everyday reasoning model that talks like a real person, spots the hinge fast, and calls out assumptions without sounding stiff.",
+    rules: ["Plainspoken replies", "Keep the hinge visible", "Be warm without being generic"],
+    exemplar: "Turning loose thoughts into a clean, usable decision path."
   },
   {
     id: "coding",
@@ -34,6 +34,80 @@ const DOMAIN_PROFILES = [
     exemplar: "Expanding historical inspiration seeds into multi-part character outlines."
   }
 ];
+
+function getAssistantWelcomeCopy() {
+  return [
+    "The Generalist is live.",
+    "Bring me the thing you're trying to think through.",
+    "I'll cut to the hinge and keep the rest honest."
+  ].join(" ");
+}
+
+function isSimpleGreeting(text = "") {
+  return /^(hi|hello|hey|yo|hiya|good (morning|afternoon|evening))[\s!.?]*$/i.test(text.trim());
+}
+
+function buildAssistantStyleReply(userText) {
+  const clean = userText.trim().replace(/\s+/g, " ");
+  if (isSimpleGreeting(clean)) {
+    return [
+      "Hey.",
+      "Say what you want to sort out, and I’ll help pull it apart cleanly."
+    ].join(" ");
+  }
+
+  return [
+    "Hinge:",
+    "the part that actually changes the answer.",
+    "",
+    "Facts:",
+    "what you know for sure.",
+    "",
+    "Assumptions:",
+    "what still needs proof.",
+    "",
+    "Move:",
+    "the smallest useful next step."
+  ].join("\n");
+}
+
+const GENERALIST_PROMPTS = [
+  "Help me sort this out",
+  "What am I missing here?",
+  "What is the real hinge?",
+  "Separate facts from assumptions",
+  "What would change my mind?"
+];
+
+function parseAssistantStyleReply(text = "") {
+  const sections = { Hinge: "", Facts: "", Assumptions: "", Move: "", intro: "" };
+  const lines = text.split("\n").map((line) => line.trim()).filter(Boolean);
+  let current = "intro";
+  for (const line of lines) {
+    if (/^hinge:?$/i.test(line)) {
+      current = "Hinge";
+      continue;
+    }
+    if (/^facts:?$/i.test(line)) {
+      current = "Facts";
+      continue;
+    }
+    if (/^assumptions:?$/i.test(line)) {
+      current = "Assumptions";
+      continue;
+    }
+    if (/^move:?$/i.test(line)) {
+      current = "Move";
+      continue;
+    }
+    if (current === "intro") {
+      sections.intro = sections.intro ? `${sections.intro} ${line}` : line;
+    } else {
+      sections[current] = sections[current] ? `${sections[current]} ${line}` : line;
+    }
+  }
+  return sections;
+}
 
 // ── HingeMark Logo Component ──
 function HingeMark({ size = 36, animated = false }) {
@@ -283,21 +357,23 @@ export default function REI() {
   return [
     {
       sender: "rei",
-      text: `System initialized. Welcome to REI.AI ${selectedDomain}.`,
+      text: `System initialized. ${getAssistantWelcomeCopy()}`,
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
     }
   ];
 });
   const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef(null);
+  const [assistantPromptIndex, setAssistantPromptIndex] = useState(0);
 
   const currentDomain = DOMAIN_PROFILES.find((d) => d.id === selectedDomain) || DOMAIN_PROFILES[0];
+  const assistantQuickPrompt = GENERALIST_PROMPTS[assistantPromptIndex % GENERALIST_PROMPTS.length];
 
   // Clear chat and initialize domain-specific context when domain changes
   useEffect(() => {
     const domainSpecificMessage = {
       sender: "rei",
-      text: `System initialized. Welcome to REI.AI ${currentDomain.label}. ${currentDomain.description} Let's begin our ${currentDomain.id === 'coding' ? 'coding session' : currentDomain.id === 'genealogy' ? 'research analysis' : currentDomain.id === 'story' ? 'story building' : 'conversation'}!`,
+      text: `System initialized. ${currentDomain.id === 'assistant' ? getAssistantWelcomeCopy() : `Welcome to REI.AI ${currentDomain.label}. ${currentDomain.description} Let's begin our ${currentDomain.id === 'coding' ? 'coding session' : currentDomain.id === 'genealogy' ? 'research analysis' : 'story building'}!`}`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
     
@@ -322,7 +398,7 @@ export default function REI() {
   const handleClearHistory = () => {
     const domainSpecificMessage = {
       sender: "rei",
-      text: `System initialized. Welcome to REI.AI ${currentDomain.label}. ${currentDomain.description} Let's begin our ${currentDomain.id === 'coding' ? 'coding session' : currentDomain.id === 'genealogy' ? 'research analysis' : currentDomain.id === 'story' ? 'story building' : 'conversation'}!`,
+      text: `System initialized. ${currentDomain.id === 'assistant' ? getAssistantWelcomeCopy() : `Welcome to REI.AI ${currentDomain.label}. ${currentDomain.description} Let's begin our ${currentDomain.id === 'coding' ? 'coding session' : currentDomain.id === 'genealogy' ? 'research analysis' : 'story building'}!`}`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
     setMessages([domainSpecificMessage]);
@@ -353,7 +429,7 @@ export default function REI() {
 
       if (selectedDomain === "assistant") {
         systemContext =
-          "You are REI, a careful, direct reasoning assistant. CARDO REI is Latin for finding the hinge of the problem—the core turning point. For simple greetings (like 'hello', 'hi', or 'hey'), respond with a brief, warm welcome and ask the user what problem or idea they would like to dissect today. When presented with complex questions, problems, or situations, dissect the input using the CARDO REI process combined with Michio Kaku's conceptual abstraction: find the exact turning point (the Hinge), abstract the complexity onto clear, measurable dimensions or axes (separating superficial details from root causes), and communicate the solution with structural clarity. Speak naturally, briefly, and with clear logical flow. Avoid preambles or meta-commentary.";
+          "You are REI, The Generalist: a distinct everyday reasoning model for ordinary conversation, judgment, and decision support. CARDO REI is the practice of finding the hinge of the problem—the exact turning point that changes the answer. Speak in a signature pattern: short opener, hinge label, facts, assumptions, move. Keep the tone warm but not bland, sharp but not hostile, and concrete rather than corporate. For simple greetings such as hello, hi, or hey, answer in one short human sentence, then invite a real topic. For actual problems, name the hinge first, separate facts from assumptions, and show the fewest useful moves to get to a decision. Prefer plain English, tight structure, and directness. If the user is uncertain, help them reduce the problem instead of filling space.";
       } else if (selectedDomain === "coding") {
         systemContext =
           "You are REI.AI, a senior software engineer executing the CARDO REI methodology. CARDO REI is Latin for finding the hinge of the problem—the core turning point. Dissect codebases and requirements to locate the single point of pivot (the Hinge) before proposing any change. Default stance: write code that is obvious, testable, and boring; prefer clarity over cleverness; fix root causes, not symptoms. Keep functions single-responsibility, name things by intent, comment the why not the what.";
@@ -373,6 +449,9 @@ export default function REI() {
           role: msg.sender === "user" ? "user" : "assistant",
           content: msg.text
         }));
+
+      // Generalist (Assistant) now routes to the live API to execute the Kaku Abstraction and CARDO REI philosophy.
+      // We no longer return early with local-style placeholders.
 
       // Call route handler API with domain-specific context
       const response = await fetch('/api/cfai', {
@@ -455,7 +534,7 @@ Limitations:
             </div>
             <div>
               <h1 className="rei-logo-title" style={{ margin: 0, lineHeight: 1.1 }}>REI.AI</h1>
-              <p className="rei-logo-sub" style={{ margin: 0 }}>CARDO REI Methodology Engine</p>
+              <p className="rei-logo-sub" style={{ margin: 0 }}>The Generalist, Hinge Finder, Archivist, Storyteller</p>
             </div>
           </div>
 
@@ -503,18 +582,39 @@ Limitations:
         {/* Active Domain Info Banner (Custom Card Style) */}
         <div className="rei-custom-card">
           <div style={{ fontSize: "10.5px", fontWeight: "700", letterSpacing: "0.08em", textTransform: "uppercase", color: "#fb923c", marginBottom: "6px" }}>
-            Active Domain Focus
+            Active Voice
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px", fontSize: "13px", color: "#cbd5e1" }}>
             <div style={{ flex: 1, minWidth: "250px" }}>
-              <span style={{ color: "#FFB300", fontWeight: "bold", marginRight: "6px" }}>Scope:</span>
+              <span style={{ color: "#FFB300", fontWeight: "bold", marginRight: "6px" }}>Mode:</span>
               <span>{currentDomain.description}</span>
             </div>
             <div>
-              <span style={{ color: "#FFB300", fontWeight: "bold", marginRight: "6px" }}>Rules:</span>
+              <span style={{ color: "#FFB300", fontWeight: "bold", marginRight: "6px" }}>Voice cues:</span>
               <span style={{ color: "#94A3B8" }}>{currentDomain.rules.join(" | ")}</span>
             </div>
           </div>
+          {selectedDomain === "assistant" && (
+            <div style={{ marginTop: "12px", display: "flex", flexWrap: "wrap", gap: "8px" }}>
+              {["Collect", "Distinguish", "Hinge", "Review", "Evaluate"].map((step) => (
+                <span
+                  key={step}
+                  style={{
+                    padding: "5px 10px",
+                    borderRadius: "999px",
+                    border: "1px solid rgba(251,146,60,0.18)",
+                    background: "rgba(255,255,255,0.03)",
+                    color: "#fed7aa",
+                    fontSize: "11px",
+                    letterSpacing: "0.04em",
+                    textTransform: "uppercase"
+                  }}
+                >
+                  {step}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Chat Interface Container */}
@@ -551,7 +651,44 @@ Limitations:
                     lineHeight: "1.4"
                   }}
                 >
-                  {msg.text}
+                  {selectedDomain === "assistant" && msg.sender === "rei" && !msg.rawJson?.fallback ? (
+                    (() => {
+                      const sections = parseAssistantStyleReply(msg.text);
+                      return sections.intro ? (
+                        <div style={{ display: "grid", gap: "10px" }}>
+                          <div>{sections.intro}</div>
+                          {sections.Hinge && (
+                            <div>
+                              <div style={{ color: "#fb923c", fontSize: "0.85em", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "4px" }}>Hinge</div>
+                              <div>{sections.Hinge}</div>
+                            </div>
+                          )}
+                          {sections.Facts && (
+                            <div>
+                              <div style={{ color: "#fb923c", fontSize: "0.85em", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "4px" }}>Facts</div>
+                              <div>{sections.Facts}</div>
+                            </div>
+                          )}
+                          {sections.Assumptions && (
+                            <div>
+                              <div style={{ color: "#fb923c", fontSize: "0.85em", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "4px" }}>Assumptions</div>
+                              <div>{sections.Assumptions}</div>
+                            </div>
+                          )}
+                          {sections.Move && (
+                            <div>
+                              <div style={{ color: "#fb923c", fontSize: "0.85em", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "4px" }}>Move</div>
+                              <div>{sections.Move}</div>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div>{msg.text}</div>
+                      );
+                    })()
+                  ) : (
+                    msg.text
+                  )}
 
                   {/* Raw JSON details drawer */}
                   {msg.rawJson && (
@@ -581,48 +718,75 @@ Limitations:
                 gap: "8px"
               }}>
                 <span>●</span>
-                <span>REI.ai is thinking...</span>
+                <span>REI is shaping the reply...</span>
               </div>
             )}
             <div ref={chatEndRef} />
           </div>
 
           {/* Chat Input form area */}
-          <form onSubmit={handleSendMessage} style={{ borderTop: "1px solid rgba(251,146,60,0.15)", background: "rgba(0,0,0,0.3)", padding: "16px", display: "flex", gap: "12px", alignItems: "center" }}>
-            <input
-              type="text"
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              placeholder="Type proof context or statements to evaluate..."
-              style={{
-                flex: 1,
-                background: "rgba(0,0,0,0.2)",
-                color: "#E2E8F0",
-                border: "1px solid rgba(251,146,60,0.15)",
-                borderRadius: "6px",
-                padding: "12px 16px",
-                fontFamily: "inherit",
-                fontSize: "1.05em",
-                outline: "none"
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                background: "#f97316",
-                color: "#FFFFFF",
-                border: "none",
-                borderRadius: "6px",
-                padding: "12px 24px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                transition: "background 0.2s ease"
-              }}
-              onMouseOver={(e) => e.currentTarget.style.background = "#fb923c"}
-              onMouseOut={(e) => e.currentTarget.style.background = "#f97316"}
-            >
-              Send
-            </button>
+          <form onSubmit={handleSendMessage} style={{ borderTop: "1px solid rgba(251,146,60,0.15)", background: "rgba(0,0,0,0.3)", padding: "16px", display: "flex", flexDirection: "column", gap: "12px" }}>
+            {selectedDomain === "assistant" && (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                {GENERALIST_PROMPTS.map((prompt, index) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    onClick={() => {
+                      setInputMessage(prompt);
+                      setAssistantPromptIndex(index);
+                    }}
+                    style={{
+                      border: "1px solid rgba(251,146,60,0.18)",
+                      background: "rgba(255,255,255,0.03)",
+                      color: "#fed7aa",
+                      borderRadius: "999px",
+                      padding: "6px 10px",
+                      fontSize: "11px",
+                      cursor: "pointer"
+                    }}
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+            )}
+            <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+              <input
+                type="text"
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                placeholder={selectedDomain === "assistant" ? assistantQuickPrompt : "Type proof context or statements to evaluate..."}
+                style={{
+                  flex: 1,
+                  background: "rgba(0,0,0,0.2)",
+                  color: "#E2E8F0",
+                  border: "1px solid rgba(251,146,60,0.15)",
+                  borderRadius: "6px",
+                  padding: "12px 16px",
+                  fontFamily: "inherit",
+                  fontSize: "1.05em",
+                  outline: "none"
+                }}
+              />
+              <button
+                type="submit"
+                style={{
+                  background: "#f97316",
+                  color: "#FFFFFF",
+                  border: "none",
+                  borderRadius: "6px",
+                  padding: "12px 24px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  transition: "background 0.2s ease"
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = "#fb923c"}
+                onMouseOut={(e) => e.currentTarget.style.background = "#f97316"}
+              >
+                Send
+              </button>
+            </div>
           </form>
         </div>
       </div>
