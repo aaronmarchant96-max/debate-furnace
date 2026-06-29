@@ -3261,6 +3261,12 @@ button {
   .shell-header {
     grid-template-columns: minmax(0, 1fr);
     gap: 14px;
+    padding-left: 72px;
+    padding-top: 12px;
+  }
+
+  .shell-brand__title {
+    margin-top: 0;
   }
 
   .forge-hero,
@@ -3892,6 +3898,83 @@ input:focus:not(:focus-visible) {
 /* ==========================================================================
    REDUCED MOTION SUPPORT
    ========================================================================== */
+
+/* ==========================================================================
+   UTILITY CLASSES (Tailwind-like for mobile-first components)
+   ========================================================================== */
+
+/* Grid Columns */
+.grid-cols-1 {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.grid-cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.625rem; /* 10px */
+}
+
+/* Spacing - Padding */
+.p-5 {
+  padding: 1.25rem; /* 20px */
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.pb-32 {
+  padding-bottom: 8rem; /* Space for mobile keyboard */
+}
+
+/* Border Radius */
+.rounded-3xl {
+  border-radius: 1.5rem; /* 24px */
+}
+
+.rounded-2xl {
+  border-radius: 1rem; /* 16px */
+}
+
+/* Text */
+.text-xs {
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+
+/* Background Colors */
+.bg-\[\#2c1f14\] {
+  background-color: #2c1f14;
+}
+
+.bg-\[\#3a2a1f\] {
+  background-color: #3a2a1f;
+}
+
+/* Flexbox */
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+/* Overflow */
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+/* Button text overflow protection */
+.grid-cols-3 button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
