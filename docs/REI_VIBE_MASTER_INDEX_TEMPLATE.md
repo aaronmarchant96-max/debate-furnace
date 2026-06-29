@@ -1,0 +1,352 @@
+# REI_VIBE_MASTER_INDEX.md — Template Structure
+**Purpose:** Single source of truth for all REI.AI, CARDO REI, Vibe handoff, battle arena contexts, and Night Shift / REI Fingerprint Router system. Prevents redundant token spend across sessions.
+
+> **💡 USE THIS FIRST:** Before reading any individual file or starting any session, check this index. If the info is here, reference it instead of re-reading source files.
+
+---
+
+## 🎯 QUICK START (30 Seconds)
+
+**What are you looking for?**
+
+| Need | Go To | Key Files |
+|------|-------|-----------|
+| CARDO REI methodology | [Methodology](#-methodology) | `PROMPTHOUND-DOCS/CARDO-REI.md` |
+| Battle Arena contexts | [Battle Arena](#-battle-arena-contexts) | `PROMPTHOUND-DOCS/PROJECTS/` |
+| REI app surface | [REI Source](#-rei-app-surface) | `debate-furnace/src/REI.jsx` |
+| Night Shift / Fingerprint Router | [Night Shift](#-night-shift--rei-fingerprint-router) | `debate-furnace/docs/groq_router_v2_plan.md` |
+| Handoff from last session | [Handoff](#-handoff-documents) | `PROMPTHOUND-DOCS/AGY_HANDOFF_*.md` |
+| Deployment | [Deployment](#-deployment) | `PROMPTHOUND-DOCS/DEPLOYMENT_VERIFICATION.md` |
+
+---
+
+## 🧠 METHODOLOGY *(Core Framework)*
+
+### CARDO REI
+- **File:** `PROMPTHOUND-DOCS/CARDO-REI.md`
+- **Purpose:** 8-step reasoning framework
+- **Steps:** Collect → Analyze → Record → Distinguish → Organize → Review → Evaluate → Iterate
+- **Confidence Tiers:** 🟢 Primary Source | 🔵 Strong Evidence | 🟠 Needs Review | 🟡 Family Memory | ⚪ Unverified
+- **Key Principle:** Find the hinge — the single point of pivot that changes the answer
+
+### Token Efficiency
+- **File:** `debate-furnace/TOKEN_SAVERS.md`
+- **Purpose:** Minimize token spend across sessions
+- **Tools:** `scripts/verify-deploy.sh`, `.git/hooks/pre-commit`
+- **Rule:** Always check this index before reading source files
+
+### Token Optimization Tips
+| Anti-Pattern | Token Cost | Fix |
+|-------------|------------|-----|
+| "Explain my codebase" | ~2000 | Reference this index + specific file |
+| "How do I deploy?" | ~500 | Run `./scripts/verify-deploy.sh` |
+| "Review all my tests" | ~1500 | Run `npm test` locally first |
+| "Write a tutorial" | ~3000 | Use existing docs in PROMPTHOUND-DOCS/ |
+| Vague requests | ~1000+ | Use CARDO REI: Hinge + Facts + Move |
+
+**Weekly Token Savings Estimate:** 5000-10000 tokens
+
+---
+
+## 🎮 BATTLE ARENA CONTEXTS *(Competitive Testing)*
+
+### Active Arenas
+| Arena | Purpose | Status | Key Files |
+|-------|---------|--------|-----------|
+| **Hinge Finder** | Coding logic, STOP rule enforcement | ✅ Active | `src/REI.jsx:658-` |
+| **Generalist** | Everyday reasoning, decision support | ✅ Active | `src/REI.jsx:655-` |
+| **Archivist** | Genealogy, evidence-tiered | ✅ Active | `src/REI.jsx:661-` |
+| **Storyteller** | Narrative architecture | ✅ Active | `src/REI.jsx:669-` |
+
+### Arena Specifications
+| Arena | Input Type | Expected Output | Validation Method | Token Budget |
+|-------|------------|----------------|------------------|--------------|
+| Hinge Finder | Underspecified coding request | STOP: Request underspecified + questions | No code snippets, questions only | 50-200 |
+| Generalist | Any non-greeting query | Hinge + Facts + Assumptions + Move | Contains all 4 elements | 100-400 |
+| Archivist | Genealogy record | Tiered evidence (🟢🔵🟠🟡) | All claims have explicit tier | 200-800 |
+| Storyteller | Narrative prompt | Character driver hinges | Clear structural timeline | 150-600 |
+
+### Battle Test Cases
+**Hinge Finder:**
+- Input: "Write a Python function to sort a list"
+- Expected: STOP response with 3+ unanswerable questions
+- Fail: Any code generation
+
+**Generalist:**
+- Input: "Should I switch jobs?"
+- Expected: Hinge (career decision) + Facts (current role, market) + Assumptions (financial stability) + Move (list pros/cons)
+- Fail: Generic advice without structure
+
+**Archivist:**
+- Input: "Charles Dyer served in 12th Virginia Regiment"
+- Expected: 🟢 Primary Source citation + cross-reference to verified profile
+- Fail: Unverified claim without tier
+
+**Storyteller:**
+- Input: "Character wants revenge but fears isolation"
+- Expected: Driver hinge (fear of isolation vs. desire for justice) + narrative structure
+- Fail: Cliché tropes without driver analysis
+
+### Battle Rules
+1. **No Assumptions:** If 2+ Phase 0 questions unanswerable → STOP
+2. **No Hedge:** Facts section contains NO "maybe/probably/might"
+3. **No Silence:** Every claim has explicit source or uncertainty flag
+4. **No Bloat:** Responses ≤ max token budget for arena
+5. **No Escape:** All validation methods must pass before response accepted
+
+---
+
+## 🤖 NIGHT SHIFT / REI FINGERPRINT ROUTER *(Cost-Efficient Routing)*
+
+### Architecture
+- **Purpose:** Job-aware, cost-efficient model routing
+- **File:** `debate-furnace/docs/groq_router_v2_plan.md`
+- **Principle:** Route each job to the optimal model based on complexity, not default
+
+### Model Fingerprints
+| Job Type | Model | Token Cost/1K | Quality Gate | Avg Response Tokens |
+|----------|-------|---------------|--------------|---------------------|
+| Simple greeting | llama-3.1-8b-instant | ~0.3 | Single sentence + invitation | 10-30 |
+| Structured reasoning | llama-3.3-70b-versatile | ~1.0 | Hinge + Facts + Move | 100-400 |
+| Complex code | llama-3.3-70b-versatile | ~1.0 | Phase 0 + HARD STOP | 200-600 |
+| Genealogy deep dive | llama-3.3-70b-versatile | ~1.0 | Evidence tiers + citations | 300-800 |
+| Adversarial test | gpt-4o | ~5.0 | Red-team validation | 500-1500 |
+
+### Routing Logic (Pseudocode)
+```javascript
+function routeJob(job) {
+  // Rule 1: Greetings - fast, cheap
+  if (isGreeting(job.input)) {
+    return { model: "llama-3.1-8b-instant", maxTokens: 50 };
+  }
+  
+  // Rule 2: Coding with underspec - needs HARD STOP enforcement
+  if (job.domain === "coding" && !canAnswerPhase0(job.input)) {
+    return { model: "llama-3.3-70b-versatile", maxTokens: 200, enforce: "HARD_STOP" };
+  }
+  
+  // Rule 3: Genealogy with claims - needs evidence tiers
+  if (job.domain === "genealogy" && hasArchivalClaims(job.input)) {
+    return { model: "llama-3.3-70b-versatile", maxTokens: 800, enforce: "EVIDENCE_TIERS" };
+  }
+  
+  // Rule 4: Adversarial - high cost, high value
+  if (job.requiresAdversarial) {
+    return { model: "gpt-4o", maxTokens: 1500, enforce: "RED_TEAM" };
+  }
+  
+  // Default: Structured reasoning
+  return { model: "llama-3.3-70b-versatile", maxTokens: 400 };
+}
+```
+
+### Fingerprint Database Schema
+```typescript
+interface Fingerprint {
+  jobType: string;           // e.g., "coding_underspecified"
+  model: string;             // e.g., "llama-3.3-70b-versatile"
+  avgInputTokens: number;
+  avgOutputTokens: number;
+  successRate: number;       // 0-1, from battle history
+  lastUpdated: Date;
+  qualityScore: number;      // 0-100, methodology compliance
+}
+```
+
+### Battle History Integration
+- **Fingerprint DB Location:** `debate-furnace/data/fingerprints.json`
+- **Learning Loop:** 
+  - Run weekly: `npm run update-fingerprints`
+  - Pulls last 1000 battles from production
+  - Updates successRate and qualityScore per job type
+  - Flags fingerprints with qualityScore < 80 for review
+- **Fallback Chain:** 
+  1. Try primary model
+  2. If unavailable → next tier up with `+50% cost warning`
+  3. If all unavailable → reject with "Models unavailable, retry later"
+- **Cost Tracking:** Logs to `data/token-usage.log` with jobType, model, tokensIn, tokensOut, timestamp
+
+---
+
+## ✅ VALIDATION & TESTING
+
+### Automated Validation Scripts
+| Script | Purpose | Run Command |
+|--------|---------|-------------|
+| `scripts/validate-battle-arena.sh` | Run all battle test cases | `./scripts/validate-battle-arena.sh` |
+| `scripts/validate-fingerprints.sh` | Verify fingerprint DB integrity | `./scripts/validate-fingerprints.sh` |
+| `scripts/token-audit.sh` | Weekly token usage report | `./scripts/token-audit.sh` |
+
+### Battle Arena Validation
+```bash
+# Run single arena test
+npm test -- --testNamePattern="Hinge Finder STOP rule"
+
+# Run all battle tests
+npm test -- --testPathPattern="battle"
+
+# Validate against production
+npm run validate:production
+```
+
+### Quality Gates
+1. **Methodology Compliance:** ≥90% of responses contain Hinge + Facts + Move
+2. **STOP Rule Enforcement:** 100% of underspecified coding requests trigger STOP
+3. **Evidence Tiers:** 100% of genealogy claims have explicit 🟢🔵🟠🟡 tier
+4. **Token Efficiency:** Average response ≤ token budget for arena
+
+---
+
+## 🏗️ REI APP SURFACE *(Verified)*
+
+### Current State
+- **Repo:** `aaronmarchant96-max/debate-furnace`
+- **Live:** https://debate-furnace.vercel.app
+- **Entry:** `src/AppShell.jsx` (navigation), `src/REI.jsx` (chat)
+
+### Personas (Live in Code)
+| Persona | ID | Description | Domain |
+|---------|-----|-------------|--------|
+| The Generalist | assistant | Everyday reasoning, judgment, decision support | Conversation |
+| The Hinge Finder | coding | Senior coding logic, STOP rule enforcement | Code |
+| The Archivist | genealogy | Evidence-tiered genealogy | Research |
+| The Storyteller | story | Narrative architecture | Creativity |
+
+### Key Components
+- **Domain Selector:** 4 personas, active badge, descriptions
+- **Chat UI:** Message bubbles, copy button, timestamps, sender labels
+- **System Prompts:** Domain-specific, CARDO REI compliant
+- **Record Ingest:** Archivist only, 12000 char limit, source type selection
+
+---
+
+## 🚀 DEPLOYMENT
+
+### Official Deployment
+- **URL:** https://debate-furnace.vercel.app
+- **Repository:** https://github.com/aaronmarchant96-max/debate-furnace
+- **API:** https://debate-furnace.vercel.app/api/cfai
+- **Vercel Project:** debate-furnace (team: prompthound-s-projects)
+
+### Verification Checklist
+1. ✅ Site returns HTTP/2 200
+2. ✅ API /api/cfai returns success: true
+3. ✅ Git remote = origin https://github.com/aaronmarchant96-max/debate-furnace
+4. ✅ Vercel project = debate-furnace
+5. ✅ Last-modified header ≥ your commit timestamp
+
+### Local Verification
+```bash
+# Check deployment status
+./scripts/verify-deploy.sh
+
+# Test API
+curl -s -X POST https://debate-furnace.vercel.app/api/cfai \
+  -H "Content-Type: application/json" \
+  -d '{"input":"test"}' | jq -r '.success'
+
+# Quick battle validation
+npm run validate:battle
+
+# Token usage report
+npm run token-audit
+
+# Verify all pre-commit hooks
+./scripts/test-hooks.sh
+```
+
+---
+
+## 🔗 CROSS-REFERENCE MAP
+
+### If You Need To...
+| Action | File | Section |
+|--------|------|---------|
+| Understand CARDO REI steps | `CARDO-REI.md` | Steps 1-8 |
+| Find deployment issues | `DEPLOYMENT_VERIFICATION.md` | Verification Checklist |
+| See battle test cases | This file | Battle Arena Contexts |
+| Configure model routing | `groq_router_v2_plan.md` | Routing Logic |
+| Add new domain | `REI.jsx` | DOMAIN_PROFILES |
+| Update fingerprints | `data/fingerprints.json` | N/A |
+| Check token usage | `data/token-usage.log` | N/A |
+
+---
+
+## 📁 FILE INVENTORY *(By Category)*
+
+### Methodology
+| File | Purpose | Status |
+|------|---------|--------|
+| `PROMPTHOUND-DOCS/CARDO-REI.md` | 8-step framework | ✅ |
+| `PROMPTHOUND-DOCS/CLI-HANDBOOK.md` | CLI workflow | ✅ |
+| `TOKEN_SAVERS.md` | Token optimization guide | ✅ |
+
+### REI App
+| File | Purpose | Status |
+|------|---------|--------|
+| `debate-furnace/src/REI.jsx` | Main chat component | ✅ |
+| `debate-furnace/src/AppShell.jsx` | Navigation | ✅ |
+| `debate-furnace/api/cfai.js` | Backend route | ✅ |
+
+### Night Shift / Router
+| File | Purpose | Status |
+|------|---------|--------|
+| `debate-furnace/docs/groq_router_v2_plan.md` | Routing spec | ✅ |
+| `debate-furnace/docs/rei_platform_map.md` | Platform architecture | ✅ |
+
+---
+
+## 📊 CURRENT STATE SUMMARY *(As of June 29, 2026)*
+
+### ✅ What's Done
+- 4 REI personas live in code and UI
+- HARD STOP RULE enforced in coding domain
+- Phase 0 questions integrated into coding prompt
+- Token-saving tools deployed (verify-deploy.sh, pre-commit hooks)
+- Battle arena contexts defined for each persona
+
+### 🎯 What's Next
+- [ ] Deploy Night Shift / Fingerprint Router to production
+- [ ] Integrate battle history tracking
+- [ ] Weekly fingerprint update automation
+- [ ] Adversarial testing suite for all personas
+
+### ⚠️ Blockers
+- None (GROQ_API_KEY verified in Vercel)
+
+### 🤖 Automation
+- **Weekly:** `npm run update-fingerprints` (Sunday 2am UTC)
+- **On commit:** Pre-commit hooks block secrets
+- **On deploy:** Auto-verify deployment status
+- **On PR:** Run battle arena validation suite
+
+---
+
+## 🔄 UPDATE LOG
+
+| Date | Update | Author |
+|------|--------|--------|
+| 2026-06-29 | Created template structure | Vibe (picked up from vibe code) |
+| 2026-06-29 | Added Battle Arena contexts | Vibe |
+| 2026-06-29 | Added Night Shift / Fingerprint Router | Vibe |
+| 2026-06-29 | Enhanced with validation, testing, glossary | Vibe |
+
+---
+
+## 📖 GLOSSARY
+
+| Term | Definition | Source |
+|------|------------|--------|
+| **Hinge** | The single point of pivot that changes the answer | CARDO-REI.md |
+| **Battle Arena** | Competitive testing environment for personas | This file |
+| **Fingerprint** | Job type → model → performance mapping | groq_router_v2_plan.md |
+| **Phase 0** | Pre-code questioning stance (7 questions) | api/cfai.js |
+| **HARD STOP** | Non-negotiable rule: stop and ask questions | api/cfai.js |
+| **Evidence Tiers** | 🟢 Primary, 🔵 Strong, 🟠 Needs Review, 🟡 Family Memory, ⚪ Unverified | CARDO-REI.md |
+| **Token Budget** | Max tokens allowed per arena response | This file |
+
+---
+
+**Last Updated:** June 29, 2026  
+**Status:** Template ready for implementation  
+**Next Review:** Weekly or after major battle arena updates
