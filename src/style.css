@@ -3773,3 +3773,323 @@ button {
     border-color: #fb923c33;
   }
 }
+
+/* =============================================================================
+   MOBILE OPTIMIZATIONS
+   Added: June 29, 2026
+   Follows user feedback: em-based breakpoints, 48px touch targets,
+   safe area insets, keyboard handling, reduced motion support
+   ============================================================================= */
+
+/* Mobile-first breakpoints (em-based for accessibility) */
+:root {
+  --breakpoint-sm: 30em;    /* 480px */
+  --breakpoint-md: 45em;    /* 720px */
+  --breakpoint-lg: 56.25em; /* 900px */
+  
+  /* Mobile-first spacing scale */
+  --spacing-xs: 0.75rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+}
+
+/* ==========================================================================
+   BASE MOBILE STYLES
+   ========================================================================== */
+
+/* Box-sizing reset */
+* {
+  box-sizing: border-box;
+}
+
+/* HTML/body mobile optimizations */
+html {
+  -webkit-text-size-adjust: 100%; /* Prevent iOS font scaling */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* ==========================================================================
+   TOUCH TARGETS (Minimum 48x48px per Apple HIG / WCAG 2.5.5)
+   ========================================================================== */
+
+button,
+[role="button"],
+.touch-target,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  min-width: 48px;
+  min-height: 48px;
+  margin: 4px; /* Prevents accidental double-taps */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent iOS zoom on form elements (16px minimum) */
+input,
+button,
+select,
+textarea {
+  font-size: 16px;
+}
+
+/* ==========================================================================
+   FOCUS STATES (Accessibility)
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid #fb923c;
+  outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ==========================================================================
+   REDUCED MOTION SUPPORT
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   SAFE AREA INSETS (iOS notch / home indicator)
+   ========================================================================== */
+
+@supports (padding: max(0px)) {
+  body {
+    padding:
+      max(12px, env(safe-area-inset-top))
+      max(12px, env(safe-area-inset-right))
+      max(12px, env(safe-area-inset-bottom))
+      max(12px, env(safe-area-inset-left));
+  }
+}
+
+/* ==========================================================================
+   BREAKPOINTS
+   Mobile-first: styles apply to all, then override at larger sizes
+   ========================================================================== */
+
+/* Default = mobile styles (0 - 29.99em) */
+
+/* Small devices (tablets, 30em - 44.99em) */
+@media (min-width: var(--breakpoint-sm)) {
+  body {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* Medium devices (small desktops, 45em - 56.24em) */
+@media (min-width: var(--breakpoint-md)) {
+  body {
+    padding: var(--spacing-md);
+  }
+}
+
+/* Large devices (desktops, 56.25em+) */
+@media (min-width: var(--breakpoint-lg)) {
+  body {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* ==========================================================================
+   SCROLL BEHAVIOR
+   ========================================================================== */
+
+.rei-chat-container,
+.rei-message-list {
+  overscroll-behavior-y: contain;
+}
+
+/* ==========================================================================
+   REI-SPECIFIC MOBILE STYLES
+   ========================================================================== */
+
+/* Responsive container */
+.rei-custom-container {
+  width: 100%;
+  max-width: min(960px, 100vw - 32px);
+  padding: clamp(var(--spacing-sm), 6vw, var(--spacing-lg));
+  margin: 0 auto;
+}
+
+/* Message bubbles - max width on mobile */
+.rei-message-bubble {
+  max-width: 85%;
+}
+
+/* Domain selector - horizontal scroll on mobile */
+.rei-domain-selector {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.rei-domain-selector > * {
+  flex: 0 0 auto;
+}
+
+.rei-domain-selector::-webkit-scrollbar {
+  display: none;
+}
+
+/* Copy button - ensure minimum size */
+.rei-copy-btn {
+  min-width: 48px;
+  min-height: 48px;
+  padding: 8px 12px;
+}
+
+/* Input area - prevent keyboard overlap */
+.rei-input-container {
+  position: relative;
+}
+
+.rei-input-area {
+  font-size: 16px;
+  padding: 12px 16px;
+  min-height: 48px;
+}
+
+/* Timestamp - better mobile display */
+.rei-message-timestamp {
+  display: block;
+  font-size: 0.8em;
+}
+
+/* Philosophy modal - full screen on mobile */
+@media (max-width: var(--breakpoint-sm)) {
+  .rei-philosophy-modal {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+    margin: 0;
+  }
+}
+
+/* Disabled pull-to-refresh for fixed headers */
+.rei-header {
+  overscroll-behavior-y: contain;
+}
+
+/* Image optimization */
+.rei-avatar,
+.rei-icon {
+  max-width: 100%;
+  height: auto;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Prevent long press menu on buttons */
+.rei-touch-button {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+
+/* ==========================================================================
+   APP SHELL MOBILE NAVIGATION
+   ========================================================================== */
+
+/* Mobile drawer */
+.rei-mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md);
+}
+
+.rei-mobile-drawer-nav {
+  margin-top: var(--spacing-md);
+}
+
+.rei-mobile-drawer-close {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+/* Hamburger menu button */
+.rei-hamburger {
+  display: none;
+}
+
+@media (max-width: var(--breakpoint-md)) {
+  .rei-hamburger {
+    display: block;
+    min-width: 48px;
+    min-height: 48px;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 24px;
+    cursor: pointer;
+  }
+}
+
+/* ==========================================================================
+   UTILITY CLASSES
+   ========================================================================== */
+
+/* Hide on mobile */
+.hide-mobile {
+  display: none;
+}
+
+@media (min-width: var(--breakpoint-sm)) {
+  .hide-mobile {
+    display: revert;
+  }
+}
+
+/* Hide on desktop */
+.hide-desktop {
+  display: revert;
+}
+
+@media (min-width: var(--breakpoint-sm)) {
+  .hide-desktop {
+    display: none;
+  }
+}
