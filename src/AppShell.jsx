@@ -35,8 +35,8 @@ const TOP_LEVEL = [
   },
   {
     id: "rei",
-    label: "REI",
-    subtitle: "Methodology engine overview."
+    label: "REI.ai",
+    subtitle: "Platform reasoning layer."
   },
   {
     id: "tracepoint",
@@ -87,7 +87,7 @@ export default function AppShell() {
         : tool === "cardo-guard"
             ? "PromptHound Labs | CARDO GUARD"
             : tool === "rei"
-              ? "PromptHound Labs | REI"
+            ? "PromptHound Labs | REI.ai"
               : tool === "tracepoint"
                 ? "PromptHound Labs | Tracepoint"
                 : "PromptHound Labs | Debate Furnace";
@@ -99,7 +99,7 @@ export default function AppShell() {
         <div className="shell-brand">
           <div className="shell-brand__title">PromptHound Labs</div>
           <div className="shell-brand__sub">Structured outputs for messy input.</div>
-          <div className="shell-brand__method">Bring the hard question. We’ll find the hinge.</div>
+          <div className="shell-brand__method">REI.ai is the platform layer. PromptHound Labs ships the tools.</div>
           <div className="shell-brand__method shell-brand__method--sub">
             CARDO REI loop: build the slice, test what holds, keep the limits visible.
           </div>

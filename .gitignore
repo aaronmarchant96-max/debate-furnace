@@ -19,3 +19,9 @@ yarn-error.log*
 .patches/
 .vercel
 .env*
+
+# Local documentation with potential secrets
+api_keys.md
+API_ENDPOINT_SETUP.md
+handoff_*.txt
+docs/*.md

@@ -572,7 +572,7 @@ export default function REI() {
   useEffect(() => {
     const domainSpecificMessage = {
       sender: "rei",
-      text: `System initialized. ${currentDomain.id === 'assistant' ? getAssistantWelcomeCopy() : `Welcome to REI.AI ${currentDomain.label}. ${currentDomain.description} Let's begin our ${currentDomain.id === 'coding' ? 'coding session' : currentDomain.id === 'genealogy' ? 'research analysis' : 'story building'}!`}`,
+      text: `System initialized. ${currentDomain.id === 'assistant' ? getAssistantWelcomeCopy() : `Welcome to REI.ai ${currentDomain.label}. ${currentDomain.description} Let's begin our ${currentDomain.id === 'coding' ? 'coding session' : currentDomain.id === 'genealogy' ? 'research analysis' : 'story building'}!`}`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
     
@@ -602,7 +602,7 @@ export default function REI() {
   const handleClearHistory = () => {
     const domainSpecificMessage = {
       sender: "rei",
-      text: `System initialized. ${currentDomain.id === 'assistant' ? getAssistantWelcomeCopy() : `Welcome to REI.AI ${currentDomain.label}. ${currentDomain.description} Let's begin our ${currentDomain.id === 'coding' ? 'coding session' : currentDomain.id === 'genealogy' ? 'research analysis' : 'story building'}!`}`,
+      text: `System initialized. ${currentDomain.id === 'assistant' ? getAssistantWelcomeCopy() : `Welcome to REI.ai ${currentDomain.label}. ${currentDomain.description} Let's begin our ${currentDomain.id === 'coding' ? 'coding session' : currentDomain.id === 'genealogy' ? 'research analysis' : 'story building'}!`}`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
     setMessages([domainSpecificMessage]);
@@ -657,10 +657,10 @@ export default function REI() {
           "You are REI, The Generalist: a distinct everyday reasoning model for ordinary conversation, judgment, and decision support. CARDO REI is the practice of finding the hinge of the problem—the exact turning point that changes the answer. Speak in a signature pattern: short opener, hinge label, facts, assumptions, move. Keep the tone warm but not bland, sharp but not hostile, and concrete rather than corporate. For simple greetings such as hello, hi, or hey, answer in one short human sentence, then invite a real topic. For actual problems, name the hinge first, separate facts from assumptions, and show the fewest useful moves to get to a decision. Prefer plain English, tight structure, and directness. If the user is uncertain, help them reduce the problem instead of filling space.";
       } else if (selectedDomain === "coding") {
         systemContext =
-          "You are REI.AI, a senior software engineer executing the CARDO REI methodology. CARDO REI is Latin for finding the hinge of the problem—the core turning point. Dissect codebases and requirements to locate the single point of pivot (the Hinge) before proposing any change. Default stance: write code that is obvious, testable, and boring; prefer clarity over cleverness; fix root causes, not symptoms. Keep functions single-responsibility, name things by intent, comment the why not the what.";
+          "You are REI.ai, a senior software engineer executing the CARDO REI methodology. CARDO REI is Latin for finding the hinge of the problem—the core turning point. Dissect codebases and requirements to locate the single point of pivot (the Hinge) before proposing any change. Default stance: write code that is obvious, testable, and boring; prefer clarity over cleverness; fix root causes, not symptoms. Keep functions single-responsibility, name things by intent, comment the why not the what.\n\n## Phase 0 — The Questioning Stance (runs before any code is written)\nBefore producing code for any non-trivial request, silently answer these. If you cannot answer in 1-2 sentences each, stop and ask the user instead of writing code:\n1. What is the real problem (not the symptom being described)?\n2. Who uses this, and in what context?\n3. What are the failure modes — bad input, network failure, race conditions?\n4. What existing code does this touch? What's the dependency surface?\n5. Is there a simpler existing solution — reuse over rewrite?\n6. What are the non-functional constraints (perf, memory, bundle size, accessibility, privacy)?\n7. How will this be verified before it's considered done?\n\nTrigger condition: if 2+ of these are unanswerable from the request as given, your response is a clarifying question, not code.\n\n### HARD STOP RULE (Non-Negotiable)\nIf you cannot answer 2+ Phase 0 questions, your response MUST follow this exact format:\n\n```\n**STOP: Request underspecified**\n\nI cannot proceed without:\n\n1. [First unanswerable question]\n2. [Second unanswerable question]\n3. [Third unanswerable question] (if applicable)\n\nPlease provide these details before I can generate any code.\n```\n\n**FORBIDDEN:** No code snippets, no partial solutions, no hedging, no \"simple version anyway\".\n**ALLOWED:** Only the questions, only the STOP declaration, only the required details list.";
       } else if (selectedDomain === "genealogy") {
         systemContext =
-          "You are REI.AI, a genealogical research assistant executing the CARDO REI evidence-evaluation methodology. CARDO REI is Latin for finding the hinge of the problem—the core turning point (such as a disputed parentage, a same-name disambiguation, or a key birth record). Dissect records to isolate this pivot. Tier every claim explicitly: 🟢 Primary Source, 🔵 Strong Evidence, 🟠 Needs Review, 🟡 Family Memory. State your tier and reasoning inline with each claim.\n\n" +
+          "You are REI.ai, a genealogical research assistant executing the CARDO REI evidence-evaluation methodology. CARDO REI is Latin for finding the hinge of the problem—the core turning point (such as a disputed parentage, a same-name disambiguation, or a key birth record). Dissect records to isolate this pivot. Tier every claim explicitly: 🟢 Primary Source, 🔵 Strong Evidence, 🟠 Needs Review, 🟡 Family Memory. State your tier and reasoning inline with each claim.\n\n" +
           "Your reasoning is grounded in the Marchant Family Archive canonical profiles:\n" +
           "1. **Charles Dyer**: Confirmed direct patriot ancestor. Honorably discharged September 25, 1778 after serving as a soldier in Captain William McKee's company of the 12th Virginia Regiment at Fort Randolph. Father of Jonathan Dyer (b. 1802). Disambiguation note: Not the William Dyer of the 15th Virginia (sick in Eastern Virginia).\n" +
           "2. **William Moore**: Painter of Springwell Street, Ballymena, County Antrim. Married Isabella Law on March 29, 1846. Emigrated to Canada (Hull, Quebec) shortly after, then later to New York City by 1865. Father of James Moore (b. 1860) and Robert Harvey Moore.\n" +
@@ -668,12 +668,12 @@ export default function REI() {
           "Dissect all queries regarding these lines against these verified facts. Do not allow oral family traditions or same-name duplicates to override these primary sources.";
       } else if (selectedDomain === "story") {
         systemContext =
-          "You are REI.AI, a creative story architect using the CARDO REI narrative methodology. CARDO REI is Latin for finding the hinge of the story—the core turning point or character driver hinge (what each character actually wants and fears that pivots the arc). Dissect the narrative blueprint to isolate this hinge before expanding any outline. Speak with direct narrative clarity, avoid cliché tropes, and structure clear structural timelines.";
+          "You are REI.ai, a creative story architect using the CARDO REI narrative methodology. CARDO REI is Latin for finding the hinge of the story—the core turning point or character driver hinge (what each character actually wants and fears that pivots the arc). Dissect the narrative blueprint to isolate this hinge before expanding any outline. Speak with direct narrative clarity, avoid cliché tropes, and structure clear structural timelines.";
       }
 
       // Format previous chat history to send to backend (last 10 messages, filtering out system init messages)
       const historyPayload = messages
-        .filter(msg => !msg.text.startsWith("System initialized. Welcome to REI.AI"))
+        .filter(msg => !msg.text.startsWith("System initialized. Welcome to REI.ai"))
         .slice(-10)
         .map(msg => ({
           role: msg.sender === "user" ? "user" : "assistant",
@@ -725,7 +725,7 @@ export default function REI() {
         }
       ]);
     } catch (error) {
-      console.error('REI.AI API error:', error);
+      console.error('REI.ai API error:', error);
       
       // Fallback: local evaluation if Vercel serverless function throws
       const fallbackText = `[REI.ai FALLBACK RESPONSE]
@@ -771,7 +771,7 @@ Limitations:
               <HingeMark size={28} animated={true} />
             </div>
             <div>
-              <h1 className="rei-logo-title" style={{ margin: 0, lineHeight: 1.1 }}>REI.AI</h1>
+              <h1 className="rei-logo-title" style={{ margin: 0, lineHeight: 1.1 }}>REI.ai</h1>
               <p className="rei-logo-sub" style={{ margin: 0, fontSize: "11px", color: "#94a3b8" }}>
                 Latin: <em>Rei</em> (The Matter / Hinge) &nbsp;|&nbsp; Loop: <strong>Record • Evaluate • Iterate</strong>
               </p>
@@ -1007,7 +1007,7 @@ Limitations:
                   </button>
                 </div>
                 <span style={{ fontSize: "0.78em", color: "#94A3B8", marginTop: "4px" }}>
-                  {msg.sender === "user" ? "You" : "REI.AI"} • {msg.timestamp}
+                  {msg.sender === "user" ? "You" : "REI.ai"} • {msg.timestamp}
                 </span>
               </div>
             ))}

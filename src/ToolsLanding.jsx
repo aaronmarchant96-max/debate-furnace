@@ -4,9 +4,9 @@ export const TOOL_CARDS = [
   {
     id: "furnace",
     label: "Debate Furnace",
-    title: "Arguments get pressure-tested here.",
+    title: "Pressure-test the hinge.",
     description:
-      "Turn a question into a structured pressure test. Find the hinge. Decide what matters.",
+      "Turn a question into a clean pressure test. Find the hinge, separate the noise, and decide what matters.",
     liveHref: "/",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
@@ -37,9 +37,9 @@ export const TOOL_CARDS = [
   {
     id: "cardo-guard",
     label: "CARDO GUARD",
-    title: "AI scores get checked against cost.",
+    title: "Cost beats confidence.",
     description:
-      "Compare expected action cost versus expected miss cost, then keep the actual decision hinge visible.",
+      "Compare expected action cost versus expected miss cost, then keep the real decision gate visible.",
     liveHref: "/#cardo-guard",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
@@ -47,10 +47,10 @@ export const TOOL_CARDS = [
   },
   {
     id: "rei",
-    label: "REI",
-    title: "The CARDO REI Methodology Engine.",
+    label: "REI.ai",
+    title: "Your reasoning style, made visible.",
     description:
-      "Unified command line interface and profile registry executing the CARDO REI framework across all tools.",
+      "A shared reasoning layer that shows your hinge-first, evidence-first style across the whole suite.",
     liveHref: "/#rei",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
@@ -59,8 +59,8 @@ export const TOOL_CARDS = [
   {
     id: "tracepoint",
     label: "Tracepoint",
-    title: "Industrial signal review for costly decisions.",
-    description: "Find the signal. Show the evidence. Keep the decision human.",
+    title: "Industrial signal review with a human gate.",
+    description: "Find the signal, show the evidence, and keep the call in human hands.",
     liveHref: "/#tracepoint",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
@@ -69,9 +69,9 @@ export const TOOL_CARDS = [
   {
     id: "cfai",
     label: "Hinge AI",
-    title: "CARDO REI genealogy research assistant.",
+    title: "Evidence-first genealogy, no guesswork.",
     description:
-      "Score evidence, ingest documents, and discover lineage connections with structured, reviewable outputs. Grounded in the CARDO REI methodology.",
+      "Score evidence, ingest documents, and discover lineage connections with structured, reviewable outputs grounded in CARDO REI.",
     liveHref: "/#cfai",
     liveLabel: "Open demo",
     repoHref: REPO_URL,
@@ -93,11 +93,11 @@ export default function ToolsLanding({ onOpenTool }) {
           <div className="eyebrow">PromptHound Labs</div>
           <h1>Tools</h1>
           <p className="lead">
-            Pick the slice you need, read the evidence, and keep the decision human.
+            Pick the slice you need. REI.ai is the platform layer; each tool is a focused slice with its own job.
           </p>
           <div className="tools-hero__sub">
             Each tool is a focused, reviewable prototype with the same discipline: show the hinge,
-            surface the limits, and keep the output useful for a real reviewer.
+            surface the limits, and make the next move obvious.
           </div>
         </div>
         <div className="tools-hero__aside">

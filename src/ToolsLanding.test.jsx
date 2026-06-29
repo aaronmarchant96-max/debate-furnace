@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import ToolsLanding, { TOOL_CARDS } from "./ToolsLanding.jsx";
 
 describe("ToolsLanding", () => {
-  it("renders a card for each PromptHound tool", () => {
+  it("renders a card for each REI.ai tool", () => {
     render(<ToolsLanding onOpenTool={jest.fn()} />);
 
     expect(screen.getByRole("heading", { name: /^tools$/i })).toBeInTheDocument();
@@ -19,7 +19,7 @@ describe("ToolsLanding", () => {
     const onOpenTool = jest.fn();
     render(<ToolsLanding onOpenTool={onOpenTool} />);
 
-    // Click the REI link (index 4)
+    // Click the REI.ai link (index 4)
     fireEvent.click(screen.getAllByRole("link", { name: /open demo/i })[4]);
     expect(onOpenTool).toHaveBeenCalledWith("rei");
 

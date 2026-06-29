@@ -3,40 +3,43 @@ CARDO REI methodology applied to this document.
 Reference: [CARDO REI Methodology](PROMPTHOUND-DOCS/CARDO-REI.md)
 -->
 
-# PromptHound Labs — Debate Furnace & Companions
+# PromptHound Labs — REI.ai Platform
 
-> Bring the hard question. We’ll find the hinge.
+> Structured outputs for messy input. Find the hinge. Keep the limits visible.
 
-**Tools in this repo:**
+**REI.ai is the platform. PromptHound Labs is the lab. This repo ships the current live slice of both.**
 
+**Current tools in this repo:**
+
+- **REI.ai** — Shared methodology surface for specialized reasoning modes.
 - **Debate Furnace** — Structured debate engine that pressure-tests arguments and surfaces the real decision hinge.
 - **Story Forge** — Turns messy historical/mythic sources into usable story blueprints while keeping the source trail visible.
-- **CARDO GUARD** — Synthetic decision validation tool that makes the cost-weighted breakeven (the hinge) explicit before anyone acts on an AI risk score.
-- **Storm Replay** — Historical storm imagery analysis focused on separating signal from noise with strong calibration discipline (explicitly not forecasting or alerting).
+- **CARDO GUARD** — Synthetic decision validation tool that makes the cost-weighted breakeven explicit before anyone acts on an AI risk score.
+- **Storm Replay** — Historical storm imagery analysis focused on separating signal from noise with strong calibration discipline.
 - **Tracepoint** — Synthetic industrial signal review for one fictional pump asset, focused on evidence, calibration, and human review.
 
 ## CARDO REI Method
 
-Debate Furnace uses the CARDO REI Method to separate what sounds good from what actually holds up.
+REI.ai uses the CARDO REI Method to separate what sounds good from what actually holds up.
 
 ![Debate Furnace preview](assets/debate-furnace-preview.png)
 
-## About Debate Furnace
+## About REI.ai
 
-Debate Furnace is the core structured debate tool in the PromptHound Labs suite. It is designed for questions that deserve more than a quick yes/no.
+REI.ai is the shared platform layer in the PromptHound Labs suite. It is designed for questions and workflows that deserve more than a quick yes/no.
 
-It pressure-tests both sides of an argument, surfaces where each side is strong or weak, and makes the actual hinge of the decision visible so the user can decide with eyes open.
+It organizes specialized tools around the same CARDO REI spine, then lets each tool pressure-test its own kind of input, surface where the case is strong or weak, and make the actual hinge of the decision visible so the user can decide with eyes open.
 
 It is especially useful when the disagreement is really about values, tradeoffs, missing evidence, or what should even count as evidence.
 
-The broader suite in this repo also includes Story Forge (source-faithful story development), CARDO GUARD (synthetic decision validation), and Storm Replay (historical storm imagery calibration).
+The broader suite in this repo also includes Story Forge (source-faithful story development), CARDO GUARD (synthetic decision validation), Storm Replay (historical storm imagery calibration), and Tracepoint (synthetic industrial review).
 
 ## Problem / Approach / Result
 
-- **Problem:** Most tools flatten disagreement into a yes/no answer.
-- **Approach:** Build a structured debate engine that pressure-tests both sides, flags weak reasoning, and surfaces the decision point through the CARDO REI Method.
-- **Result:** A working app with Gemini-backed custom debates, local fallback, share links, history, mobile polish, and copyable reports.
-- **Mission:** Help people think more clearly about hard disagreements.
+- **Problem:** Most AI tools flatten messy work into generic chat.
+- **Approach:** Build a platform of specialized tools that pressure-test inputs, flag weak reasoning, and surface the decision point through the CARDO REI Method.
+- **Result:** A working REI.ai app with live tools, shared navigation, local fallback where needed, share links, history, mobile polish, and copyable reports.
+- **Mission:** Help people think more clearly across debate, story, risk, weather, industrial signals, and review workflows.
 
 ## Live Demo
 
@@ -47,9 +50,11 @@ The broader suite in this repo also includes Story Forge (source-faithful story 
 The same app contains:
 
 - **Debate Furnace** (default)
+- **REI.ai** (shared reasoning layer)
 - **Story Forge**
 - **CARDO GUARD** — the synthetic decision validation / launch gate tool
 - **Storm Replay** — historical storm imagery analysis and calibration
+- **Tracepoint** — industrial signal review
 
 Switch tools from the top navigation.
 
@@ -57,7 +62,7 @@ Switch tools from the top navigation.
 
 This repo contains a suite of tools built around the same core idea: turn messy input into reviewable structure and make the real hinge visible.
 
-**Debate Furnace** turns a question into a structured pressure test, shows where each side is strong, shows where each side cracks, and gives the decision back to the user.
+**REI.ai / Debate Furnace** turns a question into a structured pressure test, shows where each side is strong, shows where each side cracks, and gives the decision back to the user.
 
 It currently supports:
 
@@ -313,4 +318,4 @@ Root Directory: ./
 
 ## Status
 
-Debate Furnace is a working public prototype with a live Gemini path for custom debates, saved history, and share links. The current goal is to keep tightening the prompt quality, improve profile coverage, and turn the strongest user patterns into stable product features.
+PromptHound Labs is a working public prototype for the broader REI.ai platform. Debate Furnace is the original pressure-testing slice, and the current goal is to keep tightening the prompt quality, improve profile coverage, and turn the strongest user patterns into stable product features across the suite.
