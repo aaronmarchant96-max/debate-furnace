@@ -6,6 +6,7 @@ const DEFAULT_MODEL = process.env.MODEL || null;
 import { exec } from "child_process";
 import { promisify } from "util";
 import fs from "fs";
+import { buildRouterDecision, resolveRoutingModel } from "../src/lib/nightShiftRouter.js";
 
 const execAsync = promisify(exec);
 const CFAI_PATH = process.env.CFAI_PATH; // No default – if undefined we fall back to Groq
@@ -125,14 +126,15 @@ When fixing an error:
 ## Note for Agent Environments
 You have file and shell access — use it. Verify, don't assume, wherever a tool call can replace a guess.`;
 
-function selectGroqModel() {
-  // Always use the 70B model. The 8B instant model ignores the system prompt
-  // and hallucinates off-topic responses, so it is not used.
-  return DEFAULT_MODEL || "llama-3.3-70b-versatile";
+function selectGroqModel(prompt = "", routerDecision = null) {
+  const decision = routerDecision || buildRouterDecision({ input: prompt });
+  return resolveRoutingModel(decision) || DEFAULT_MODEL || "llama-3.3-70b-versatile";
 }
 
-async function callGroqDirectly(prompt, systemPrompt = "", history = []) {
+async function callGroqDirectly(prompt, systemPrompt = "", history = [], routerDecision = null) {
+  const isPremiumRoute = routerDecision?.model === "gpt-4o" || routerDecision?.id === "adversarial-validation";
   const isGptMode =
+    isPremiumRoute ||
     prompt.toLowerCase().includes("proprietary model profiles") ||
     prompt.toLowerCase().includes("gpt mode");
 
@@ -186,10 +188,12 @@ async function callGroqDirectly(prompt, systemPrompt = "", history = []) {
     return {
       content: `[REI.AI NOTICE] GROQ_API_KEY not set or placeholder. Mock response for prompt: ${prompt}`,
       model: 'mock',
+      routerDecision,
     };
   }
 
-  const selectedModel = selectGroqModel(prompt);
+  const selectedModel = selectGroqModel(prompt, routerDecision);
+  const maxTokens = routerDecision?.maxTokens || 2048;
 
   const requestBody = {
     model: selectedModel,
@@ -205,7 +209,7 @@ async function callGroqDirectly(prompt, systemPrompt = "", history = []) {
       },
     ],
     temperature: 0.7,
-    max_tokens: 2048,
+    max_tokens: maxTokens,
   };
 
   // Retry transient failures (rate limits, 5xx) to avoid spiking the error rate.
@@ -237,7 +241,7 @@ async function callGroqDirectly(prompt, systemPrompt = "", history = []) {
         content = `[REI.AI ROUTING WARNING: OPENAI_API_KEY not found in Vercel. Falling back to Open-Source Router: ${selectedModel}]\n\n${content}`;
       }
 
-      return { content, model: selectedModel };
+      return { content, model: selectedModel, routerDecision };
     }
 
     const errText = await response.text();
@@ -253,11 +257,12 @@ async function callGroqDirectly(prompt, systemPrompt = "", history = []) {
   return {
     content: `[REI.AI NOTICE] The reasoning backend is temporarily busy (rate limit). Please wait a moment and try again.`,
     model: "rate-limited",
+    routerDecision,
     rateLimited: true,
   };
 }
 
-async function handleCfaiRequest(command, args = [], input = "", systemPrompt = "", history = []) {
+async function handleCfaiRequest(command, args = [], input = "", systemPrompt = "", history = [], routerDecision = null) {
   // Check if CLI is available locally
   const localCliExists = CFAI_PATH && fs.existsSync(CFAI_PATH);
 
@@ -265,11 +270,12 @@ async function handleCfaiRequest(command, args = [], input = "", systemPrompt = 
     try {
       // Fallback: execute direct Groq API routing
       const payload = input || (args.length > 0 ? args.join(" ") : "help");
-      const response = await callGroqDirectly(payload, systemPrompt, history);
+      const response = await callGroqDirectly(payload, systemPrompt, history, routerDecision);
       return {
         success: true,
         result: response.content,
         model: response.model,
+        routerDecision: response.routerDecision || routerDecision,
         timestamp: new Date().toISOString(),
       };
     } catch (apiError) {
@@ -324,7 +330,7 @@ export default async function handler(req, res) {
     res.setHeader("Content-Type", "application/json");
 
     if (req.method === "POST") {
-      const { command, args = [], input = "", systemPrompt = "", history = [] } = req.body || {};
+      const { command, args = [], input = "", systemPrompt = "", history = [], routerDecision } = req.body || {};
       
       // Backend length guard - never trust client-side validation alone
       if (typeof input === "string" && input.length > MAX_INPUT_CHARS) {
@@ -334,7 +340,7 @@ export default async function handler(req, res) {
         });
       }
       
-      const result = await handleCfaiRequest(command, args, input, systemPrompt, history);
+      const result = await handleCfaiRequest(command, args, input, systemPrompt, history, routerDecision);
       res.status(result.success ? 200 : 500).json(result);
       return;
     }

@@ -1,0 +1,68 @@
+[
+  {
+    "id": "simple-greeting",
+    "jobType": "simple-greeting",
+    "label": "Simple Greeting",
+    "model": "llama-3.1-8b-instant",
+    "maxTokens": 50,
+    "costPer1k": 0.3,
+    "qualityGate": "Single sentence + invitation",
+    "enforce": null,
+    "description": "Fast, cheap responses for greetings and light warm-up context."
+  },
+  {
+    "id": "structured-reasoning",
+    "jobType": "structured-reasoning",
+    "label": "Structured Reasoning",
+    "model": "llama-3.3-70b-versatile",
+    "maxTokens": 400,
+    "costPer1k": 1.0,
+    "qualityGate": "Hinge + Facts + Move",
+    "enforce": null,
+    "description": "Default routing for general decision support and analysis."
+  },
+  {
+    "id": "coding-hinge",
+    "jobType": "coding-hinge",
+    "label": "Coding Hinge",
+    "model": "llama-3.3-70b-versatile",
+    "maxTokens": 600,
+    "costPer1k": 1.0,
+    "qualityGate": "Phase 0 + HARD STOP",
+    "enforce": "HARD_STOP",
+    "description": "Coding tasks that need clarification, root-cause analysis, and explicit verification."
+  },
+  {
+    "id": "genealogy-deep-dive",
+    "jobType": "genealogy-deep-dive",
+    "label": "Genealogy Deep Dive",
+    "model": "llama-3.3-70b-versatile",
+    "maxTokens": 800,
+    "costPer1k": 1.0,
+    "qualityGate": "Evidence tiers + citations",
+    "enforce": "EVIDENCE_TIERS",
+    "description": "Genealogy, archival record analysis, and evidence-tiered reasoning."
+  },
+  {
+    "id": "story-architect",
+    "jobType": "story-architect",
+    "label": "Story Architect",
+    "model": "llama-3.3-70b-versatile",
+    "maxTokens": 600,
+    "costPer1k": 1.0,
+    "qualityGate": "Character hinge + timeline",
+    "enforce": "NARRATIVE_BLUEPRINT",
+    "description": "Narrative planning, outlines, and story architecture."
+  },
+  {
+    "id": "adversarial-validation",
+    "jobType": "adversarial-validation",
+    "label": "Adversarial Validation",
+    "model": "gpt-4o",
+    "maxTokens": 1500,
+    "costPer1k": 5.0,
+    "qualityGate": "Red-team validation",
+    "enforce": "RED_TEAM",
+    "description": "High-stakes critique, adversarial review, or stress-testing."
+  }
+]

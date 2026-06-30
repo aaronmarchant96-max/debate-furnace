@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useMobile, useKeyboardVisible } from "./useMobile.js";
+import { buildRouterDecision } from "./lib/nightShiftRouter.js";
 
 const MAX_RECORD_CHARS = 12000;
 
@@ -701,6 +702,13 @@ export default function REI() {
         ? `\n\nIngested Source Record (pasted by user, source: ${sourceLabel} — treat as raw, unverified material to evaluate and tier, not as established fact):\n\"\"\"\n${ingestedRecord}\n\"\"\"\n`
         : "";
 
+      const routerDecision = buildRouterDecision({
+        input: userMsg.text,
+        domain: selectedDomain,
+        history: historyPayload,
+        attachedRecord: ingestedRecord,
+      });
+
       // Call route handler API with domain-specific context
       const response = await fetch('/api/cfai', {
         method: 'POST',
@@ -711,7 +719,8 @@ export default function REI() {
           command: 'score',
           input: `${systemContext}\n\nDomain: ${currentDomain.label}\nRules: ${currentDomain.rules.join(", ")}${recordBlock}\n\nUser Query: ${userMsg.text}`,
           systemPrompt: systemContext,
-          history: historyPayload
+          history: historyPayload,
+          routerDecision,
         })
       });
 
@@ -736,6 +745,7 @@ export default function REI() {
             timestamp: data.timestamp || new Date().toISOString(),
             hadIngestedRecord: Boolean(ingestedRecord),
             recordSourceType: ingestedRecord ? recordSourceType : null,
+            routerDecision: data.routerDecision || routerDecision,
           }
         }
       ]);
