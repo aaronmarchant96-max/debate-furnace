@@ -36,6 +36,8 @@ describe("cardoGuard", () => {
       costToMiss: 1200000,
     });
 
+    // Note: comparison strings are scenario-specific copy — if scenario
+    // text changes, these assertions will fail intentionally.
     expect(buildCardoGuardComparison(review)).toEqual([
       "Make acting more expensive.",
       "Show this score band is wrong more often than assumed.",
@@ -174,6 +176,27 @@ describe("cardoGuard", () => {
       // The previously unreachable defensive branch (falseAlarmRate === 1)
       expect(calculateBreakevenMissCost(50000, 1)).toBe(0);
       expect(calculateBreakevenMissCost(0, 1)).toBe(0);
+    });
+
+    // Band boundary tests — these catch regressions if the bucketing
+    // thresholds shift. Mid-band values are tested above; these test
+    // the exact edges where one band becomes another.
+    it("getConfidenceBand maps boundary values to the correct band", () => {
+      expect(getConfidenceBand(90)).toBe("high");      // top of high band
+      expect(getConfidenceBand(89)).toBe("moderate");  // just below high
+      expect(getConfidenceBand(85)).toBe("moderate");  // top of moderate band
+      expect(getConfidenceBand(84)).toBe("low");       // just below moderate
+      expect(getConfidenceBand(75)).toBe("low");       // top of low band
+      expect(getConfidenceBand(74)).toBe("very low");  // just below low
+    });
+
+    it("getSyntheticFalseAlarmRate maps boundary values to the correct rate", () => {
+      expect(getSyntheticFalseAlarmRate(90)).toBe(0.15); // top of high band
+      expect(getSyntheticFalseAlarmRate(89)).toBe(0.31); // crosses into moderate
+      expect(getSyntheticFalseAlarmRate(85)).toBe(0.31); // top of moderate band
+      expect(getSyntheticFalseAlarmRate(84)).toBe(0.44); // crosses into low
+      expect(getSyntheticFalseAlarmRate(75)).toBe(0.44); // top of low band
+      expect(getSyntheticFalseAlarmRate(74)).toBe(0.57); // crosses into very low
     });
   });
 });

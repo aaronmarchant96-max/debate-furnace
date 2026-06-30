@@ -35,20 +35,20 @@ export function getScenarioById(id) {
 export function getSyntheticFalseAlarmRate(confidence) {
   const numericConfidence = Number(confidence);
 
-  if (numericConfidence >= 94) return 0.09;
-  if (numericConfidence >= 88) return 0.15;
-  if (numericConfidence >= 80) return 0.31;
-  if (numericConfidence >= 70) return 0.44;
+  if (numericConfidence >= 95) return 0.09;
+  if (numericConfidence >= 90) return 0.15;
+  if (numericConfidence >= 85) return 0.31;
+  if (numericConfidence >= 75) return 0.44;
   return 0.57;
 }
 
 export function getConfidenceBand(confidence) {
   const numericConfidence = Number(confidence);
 
-  if (numericConfidence >= 94) return "very high";
-  if (numericConfidence >= 88) return "high";
-  if (numericConfidence >= 80) return "moderate";
-  if (numericConfidence >= 70) return "low";
+  if (numericConfidence >= 95) return "very high";
+  if (numericConfidence >= 90) return "high";
+  if (numericConfidence >= 85) return "moderate";
+  if (numericConfidence >= 75) return "low";
   return "very low";
 }
 
