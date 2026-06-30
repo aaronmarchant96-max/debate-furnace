@@ -919,6 +919,29 @@ Limitations:
                     📋 Record attached — {msg.attachedRecord.sourceType} ({msg.attachedRecord.charCount.toLocaleString()} chars)
                   </div>
                 )}
+                {msg.sender === "rei" && msg.rawJson?.routerDecision && (
+                  <div style={{
+                    marginBottom: "8px",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "6px 10px",
+                    borderRadius: "999px",
+                    border: "1px solid rgba(251,146,60,0.24)",
+                    background: "rgba(251,146,60,0.1)",
+                    color: "#fed7aa",
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    letterSpacing: "0.03em",
+                    textTransform: "uppercase",
+                  }}>
+                    <span style={{ fontSize: "11px" }}>🌙</span>
+                    <span>{msg.rawJson.routerDecision.label}</span>
+                    <span style={{ color: "#fbbf24", fontWeight: 600 }}>
+                      {msg.rawJson.routerDecision.model}
+                    </span>
+                  </div>
+                )}
                 <div
                   style={{
                     background: msg.sender === "user" ? "rgba(255,255,255,0.06)" : "rgba(251,146,60,0.08)",
@@ -972,14 +995,18 @@ Limitations:
                     msg.text
                   )}
 
-                  {/* Raw JSON details drawer */}
+                  {/* Router summary */}
                   {msg.rawJson && (
-                    <details style={{ marginTop: "12px", borderTop: "1px dashed rgba(251,146,60,0.18)", paddingTop: "8px" }}>
-                      <summary style={{ color: "#94A3B8", fontSize: "0.85em", cursor: "pointer", outline: "none" }}>Raw JSON</summary>
-                      <pre style={{ fontSize: "0.85em", color: "#94A3B8", overflowX: "auto", marginTop: "6px", background: "rgba(0,0,0,0.3)", padding: "8px", borderRadius: "4px" }}>
-                        <code>{JSON.stringify(msg.rawJson, null, 2)}</code>
-                      </pre>
-                    </details>
+                    <div style={{ marginTop: "12px", borderTop: "1px dashed rgba(251,146,60,0.18)", paddingTop: "8px" }}>
+                      <div style={{ color: "#94A3B8", fontSize: "0.85em", marginBottom: "6px", fontWeight: 600 }}>Night Shift routing</div>
+                      <div style={{ display: "grid", gap: "4px", fontSize: "0.82em", color: "#cbd5e1" }}>
+                        <div><strong style={{ color: "#fb923c" }}>Route:</strong> {msg.rawJson.routerDecision?.label || "n/a"}</div>
+                        <div><strong style={{ color: "#fb923c" }}>Model:</strong> {msg.rawJson.routerDecision?.model || msg.rawJson.model || "n/a"}</div>
+                        <div><strong style={{ color: "#fb923c" }}>Max tokens:</strong> {msg.rawJson.routerDecision?.maxTokens || "n/a"}</div>
+                        <div><strong style={{ color: "#fb923c" }}>Quality gate:</strong> {msg.rawJson.routerDecision?.qualityGate || "n/a"}</div>
+                        <div><strong style={{ color: "#fb923c" }}>Enforcement:</strong> {msg.rawJson.routerDecision?.enforce || "none"}</div>
+                      </div>
+                    </div>
                   )}
                   <button
                     onClick={() => copyText(msg.text)}
