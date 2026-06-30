@@ -73,6 +73,16 @@ function getToolPath(tool) {
   return "/#rei";
 }
 
+function getToolLabel(tool) {
+  if (tool === "tools") return "Tools";
+  if (tool === "story-forge") return "Story Forge";
+  if (tool === "storm-replay") return "Storm Replay";
+  if (tool === "cardo-guard") return "CARDO GUARD";
+  if (tool === "rei" || tool === "cfai") return "REI.ai";
+  if (tool === "tracepoint") return "Tracepoint";
+  return "Debate Furnace";
+}
+
 export default function AppShell() {
   const [tool, setTool] = useState(getInitialTool);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -111,6 +121,8 @@ export default function AppShell() {
                 ? "PromptHound Labs | Tracepoint"
                 : "PromptHound Labs | Debate Furnace";
   }, [tool]);
+
+  const currentToolLabel = getToolLabel(tool);
 
   return (
     <div className="app-shell" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
@@ -182,41 +194,45 @@ export default function AppShell() {
           </button>
         </>
       )}
-      
-      <header className={`shell-header ${tool === "tools" ? "shell-header--landing" : "shell-header--tool"}`}>
-        {tool === "tools" ? (
+
+      {tool === "tools" ? (
+        <header className="shell-header shell-header--landing">
           <div className="shell-brand">
             <div className="shell-brand__title">PromptHound Labs</div>
             <div className="shell-brand__sub">Structured outputs for messy input.</div>
           </div>
-        ) : (
+
+          {!mobile && (
+            <nav className="top-tabs hide-mobile" aria-label="Top-level tools">
+              {TOP_LEVEL.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={tool === item.id ? "top-tab is-active" : "top-tab touch-target"}
+                  onClick={() => setTool(item.id)}
+                  aria-pressed={tool === item.id}
+                >
+                  <span className="top-tab__label">{item.label}</span>
+                  <span className="top-tab__sub">{item.subtitle}</span>
+                </button>
+              ))}
+            </nav>
+          )}
+        </header>
+      ) : !mobile ? (
+        <div className="shell-tool-bar" aria-label="Breadcrumb">
           <button
             type="button"
-            className="shell-brand--mini"
+            className="shell-tool-bar__back"
             onClick={() => setTool("tools")}
-            aria-label="Open tools menu"
           >
-            PromptHound
+            ← PromptHound Labs
           </button>
-        )}
+          <span className="shell-tool-bar__sep" aria-hidden="true">/</span>
+          <span className="shell-tool-bar__current">{currentToolLabel}</span>
+        </div>
+      ) : null}
 
-        {!mobile && (
-          <nav className="top-tabs hide-mobile" aria-label="Top-level tools">
-            {TOP_LEVEL.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                className={tool === item.id ? "top-tab is-active" : "top-tab touch-target"}
-                onClick={() => setTool(item.id)}
-                aria-pressed={tool === item.id}
-              >
-                <span className="top-tab__label">{item.label}</span>
-                <span className="top-tab__sub">{item.subtitle}</span>
-              </button>
-            ))}
-          </nav>
-        )}
-      </header>
       <main className="shell-main" style={mobile && drawerOpen ? { opacity: 0.3 } : {}}>
         {tool === "tools" ? (
           <ToolsLanding onOpenTool={setTool} />

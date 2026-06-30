@@ -56,7 +56,10 @@ button {
 }
 
 .app-shell {
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
   background: var(--page);
 }
 
@@ -71,35 +74,45 @@ button {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
-.shell-header--tool {
-  padding: 8px 16px;
-  min-height: 48px;
+.shell-tool-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(9, 13, 18, 0.96);
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 
-.shell-header--tool .top-tabs {
-  width: 100%;
-  justify-content: flex-end;
+.shell-tool-bar__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.shell-tool-bar__back:hover {
+  color: var(--accent-strong);
+}
+
+.shell-tool-bar__sep {
+  color: var(--text-dim);
+}
+
+.shell-tool-bar__current {
+  color: var(--text);
+  font-weight: 600;
 }
 
 .shell-brand {
   min-width: 0;
-}
-
-.shell-brand--mini {
-  flex: 0 0 auto;
-  background: transparent;
-  border: none;
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  padding: 6px 10px;
-  border-radius: 8px;
-  transition: background 0.15s ease;
-}
-
-.shell-brand--mini:hover {
-  background: rgba(251, 146, 60, 0.1);
 }
 
 .shell-brand__eyebrow,
@@ -312,7 +325,10 @@ button {
 }
 
 .shell-main {
-  padding: 16px 24px 32px;
+  flex: 1;
+  min-height: 0;
+  padding: 0;
+  overflow: auto;
 }
 
 .creative-engine,
@@ -3202,6 +3218,7 @@ button {
 .tools-page {
   display: grid;
   gap: 12px;
+  padding: 24px !important;
 }
 
 .tools-hero {
@@ -3297,10 +3314,6 @@ button {
     flex-direction: row;
     padding-left: 16px;
     padding-right: 16px;
-  }
-
-  .shell-header--tool {
-    padding-left: 16px;
   }
 
   .shell-brand__title {
