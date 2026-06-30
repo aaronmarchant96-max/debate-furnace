@@ -782,7 +782,7 @@ Limitations:
       color: "#E2E8F0",
       fontFamily: "Inter, sans-serif",
       width: "100%",
-      maxWidth: mobile ? undefined : "1200px",
+      maxWidth: mobile ? undefined : "1400px",
       marginLeft: mobile ? undefined : "auto",
       marginRight: mobile ? undefined : "auto"
     }}>
@@ -807,7 +807,7 @@ Limitations:
             </div>
             <div>
               <h1 className="rei-logo-title" style={{ margin: 0, lineHeight: 1.1 }}>REI.ai</h1>
-              <p className="rei-logo-sub" style={{ margin: 0, fontSize: "11px", color: "#94a3b8" }}>
+              <p className="rei-logo-sub" style={{ margin: "4px 0 0", fontSize: "12px", color: "#94a3b8", letterSpacing: "0.02em" }}>
                 Latin: <em>Rei</em> (The Matter / Hinge) &nbsp;|&nbsp; Loop: <strong>Record • Evaluate • Iterate</strong>
               </p>
             </div>
@@ -842,16 +842,15 @@ Limitations:
               type="button"
               onClick={handleClearHistory}
               style={{
-                background: "transparent",
+                background: "rgba(239, 68, 68, 0.08)",
                 color: "#EF4444",
-                border: "1px dashed #EF4444",
+                border: "1px solid rgba(239, 68, 68, 0.4)",
                 padding: "9px 14px",
                 borderRadius: "9px",
                 fontSize: "12.5px",
                 fontWeight: "bold",
                 cursor: "pointer",
-                transition: "all 0.2s ease",
-                marginLeft: "8px"
+                transition: "all 0.2s ease"
               }}
               onMouseOver={(e) => e.currentTarget.style.background = "rgba(239, 68, 68, 0.1)"}
               onMouseOut={(e) => e.currentTarget.style.background = "transparent"}
@@ -884,7 +883,7 @@ Limitations:
         {/* Scrollable Main Content with keyboard space */}
         <main className="flex-1 overflow-y-auto pb-32" style={{ padding: "16px 16px 0" }}>
           {/* Active Domain Info Banner (Custom Card Style) */}
-        <div className="bg-[#2c1f14] rounded-3xl p-5 border border-amber-900">
+        <div className="bg-[#2c1f14] rounded-3xl p-5 border border-amber-900" style={{ marginBottom: "20px" }}>
           <div style={{ fontSize: "10.5px", fontWeight: "700", letterSpacing: "0.08em", textTransform: "uppercase", color: "#fb923c", marginBottom: "6px" }}>
             Active Voice
           </div>
@@ -933,7 +932,7 @@ Limitations:
         />
 
         {/* Chat Interface Container */}
-        <div className="rei-chat-container" style={{ flex: 1, background: "rgba(0,0,0,0.2)", border: "1px solid rgba(251,146,60,0.15)", borderRadius: "12px", display: "flex", flexDirection: "column", minHeight: "500px", overflow: "hidden" }}>
+        <div className="rei-chat-container" style={{ flex: 1, background: "rgba(0,0,0,0.2)", border: "1px solid rgba(251,146,60,0.15)", borderRadius: "12px", display: "flex", flexDirection: "column", minHeight: "300px", overflow: "hidden" }}>
           
           {/* Chat History Area */}
           <div className="rei-chat-history" style={{ flex: 1, padding: "20px", overflowY: "auto", display: "flex", flexDirection: "column", gap: "18px" }}>
@@ -942,7 +941,8 @@ Limitations:
                 key={index}
                 style={{
                   alignSelf: msg.sender === "user" ? "flex-end" : "flex-start",
-                  maxWidth: "80%",
+                  maxWidth: "95%",
+                  width: "100%",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: msg.sender === "user" ? "flex-end" : "flex-start",
@@ -971,7 +971,7 @@ Limitations:
                     color: "#E2E8F0",
                     border: msg.sender === "user" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(251,146,60,0.18)",
                     borderRadius: "10px",
-                    padding: "10px 14px",
+                    padding: "10px 60px 10px 14px",
                     fontFamily: msg.sender === "rei" ? "JetBrains Mono, Fira Code, monospace" : "inherit",
                     fontSize: "14.5px",
                     whiteSpace: "pre-wrap",
@@ -1083,7 +1083,7 @@ Limitations:
         {/* Fixed Input Area at Bottom with safe area */}
         <div className="fixed bottom-0 safe-bottom" style={{
           width: "100%",
-          maxWidth: mobile ? undefined : "1200px",
+          maxWidth: mobile ? undefined : "1400px",
           left: 0,
           right: 0,
           marginLeft: mobile ? undefined : "auto",
@@ -1108,10 +1108,13 @@ Limitations:
                       setInputMessage(prompt);
                       setAssistantPromptIndex(index);
                     }}
-                    className="bg-[#3a2a1f] py-4 rounded-2xl text-xs tracking-wider"
+                    className="bg-[#3a2a1f] rounded-2xl text-xs tracking-wider"
                     style={{
                       flex: mobile ? "1 1 30%" : "1 1 auto",
-                      minWidth: mobile ? "80px" : "140px"
+                      minWidth: mobile ? "100px" : "180px",
+                      padding: "14px 18px",
+                      whiteSpace: "normal",
+                      lineHeight: "1.3"
                     }}
                   >
                     {prompt}
@@ -1125,7 +1128,7 @@ Limitations:
                 type="text"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                placeholder={selectedDomain === "assistant" ? assistantQuickPrompt : "Type proof context or statements to evaluate..."}
+                placeholder={selectedDomain === "assistant" ? "What are you thinking through?" : "Type proof context or statements to evaluate..."}
                 className="rei-input-area"
                 style={{
                   flex: 1,
@@ -1154,6 +1157,8 @@ Limitations:
                   transition: "background 0.2s ease",
                   minWidth: "48px",
                   minHeight: "48px",
+                  height: "48px",
+                  alignSelf: "center",
                   fontSize: "16px"
                 }}
                 onMouseOver={(e) => e.currentTarget.style.background = "#fb923c"}
