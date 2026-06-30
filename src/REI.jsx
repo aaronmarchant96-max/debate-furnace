@@ -435,6 +435,299 @@ export default function REI() {
         position: relative;
         z-index: 1;
       }
+      .rei-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 16px 16px 12px;
+        background: rgba(10, 5, 5, 0.9);
+        border-bottom: 1px solid rgba(251, 146, 60, 0.16);
+        backdrop-filter: blur(10px);
+      }
+      .rei-header__brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+      .rei-domain-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        justify-content: flex-end;
+        flex: 1 1 320px;
+      }
+      .rei-domain-tab {
+        padding: 8px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.02);
+        color: #94a3b8;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.25;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        text-align: left;
+        min-height: 46px;
+      }
+      .rei-domain-tab.is-active {
+        background: linear-gradient(135deg, rgba(249,115,22,0.22), rgba(251,191,36,0.14));
+        border-color: #f97316;
+        color: #fed7aa;
+        box-shadow: 0 0 18px rgba(249,115,22,0.15);
+      }
+      .rei-action-btn {
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 10px;
+        padding: 9px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #e2e8f0;
+        background: rgba(255,255,255,0.04);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .rei-action-btn:hover {
+        border-color: rgba(251,146,60,0.35);
+        transform: translateY(-1px);
+      }
+      .rei-action-btn--danger {
+        color: #fda4af;
+        border-color: rgba(251,113,133,0.25);
+      }
+      .rei-action-btn--accent {
+        color: #fde68a;
+        border-color: rgba(251,191,36,0.25);
+      }
+      .rei-domain-banner {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(251,146,60,0.16);
+        border-radius: 14px;
+        padding: 12px 14px;
+        margin-bottom: 12px;
+      }
+      .rei-domain-banner__eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #fb923c;
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+      .rei-domain-banner__row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+      .rei-domain-banner__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        color: #f5d7c4;
+        font-size: 13px;
+      }
+      .rei-domain-banner__meta--secondary {
+        color: #d6a98a;
+      }
+      .rei-domain-banner__label {
+        color: #fb923c;
+        font-weight: 700;
+      }
+      .rei-domain-banner__steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .rei-domain-banner__step {
+        padding: 5px 8px;
+        border-radius: 999px;
+        background: rgba(251,146,60,0.11);
+        border: 1px solid rgba(251,146,60,0.18);
+        color: #fed7aa;
+        font-size: 11px;
+        font-weight: 600;
+      }
+      .rei-chat-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .rei-chat-history {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-bottom: 8px;
+      }
+      .rei-chat-message {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        animation: fadeIn 0.3s ease-in-out forwards;
+        opacity: 0;
+      }
+      .rei-chat-message--user {
+        align-items: flex-end;
+      }
+      .rei-chat-message--rei {
+        align-items: flex-start;
+      }
+      .rei-chat-bubble {
+        border-radius: 12px;
+        padding: 12px 14px 12px 14px;
+        font-family: inherit;
+        font-size: 14.5px;
+        white-space: pre-wrap;
+        line-height: 1.5;
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .rei-chat-bubble--user {
+        background: rgba(255,255,255,0.06);
+        color: #E2E8F0;
+        border: 1px solid rgba(255,255,255,0.1);
+      }
+      .rei-chat-bubble--rei {
+        background: rgba(251,146,60,0.08);
+        color: #E2E8F0;
+        border: 1px solid rgba(251,146,60,0.18);
+      }
+      .rei-chat-meta {
+        font-size: 0.78em;
+        color: #94A3B8;
+        margin-top: 4px;
+      }
+      .rei-router-badge {
+        margin-bottom: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(251,146,60,0.24);
+        background: rgba(251,146,60,0.1);
+        color: #fed7aa;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+      .rei-router-panel {
+        margin-top: 12px;
+        border-top: 1px dashed rgba(251,146,60,0.18);
+        padding-top: 8px;
+      }
+      .rei-router-panel__title {
+        color: #94A3B8;
+        font-size: 0.85em;
+        margin-bottom: 6px;
+        font-weight: 600;
+      }
+      .rei-router-panel__grid {
+        display: grid;
+        gap: 4px;
+        font-size: 0.82em;
+        color: #cbd5e1;
+      }
+      .rei-router-panel__item {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .rei-router-panel__label {
+        color: #fb923c;
+        font-weight: 700;
+      }
+      .rei-copy-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: rgba(251,146,60,0.15);
+        border: 1px solid rgba(251,146,60,0.3);
+        border-radius: 4px;
+        color: #fb923c;
+        cursor: pointer;
+        font-size: 0.75em;
+        padding: 2px 6px;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        min-width: 44px;
+        min-height: 44px;
+      }
+      .rei-copy-btn:hover {
+        opacity: 1;
+      }
+      .rei-input-shell {
+        width: 100%;
+        max-width: 1400px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        background: var(--surface);
+        border-top: 1px solid rgba(251,146,60,0.15);
+        padding: 16px;
+        box-sizing: border-box;
+      }
+      .rei-input-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .rei-input-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .rei-input-area {
+        flex: 1;
+        background: rgba(0,0,0,0.2);
+        color: #E2E8F0;
+        border: 1px solid rgba(251,146,60,0.15);
+        border-radius: 6px;
+        font-family: inherit;
+        font-size: 16px;
+        outline: none;
+      }
+      .rei-input-area:focus {
+        border-color: rgba(251,146,60,0.45);
+        box-shadow: 0 0 0 2px rgba(249,115,22,0.18);
+      }
+      .rei-touch-button {
+        background: #f97316;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        min-width: 48px;
+        align-self: center;
+        font-size: 16px;
+      }
+      .rei-quick-prompt {
+        flex: 1 1 auto;
+        min-width: 100px;
+        padding: 14px 18px;
+        white-space: normal;
+        line-height: 1.3;
+        border-radius: 16px;
+        background: #3a2a1f;
+        color: #f5e5d7;
+        border: 1px solid rgba(255,255,255,0.06);
+        cursor: pointer;
+      }
+      .rei-quick-prompt:hover {
+        border-color: rgba(251,146,60,0.35);
+        transform: translateY(-1px);
+      }
       
       /* Philosophy Modal Styles */
       .rei-modal-overlay {
@@ -549,14 +842,6 @@ export default function REI() {
     }
   }, []);
 
-
-  // Clear legacy chat history key on first load (pre‑v2 storage)
-  useEffect(() => {
-    if (typeof window !== "undefined" && localStorage.getItem("rei_chat_history_v2")) {
-      console.info("Removing legacy chat history key 'rei_chat_history_v2' to reset chat");
-      localStorage.removeItem("rei_chat_history_v2");
-    }
-  }, []);
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState(() => {
   if (typeof window !== "undefined") {
@@ -893,15 +1178,10 @@ Limitations:
             {messages.map((msg, index) => (
               <div
                 key={index}
+                className={`rei-chat-message ${msg.sender === "user" ? "rei-chat-message--user" : "rei-chat-message--rei"}`}
                 style={{
-                  alignSelf: msg.sender === "user" ? "flex-end" : "flex-start",
                   maxWidth: "95%",
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: msg.sender === "user" ? "flex-end" : "flex-start",
-                  animation: "fadeIn 0.3s ease-in-out forwards",
-                  opacity: 0
+                  width: "100%"
                 }}
                 onAnimationEnd={(e) => {
                   e.currentTarget.style.opacity = "1";
@@ -920,21 +1200,7 @@ Limitations:
                   </div>
                 )}
                 {msg.sender === "rei" && msg.rawJson?.routerDecision && (
-                  <div style={{
-                    marginBottom: "8px",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "6px 10px",
-                    borderRadius: "999px",
-                    border: "1px solid rgba(251,146,60,0.24)",
-                    background: "rgba(251,146,60,0.1)",
-                    color: "#fed7aa",
-                    fontSize: "11px",
-                    fontWeight: 700,
-                    letterSpacing: "0.03em",
-                    textTransform: "uppercase",
-                  }}>
+                  <div className="rei-router-badge">
                     <span style={{ fontSize: "11px" }}>🌙</span>
                     <span>{msg.rawJson.routerDecision.label}</span>
                     <span style={{ color: "#fbbf24", fontWeight: 600 }}>
@@ -943,17 +1209,9 @@ Limitations:
                   </div>
                 )}
                 <div
+                  className={`rei-chat-bubble ${msg.sender === "user" ? "rei-chat-bubble--user" : "rei-chat-bubble--rei"}`}
                   style={{
-                    background: msg.sender === "user" ? "rgba(255,255,255,0.06)" : "rgba(251,146,60,0.08)",
-                    color: "#E2E8F0",
-                    border: msg.sender === "user" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(251,146,60,0.18)",
-                    borderRadius: "10px",
-                    padding: "10px 60px 10px 14px",
-                    fontFamily: "inherit",
-                    fontSize: "14.5px",
-                    whiteSpace: "pre-wrap",
-                    lineHeight: "1.4",
-                    position: "relative"
+                    padding: "10px 60px 10px 14px"
                   }}
                 >
                   {selectedDomain === "assistant" && msg.sender === "rei" && !msg.rawJson?.fallback ? (
@@ -997,14 +1255,14 @@ Limitations:
 
                   {/* Router summary */}
                   {msg.rawJson && (
-                    <div style={{ marginTop: "12px", borderTop: "1px dashed rgba(251,146,60,0.18)", paddingTop: "8px" }}>
-                      <div style={{ color: "#94A3B8", fontSize: "0.85em", marginBottom: "6px", fontWeight: 600 }}>Night Shift routing</div>
-                      <div style={{ display: "grid", gap: "4px", fontSize: "0.82em", color: "#cbd5e1" }}>
-                        <div><strong style={{ color: "#fb923c" }}>Route:</strong> {msg.rawJson.routerDecision?.label || "n/a"}</div>
-                        <div><strong style={{ color: "#fb923c" }}>Model:</strong> {msg.rawJson.routerDecision?.model || msg.rawJson.model || "n/a"}</div>
-                        <div><strong style={{ color: "#fb923c" }}>Max tokens:</strong> {msg.rawJson.routerDecision?.maxTokens || "n/a"}</div>
-                        <div><strong style={{ color: "#fb923c" }}>Quality gate:</strong> {msg.rawJson.routerDecision?.qualityGate || "n/a"}</div>
-                        <div><strong style={{ color: "#fb923c" }}>Enforcement:</strong> {msg.rawJson.routerDecision?.enforce || "none"}</div>
+                    <div className="rei-router-panel">
+                      <div className="rei-router-panel__title">Night Shift routing</div>
+                      <div className="rei-router-panel__grid">
+                        <div className="rei-router-panel__item"><span className="rei-router-panel__label">Route:</span> {msg.rawJson.routerDecision?.label || "n/a"}</div>
+                        <div className="rei-router-panel__item"><span className="rei-router-panel__label">Model:</span> {msg.rawJson.routerDecision?.model || msg.rawJson.model || "n/a"}</div>
+                        <div className="rei-router-panel__item"><span className="rei-router-panel__label">Max tokens:</span> {msg.rawJson.routerDecision?.maxTokens || "n/a"}</div>
+                        <div className="rei-router-panel__item"><span className="rei-router-panel__label">Quality gate:</span> {msg.rawJson.routerDecision?.qualityGate || "n/a"}</div>
+                        <div className="rei-router-panel__item"><span className="rei-router-panel__label">Enforcement:</span> {msg.rawJson.routerDecision?.enforce || "none"}</div>
                       </div>
                     </div>
                   )}
@@ -1013,20 +1271,8 @@ Limitations:
                     className="rei-copy-btn touch-target"
                     aria-label="Copy message"
                     style={{
-                      position: "absolute",
-                      top: "8px",
-                      right: "8px",
-                      background: "rgba(251,146,60,0.15)",
-                      border: "1px solid rgba(251,146,60,0.3)",
-                      borderRadius: "4px",
-                      color: "#fb923c",
-                      cursor: "pointer",
                       fontSize: mobile ? "0.85em" : "0.75em",
-                      padding: mobile ? "6px 10px" : "2px 6px",
-                      opacity: 0.7,
-                      transition: "opacity 0.2s",
-                      minWidth: "44px",
-                      minHeight: "44px"
+                      padding: mobile ? "6px 10px" : "2px 6px"
                     }}
                     onMouseOver={(e) => e.currentTarget.style.opacity = 1}
                     onMouseOut={(e) => e.currentTarget.style.opacity = 0.7}
@@ -1035,7 +1281,7 @@ Limitations:
                     Copy
                   </button>
                 </div>
-                <span style={{ fontSize: "0.78em", color: "#94A3B8", marginTop: "4px" }}>
+                <span className="rei-chat-meta">
                   {msg.sender === "user" ? "You" : "REI.ai"} • {msg.timestamp}
                 </span>
               </div>
@@ -1062,23 +1308,13 @@ Limitations:
         </main>
 
         {/* Fixed Input Area at Bottom with safe area */}
-        <div className="fixed bottom-0 safe-bottom" style={{
-          width: "100%",
-          maxWidth: mobile ? undefined : "1400px",
-          left: 0,
-          right: 0,
-          marginLeft: mobile ? undefined : "auto",
-          marginRight: mobile ? undefined : "auto",
-          background: "var(--surface)",
-          borderTop: "1px solid rgba(251,146,60,0.15)",
-          padding: "16px"
+        <div className="rei-input-shell fixed bottom-0 safe-bottom" style={{
+          maxWidth: mobile ? undefined : "1400px"
         }}>
-          <form onSubmit={handleSendMessage} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <form className="rei-input-form" onSubmit={handleSendMessage}>
             {selectedDomain === "assistant" && (
-              <div style={{
-                display: "flex",
+              <div className="rei-input-row" style={{
                 flexWrap: "wrap",
-                gap: "10px",
                 justifyContent: mobile ? "stretch" : "center"
               }}>
                 {GENERALIST_PROMPTS.map((prompt, index) => (
@@ -1089,13 +1325,10 @@ Limitations:
                       setInputMessage(prompt);
                       setAssistantPromptIndex(index);
                     }}
-                    className="bg-[#3a2a1f] rounded-2xl text-xs tracking-wider"
+                    className="rei-quick-prompt"
                     style={{
                       flex: mobile ? "1 1 30%" : "1 1 auto",
-                      minWidth: mobile ? "100px" : "180px",
-                      padding: "14px 18px",
-                      whiteSpace: "normal",
-                      lineHeight: "1.3"
+                      minWidth: mobile ? "100px" : "180px"
                     }}
                   >
                     {prompt}
@@ -1103,7 +1336,7 @@ Limitations:
                 ))}
               </div>
             )}
-            <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+            <div className="rei-input-row">
               <input
                 ref={inputRef}
                 type="text"
@@ -1113,14 +1346,7 @@ Limitations:
                 className="rei-input-area"
                 style={{
                   flex: 1,
-                  background: "rgba(0,0,0,0.2)",
-                  color: "#E2E8F0",
-                  border: "1px solid rgba(251,146,60,0.15)",
-                  borderRadius: "6px",
                   padding: mobile ? "14px 16px" : "12px 16px",
-                  fontFamily: "inherit",
-                  fontSize: "16px",
-                  outline: "none",
                   minHeight: "48px"
                 }}
               />
@@ -1128,19 +1354,9 @@ Limitations:
                 type="submit"
                 className="rei-touch-button touch-target"
                 style={{
-                  background: "#f97316",
-                  color: "#FFFFFF",
-                  border: "none",
-                  borderRadius: "6px",
                   padding: mobile ? "14px 28px" : "12px 24px",
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                  transition: "background 0.2s ease",
-                  minWidth: "48px",
                   minHeight: "48px",
-                  height: "48px",
-                  alignSelf: "center",
-                  fontSize: "16px"
+                  height: "48px"
                 }}
                 onMouseOver={(e) => e.currentTarget.style.background = "#fb923c"}
                 onMouseOut={(e) => e.currentTarget.style.background = "#f97316"}
