@@ -10,7 +10,7 @@ Most AI prototypes look convincing on a happy path but fall apart when the input
 
 What I built
 
-The project now has a REI experience with a structured reasoning shell, a Night Shift routing layer, and a deterministic CARDO GUARD decision gate. The routing layer classifies requests before the model call. The prompt scaffolding adds a hard-stop rule for underspecified work. The app shell keeps the experience organized and reviewable.
+The project now has a REI experience with a structured reasoning shell, a Night Shift routing layer, and a deterministic CARDO GUARD decision gate. The routing layer classifies requests before the model call and now uses richer fingerprint signals, complexity cues, and lightweight route-memory so it can adapt more sensibly to uncertain or repeated patterns. The prompt scaffolding adds a hard-stop rule for underspecified work. The app shell keeps the experience organized and reviewable.
 
 How the routing works
 
