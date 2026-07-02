@@ -61,7 +61,7 @@ export default function CardoGuard() {
   const whyThisVerdict = useMemo(() => buildCardoGuardWhyThisVerdict(review), [review]);
 
   const confidenceBandLabel =
-    review.confidenceBand === "low"
+    review.confidenceBand === "low" || review.confidenceBand === "very low"
       ? "cautious synthetic band"
       : `${review.confidenceBand} calibration band`;
 

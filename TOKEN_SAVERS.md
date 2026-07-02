@@ -1,5 +1,13 @@
 # Token-Saving Workflow for debate-furnace
 
+## Why this document matters
+
+This document exists to keep future CLI sessions productive without wasting context or money. The goal is to make the first useful steps cheap and repeatable, so the work can move forward with less backtracking and less repeated explanation.
+
+A simple target is to reduce the cost of becoming productive from roughly 100K tokens to roughly 12K tokens. That is an 88% reduction in early-session overhead and keeps the work closer to 12% of the available conversation cap.
+
+The same habits that reduce token usage also improve reliability. Clear entry points, documented checks, and a short recovery path make mistakes easier to catch and easier to fix.
+
 ## 🚀 Before Asking Vibe
 
 ### 1. Verify Deployment (No Tokens)

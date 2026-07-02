@@ -1,0 +1,185 @@
+# CLI Reference for REI workspace
+
+**IMPORTANT: This document is the authoritative reference for all CLI agents working on this project. Every CLI session MUST read and follow this document first.**
+
+This file is a compact handoff document for future CLI sessions. It gathers the most important repo context, entry points, and verification steps in one place so you do not need to read many files first.
+
+## For CLI Agents
+
+1. **READ THIS FIRST**: Before making any changes or exploring the codebase, read this entire document
+2. **FOLLOW THE STRUCTURE**: Use the entry points and patterns described here
+3. **UPDATE RESPONSIBLY**: Keep this document current with important architectural changes
+4. **VERIFY BEFORE CLAIMING COMPLETION**: Always run the verification commands listed below
+
+### Efficiency Notes
+
+**Token Efficiency Goal:**
+- **Documented target**: reduce the cost of becoming productive from roughly 100K tokens to roughly 12K tokens
+- **Result**: about 88% less token usage for onboarding and early task execution
+- **Context**: the goal is to keep this work near 12% of the conversation cap so more room stays available for real implementation
+
+**Why this matters:**
+- It shortens the time spent getting oriented before making changes
+- It leaves more room for actual work instead of repeated context gathering
+- It creates a more reliable workflow because the same paths and checks are reused
+- It keeps the project cost-conscious and easier to maintain over time
+
+**How this is achieved:**
+- The CLI reference gives one place to start instead of forcing repeated file reading
+- The entry points and patterns are explicit, which reduces redundant exploration
+- Verification steps are documented, which reduces wasted test cycles and backtracking
+- The mistake-handling section gives a clean recovery path instead of expensive trial-and-error loops
+
+**Maintain this efficiency by:**
+- Reading this document first before making changes or exploring the repo
+- Following the documented entry points and verification steps
+- Updating this document when the architecture or workflow materially changes
+- Keeping changes focused and disciplined so the reference stays useful
+
+## Repo purpose
+
+REI.ai is a reasoning-first web app for structured decision support. The repo includes a live UI, a routing layer, a cost-aware decision gate, and a test suite that treats behavior as something to verify rather than simply observe.
+
+Live demo: https://debate-furnace.vercel.app/#rei
+- **Status**: ✅ Verified accessible (2026-07-01)
+- **Purpose**: Production deployment of REI.ai reasoning interface
+
+Repository: https://github.com/aaronmarchant96-max/rei-ai-platform
+
+## Repository Portfolio
+
+**Total: 579+ commits across 9 repositories** (verified via Git history)
+
+| Repository | Commits | Focus | Status |
+|------------|---------|-------|--------|
+| **codium-code-examples** | 186 | Code examples, Codium AI integration, development patterns | Active |
+| **debate-furnace** | 176 | Production AI platform: REI.ai, NightShift router, CARDO GUARD, 6 specialized tools | Active / Deployed |
+| **llm-adversarial-testing** | 107 | Adversarial testing framework: dual-axis judging, case studies, CI/CD pipeline | Active |
+| **family-archive** | 73 | Genealogy archive: 132 people, 86 documents, evidence-tiered reasoning | Active / Deployed |
+| **uap-footage-analyzer** | 24 | UAP footage analysis system | Active |
+| **aaronmarchant96-max** | 11 | Personal profile and configuration | Active |
+| **local-video-motion-zone-detector** | 3 | Motion detection prototype | Active |
+
+**All repositories built on commodity hardware (Intel Celeron J4105, 8GB RAM) with a $25/month budget.**
+
+**Cross-repo patterns:**
+- Consistent documentation discipline (Fortis et Liber methodology)
+- Token-efficient development workflows
+- Production-grade testing and deployment
+- Cost-aware architecture ( NightShift + CARDO GUARD routing)
+
+## Main entry points
+
+- src/REI.jsx: main REI experience and reasoning shell
+- src/AppShell.jsx: top-level app shell and tool router
+- api/cfai.js: backend route and prompt scaffolding
+- src/lib/nightShiftRouter.js: Night Shift routing logic
+- data/fingerprints.json: routing catalog and cost model
+- src/lib/cardoGuard.js: deterministic decision gate
+- src/lib/nightShiftRouter.test.js: routing tests
+- src/lib/cardoGuard.test.js: CARDO GUARD tests
+
+## Important architecture notes
+
+The Night Shift router is rule-based and explicit. It uses a catalog of fingerprints to choose a path before the model call. The routing decisions are testable and inspectable.
+
+The backend prompt scaffolding in api/cfai.js uses a hard-stop rule for underspecified requests. Instead of guessing, it asks for the missing context.
+
+CARDO GUARD is deterministic and cost-aware. It evaluates whether acting is worth the cost based on confidence and expected loss.
+
+The app shell keeps the experience structured and reviewable rather than leaving everything inside a single chat flow.
+
+## Evidence and testing
+
+Use Jest as the main evidence gate.
+
+### Recent Fixes and Updates
+
+**CardoGuard Test Fix (2026-07-01):**
+- **Problem**: Test "shows the cautious synthetic band for low-confidence scenarios" was failing
+- **Root Cause**: UI wasn't rendering "cautious synthetic band" text for low confidence scenarios
+- **Fix**: Updated `src/CardoGuard.jsx` to render both low and very low confidence bands as "cautious synthetic band"
+- **Verification**: `npm test -- --runInBand src/lib/cardoGuard.test.js src/CardoGuard.test.jsx` (17/17 tests now passing)
+- **Impact**: CARDO GUARD confidence labeling is now consistent across low confidence scenarios
+
+### Current Test Status
+
+- **Total tests**: 17 passing (after fix)
+- **Key test files**:
+  - `src/lib/cardoGuard.test.js` - Core decision logic tests
+  - `src/CardoGuard.test.jsx` - UI component tests
+- **Build status**: ✅ Passing with warnings about chunk size
+- **Production status**: ✅ Live demo verified accessible
+
+Common commands:
+
+- `npm test` - Run full test suite
+- `npm run build` - Production build
+- `npm test -- --runInBand [specific-test-files]` - Targeted testing
+
+The repo already contains tests for routing behavior, app-shell flow, and CARDO GUARD decision logic.
+
+## Useful supporting docs
+
+- README.md
+- CASE_STUDY.md
+- TOKEN_SAVERS.md
+- DEVELOPMENT_SETUP.md
+- docs/REI_VIBE_MASTER_INDEX_TEMPLATE.md
+
+## Quick read order
+
+1. Read this file first.
+2. Open src/REI.jsx for the main experience.
+3. Open api/cfai.js for backend prompt and routing behavior.
+4. Open src/lib/nightShiftRouter.js for the router logic.
+5. Open src/lib/cardoGuard.js for the decision gate.
+6. Run npm test and npm run build before claiming the work is verified.
+
+## Update Policy
+
+**When to update this document:**
+- New major components added
+- Architecture changes
+- New entry points or workflows
+- Changes to testing/verification approach
+- Important dependency updates
+
+**When NOT to update:**
+- Minor bug fixes
+- Small refactoring
+- Documentation-only changes
+- Routine maintenance
+
+**Update format:** Keep it concise, organized, and focused on what future CLI agents need to know.
+
+## Handling Mistakes
+
+**Common mistakes to avoid:**
+- Skipping the verification step (`npm test` and `npm run build`)
+- Making changes without reading this document first
+- Updating this document for trivial changes
+- Not following the existing code patterns and entry points
+
+**When you make a mistake:**
+1. **Acknowledge it immediately** - Don't try to hide or work around errors
+2. **Revert cleanly** - Use `git reset` or `git checkout` to undo problematic changes
+3. **Understand the root cause** - Read the relevant code sections again
+4. **Fix properly** - Make the correction following established patterns
+5. **Re-verify** - Run the full test suite again
+6. **Document if significant** - Update this reference if the mistake reveals a gap
+
+**Example recovery workflow:**
+```bash
+# Oops, made a bad change
+git status  # See what changed
+git checkout -- path/to/problematic/file  # Revert the file
+git reset  # If needed, reset staging
+
+# Now do it right
+# ... make proper changes ...
+npm test  # Verify
+npm run build  # Build check
+```
+
+**Remember:** Mistakes are expected. What matters is catching them early and fixing them properly.
